@@ -1,3 +1,3 @@
 export class Roster {
-  rostername: name;
+  rostername: string;
 }
