@@ -1,15 +1,29 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
 mat-drawer-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background-color: black;
 }
+mat-drawer-content div{
+  width: 100%;
+
+}
 mat-drawer-content button{
 position: absolute;
+  top: 50px;
+  left: 50px;
   background: none;
   color: #fff;
+  font-size: 20px;
 }
-
+.mat-icon {
+  font-size: 35px;
+}
 mat-drawer{
   padding: 100px;
+}
+.crystal-background{
+  background-color: black;
+  background-image: url("../assets/img/bg.jpg");
 }

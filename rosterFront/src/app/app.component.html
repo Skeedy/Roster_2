@@ -7,14 +7,15 @@
     </ul>
   </mat-drawer>
   <mat-drawer-content>
-
     <button mat-raised-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <div class="d-flex">
-    <img src="../assets/img/xivlogo.png">
+    <div class="d-flex justify-content-center" style="height: 20vh">
+      <img src="../assets/img/xivlogo.png">
     </div>
+    <div class="container crystal-background" style="height: 80vh">
     <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
 
 </mat-drawer-container>
