@@ -1,4 +1,9 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@font-face {
+  font-family: 'FFXIV';
+  src: url('../assets/fonts/FFXIV/OPTIEngeEtienne.woff') format('woff'),
+  url('../assets/fonts/FFXIV/OPTIEngeEtienne.woff2') format('woff2');
+}
 mat-drawer-content {
   display: flex;
   flex-direction: column;
@@ -15,15 +20,27 @@ position: absolute;
   left: 50px;
   background: none;
   color: #fff;
-  font-size: 20px;
 }
+mat-drawer-content button:focus, mat-drawer-content button:active:focus, mat-drawer-content button.active:focus {
+  outline: none !important;
+}
+
 .mat-icon {
   font-size: 35px;
 }
 mat-drawer{
-  padding: 100px;
+  padding: 35px;
 }
 .crystal-background{
   background-color: black;
   background-image: url("../assets/img/bg.jpg");
+}
+mat-drawer{
+  background: linear-gradient(to left, #476b8a, #000);
+  color: white;
+  font-family: FFXIV;
+  font-size: 30px;
+}
+mat-drawer ul li{
+  list-style: none;
 }

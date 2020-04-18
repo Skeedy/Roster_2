@@ -26,7 +26,8 @@ class RosterController extends AbstractController
     public function index(RosterRepository $rosterRepository ): Response
     {
         $rosters = $rosterRepository->findAll();
-        dd($rosters);
+        $respond = $this->json($rosters, 200, [], ['groups'=> 'test']);
+        return $respond;
     }
 
     /**
