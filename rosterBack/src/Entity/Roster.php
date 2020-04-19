@@ -6,9 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RosterRepository")
+ * @UniqueEntity("email")
+ * @UniqueEntity("rostername")
  */
 class Roster implements UserInterface
 {
@@ -41,6 +44,12 @@ class Roster implements UserInterface
     * @ORM\Column(type="string", unique=true, nullable=true)
     */
     private $apiToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups("test")
+     */
+    private $email;
 
 
     public function getId(): ?int
@@ -136,5 +145,17 @@ class Roster implements UserInterface
     public function __toString(): string
     {
         return $this->rostername;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }

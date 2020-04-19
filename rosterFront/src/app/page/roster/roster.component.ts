@@ -18,10 +18,10 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
         opacity: 0,
       })),
       transition('open => closed', [
-        animate('0.2s')
+        animate('0.1s')
       ]),
       transition('closed => open', [
-        animate('0.2s')
+        animate('0.1s')
       ]),
     ]),
     trigger('registerOpenClose', [
@@ -34,10 +34,10 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
         opacity: 0,
       })),
       transition('open => closed', [
-        animate('0.2s')
+        animate('0.1s')
       ]),
       transition('closed => open', [
-        animate('0.2s')
+        animate('0.1s')
       ]),
     ]),
   ],

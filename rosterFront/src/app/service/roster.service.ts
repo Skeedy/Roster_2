@@ -15,4 +15,12 @@ export class RosterService {
   public getRosters() {
     return this.http.get<Roster[]>(`${this.url}`);
   }
+  public register(data) {
+    const obj = {
+      rostername: data.rostername,
+      email: data.email,
+      password: data.password
+    };
+    return this.http.post(Globals.APP_API + '/roster/new', obj);
+  }
 }

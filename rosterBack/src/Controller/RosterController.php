@@ -33,10 +33,20 @@ class RosterController extends AbstractController
     /**
      * @Route("/new", name="roster_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    public function new(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
         $jsonPost = $request->getContent();
         $roster = $serializer->deserialize($jsonPost, Roster::class, 'json');
+        $newName = $roster->getRostername();
+        $newEmail = $roster->getEmail();
+            if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
+                $response = JsonResponse::fromJsonString('{ "response": "This email is already used" }', 404);
+                return $response;
+            }
+            if ($rosterRepository->findOneBy(['rostername'=> $newName])){
+                $response = JsonResponse::fromJsonString('{ "response": "This name is already used" }', 404);
+                return $response;
+            }
         $roster->setRoles(['ROLE_USER']);
         $rawPassword = $roster->getPassword();
         $encode = $encoder->encodePassword($roster, $rawPassword);

@@ -1,0 +1,7 @@
+button:focus,button:active:focus,button.active:focus {
+  outline: none !important;
+}
+.mat-raised-button.mat-primary[disabled]{
+  color: #FFF;
+  background-color: #476b8a;
+}

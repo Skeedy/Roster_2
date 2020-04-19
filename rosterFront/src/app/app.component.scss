@@ -34,6 +34,9 @@ mat-drawer{
 .crystal-background{
   background-color: black;
   background-image: url("../assets/img/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 mat-drawer{
   background: linear-gradient(to left, #476b8a, #000);
