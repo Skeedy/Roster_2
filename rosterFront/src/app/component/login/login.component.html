@@ -1,0 +1,18 @@
+  <form class="form-content " [formGroup]="loginForm">
+    <div>
+    <mat-form-field color="primary">
+      <input matInput placeholder="Roster name" formControlName="rostername" autocomplete="off" required/>
+    </mat-form-field>
+      <span class="mx-2"></span>
+    <mat-form-field>
+      <input matInput placeholder="Password" type="password" formControlName="password" autocomplete="off" required/>
+    </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary"
+            [disabled]="loading || loginForm.invalid">Log in</button>
+  </form>
+  <div class="text-center mt-4">
+    <div class="row justify-content-center">
+      <a href="">Forgot password?</a>
+    </div>
+  </div>

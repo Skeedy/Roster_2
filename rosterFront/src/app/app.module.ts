@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { APP_BASE_HREF} from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './component/login/login.component';
+import { NewRosterComponent } from './component/new-roster/new-roster.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoginComponent } from './page/login/login.component';
 import { RosterComponent } from './page/roster/roster.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -48,11 +50,13 @@ import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
+    NewRosterComponent,
     AppComponent,
     LoginComponent,
     RosterComponent
   ],
   imports: [
+    FormsModule, ReactiveFormsModule,
     HttpClientModule,
     MatAutocompleteModule,
     MatBadgeModule,

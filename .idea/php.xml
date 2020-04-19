@@ -88,6 +88,7 @@
       <path value="$PROJECT_DIR$/rosterBack/vendor/psr/log" />
       <path value="$PROJECT_DIR$/rosterBack/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/rosterBack/vendor/symfony/asset" />
+      <path value="$PROJECT_DIR$/rosterBack/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

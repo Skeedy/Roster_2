@@ -1,5 +1,18 @@
-<div style="color: #fff">
-  <div *ngFor="let roster of rosters">
-    {{roster.rostername}}
+<div style="color: #fff" class="text-center">
+  <div style="height: 100px"></div>
+  <div>
+    <button  (click)="toggleLogIn()" mat-raised-button style="background: #476b8a; color: #FFF"><h4>Log into your roster</h4></button >
+    <div style="height: 50px"></div>
+    <div  [@logOpenClose]="logIsOpen ? 'open' : 'closed'" style="margin: auto; width: 50%; border: 1px solid #fff; border-radius: 200px;">
+        <app-login></app-login>
+    </div>
+  </div>
+  <div style="height: 50px"></div>
+  <div>
+    <button  (click)="toggleRegister()" mat-raised-button style="background: #476b8a; color: #FFF"><h4>Create your roster</h4></button>
+      <div style="height: 50px"></div>
+      <div  [@registerOpenClose]="registerOpen ? 'open' : 'closed'" style="margin: auto;  border: 1px solid #fff; border-radius: 200px;">
+        <app-new-roster></app-new-roster>
+      </div>
   </div>
 </div>
