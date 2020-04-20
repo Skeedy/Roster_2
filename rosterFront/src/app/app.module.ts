@@ -3,13 +3,7 @@ import { NgModule, Component } from '@angular/core';
 import { APP_BASE_HREF} from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './component/login/login.component';
-import { NewRosterComponent } from './component/new-roster/new-roster.component';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RosterComponent } from './page/roster/roster.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -47,13 +41,20 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {HttpClientModule} from '@angular/common/http';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './component/login/login.component';
+import { NewRosterComponent } from './component/new-roster/new-roster.component';
+import { AuthComponent } from './page/auth/auth.component';
+import { RosterComponent } from './page/roster/roster.component';
 
 @NgModule({
   declarations: [
     NewRosterComponent,
     AppComponent,
     LoginComponent,
-    RosterComponent
+    RosterComponent,
+    AuthComponent
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

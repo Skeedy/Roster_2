@@ -24,31 +24,31 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
-  login() {
-    this.connexionFailed = false;
-    this.loading = true;
-    const val = this.loginForm.value;
-    if (val.username && val.password) {
-      this.auth.login(val.username, val.password)
-        .subscribe(
-          () => {
-            this.auth.profile()
-              .subscribe(
-                (user) => {
-                  this.router.navigate(['/product']);
-                  this.loading = false;
-                },
-                (err) => {
-                  console.log(err);
-                  this.connexionFailed = true;
-                  this.loading = false;
-                });
-          },
-          (err) => {
-            console.log(err);
-            this.connexionFailed = true;
-            this.loading = false;
-          } );
-    }
-  }
+  // login() {
+  //   this.connexionFailed = false;
+  //   this.loading = true;
+  //   const val = this.loginForm.value;
+  //   if (val.username && val.password) {
+  //     this.auth.login(val.username, val.password)
+  //       .subscribe(
+  //         () => {
+  //           this.auth.profile()
+  //             .subscribe(
+  //               (user) => {
+  //                 this.router.navigate(['/product']);
+  //                 this.loading = false;
+  //               },
+  //               (err) => {
+  //                 console.log(err);
+  //                 this.connexionFailed = true;
+  //                 this.loading = false;
+  //               });
+  //         },
+  //         (err) => {
+  //           console.log(err);
+  //           this.connexionFailed = true;
+  //           this.loading = false;
+  //         } );
+  //   }
+  // }
 }
