@@ -1,17 +1,17 @@
 <div style="color: #fff; " class="text-center">
   <div style="height: 100px"></div>
   <div>
-    <button  (click)="toggleLogIn()" mat-raised-button style="font-family: 'FFXIV';background: #476b8a; color: #FFF"><h4>Log into your roster</h4></button >
+    <button  (click)="toggleLogIn()" mat-raised-button>Log into your roster</button >
     <div style="height: 50px"></div>
-    <div  [@logOpenClose]="logIsOpen ? 'open' : 'closed'" style="margin: auto; width: 50%; border: 1px solid #fff; border-radius: 200px;">
+    <div  [@logOpenClose]="logIsOpen ? 'open' : 'closed'" class="input-field ">
         <app-login></app-login>
     </div>
   </div>
   <div style="height: 50px"></div>
   <div>
-    <button  (click)="toggleRegister()" mat-raised-button style="font-family: 'FFXIV'; background: #476b8a; color: #FFF"><h4>Create your roster</h4></button>
+    <button  (click)="toggleRegister()" mat-raised-button>Create your roster</button>
       <div style="height: 50px"></div>
-      <div  [@registerOpenClose]="registerOpen ? 'open' : 'closed'" style="; width: 50%; margin: auto;  border: 1px solid #fff; border-radius: 200px;">
+      <div  [@registerOpenClose]="registerOpen ? 'open' : 'closed'" class="input-field ">
         <app-new-roster></app-new-roster>
       </div>
   </div>

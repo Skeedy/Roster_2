@@ -40,11 +40,11 @@ class RosterController extends AbstractController
         $newName = $roster->getRostername();
         $newEmail = $roster->getEmail();
             if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
-                $response = JsonResponse::fromJsonString('{ "response": "This email is already used" }', 404);
+                $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 403);
                 return $response;
             }
             if ($rosterRepository->findOneBy(['rostername'=> $newName])){
-                $response = JsonResponse::fromJsonString('{ "response": "This name is already used" }', 404);
+                $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 403);
                 return $response;
             }
         $roster->setRoles(['ROLE_USER']);

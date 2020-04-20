@@ -1,10 +1,18 @@
+<div *ngIf="registrationDone">
+  <div class="text-center">Roster created !</div>
+  <div>
+    <img width="70px" src="../../../assets/img/happy_spriggan.png">
+    Now you can add player to your team <a>here</a> !
+  </div>
+</div>
 <div *ngIf="!registrationDone">
-  <ngb-alert type="danger" *ngIf="registerFailed" (close)="registerFailed = false">
-    Une erreur est survenue, veuillez consulter l'administrateur du site
-  </ngb-alert>
-  <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
-  <mat-card-title class="text-center">S'enregistrer</mat-card-title>
-  <mat-card-content>
+  <div *ngIf="registerFailed" (close)="registerFailed = false" class="error">
+    <img width="70px" src="../../../assets/img/moogle.png">
+    <div> {{html}} !</div>
+  </div>
+
+   <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+  <div>
     <form class="form-content" [formGroup]="registerForm">
       <div class="">
         <mat-form-field>
@@ -13,6 +21,7 @@
                  formControlName="rostername"
                  autocomplete="Off" required/>
         </mat-form-field>
+        <span class="mx-2"></span>
         <mat-form-field>
           <input matInput type="email"
                  placeholder="email"
@@ -29,6 +38,7 @@
                  formControlName="password"
                  autocomplete="Off" required/>
         </mat-form-field>
+        <span class="mx-2"></span>
         <mat-form-field>
           <input matInput type="password"
                  placeholder="{{ password.errors?.pattern ?
@@ -45,15 +55,11 @@
       <button mat-raised-button color="primary"
               [disabled]="loading || registerForm.invalid"
               (click)="register()">
-        <span>Envoyer</span>
+        <span>Create</span>
       </button>
     </form>
-  </mat-card-content>
+  </div>
 </div>
-<mat-card *ngIf="registrationDone">
-  <mat-card-title class="text-center">Enregistrement réalisé</mat-card-title>
-  <mat-card-content>
-    Veuillez consulter votre email afin de confirmer votre inscription.
-    Vous pourrez ensuite vous connecter.
-  </mat-card-content>
-</mat-card>
+
+
+

@@ -5,3 +5,11 @@ button:focus,button:active:focus,button.active:focus {
   color: #FFF;
   background-color: #476b8a;
 }
+.error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}

@@ -11,10 +11,11 @@ import {RosterService} from "../../service/roster.service";
 })
 export class NewRosterComponent implements OnInit {
 
-  private registerFailed: boolean;
+  public registerFailed: boolean;
   public registrationDone: boolean;
-  private loading: boolean;
+  public loading: boolean;
   private registerForm: FormGroup;
+  public html: string;
 
   constructor(private fb: FormBuilder, private authServ: AuthService, private  rosterServ : RosterService) { }
 
@@ -45,7 +46,10 @@ export class NewRosterComponent implements OnInit {
     this.rosterServ.register(val).subscribe( () => {
       this.loading = false;
       this.registrationDone = true;
-    }, () => {
+      this.html ='success'
+    }, (err) => {
+      console.log(err);
+      this.html = err.error.response;
       this.loading = false;
       this.registerFailed = true;
     });

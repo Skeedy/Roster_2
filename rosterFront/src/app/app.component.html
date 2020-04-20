@@ -1,7 +1,7 @@
 <mat-drawer-container class="example-container" [hasBackdrop]="true">
   <mat-drawer #drawer>
     <ul>
-      <li><a routerLink="/roster" routerLinkActive="active">Roster</a></li>
+      <li><a (click)="drawer.toggle()" routerLink="/roster" routerLinkActive="active">Roster</a></li>
       <li>Characters</li>
       <li>Items</li>
     </ul>
@@ -10,7 +10,7 @@
     <button mat-raised-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <div class="container crystal-background" style="height: 100vh">
+    <div class="container crystal-background" style="height: 100vh; z-index: 1">
       <div class="d-flex justify-content-center mt-3" style="height:150px">
         <img src="../assets/img/logoFF.png">
       </div>

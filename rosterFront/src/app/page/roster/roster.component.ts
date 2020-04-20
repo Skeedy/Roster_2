@@ -10,8 +10,9 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
   animations: [
     trigger('logOpenClose', [
       state('open', style({
-        height: '200px',
+        height: '100%',
         opacity: 1,
+        display : 'block'
       })),
       state('closed', style({
         height: '0px',
@@ -26,8 +27,9 @@ import {trigger,state,style,animate,transition} from '@angular/animations';
     ]),
     trigger('registerOpenClose', [
       state('open', style({
-        height: '200px',
+        height: '100%',
         opacity: 1,
+        display : 'block'
       })),
       state('closed', style({
         height: '0px',
