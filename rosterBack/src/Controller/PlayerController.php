@@ -28,17 +28,18 @@ class PlayerController extends AbstractController
      */
     public function index(PlayerRepository $playerRepository)
     {
-        $playerjobs = $playerRepository->findAll();
-        $response = $this->json($playerjobs, 200, [], ['groups'=>'player']);
+        $player = $playerRepository->findAll();
+        $response = $this->json($player, 200, [], ['groups'=>'player']);
         return $response;
     }
 
     /**
      * @Route("/{id}", name="player_show", methods={"GET"})
      */
-    public function show(): Response
+    public function show(Player $player): Response
     {
-        $response = file_get_contents('http://example.com/path/to/api/call?param1=5');
+        $respond = $this->json($player, 200, [], ['groups'=>'player']);
+        return $respond;
     }
 
     /**
@@ -66,7 +67,6 @@ class PlayerController extends AbstractController
     /**
      * @Route("/patch/{id}", name="player_patch", methods={"PATCH"})
      */
-
     public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');

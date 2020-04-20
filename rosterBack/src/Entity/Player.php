@@ -18,32 +18,43 @@ class Player
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
+     * @Groups("roster")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $IDLodestone;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
+     * @Groups("roster")
      */
     private $server;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PlayerJob", mappedBy="player", orphanRemoval=true, cascade={"persist"})
      * @Groups("player")
+     * @Groups("roster")
      */
     private $playerJobs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Roster", inversedBy="player")
+     * @Groups("player")
+     */
+    private $roster;
 
     public function __construct()
     {
@@ -118,6 +129,18 @@ class Player
                 $playerJob->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoster(): ?Roster
+    {
+        return $this->roster;
+    }
+
+    public function setRoster(?Roster $roster): self
+    {
+        $this->roster = $roster;
 
         return $this;
     }

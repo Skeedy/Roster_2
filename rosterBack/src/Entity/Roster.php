@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Entity\Player;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RosterRepository")
@@ -19,13 +22,14 @@ class Roster implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("test")
+     * @Groups("roster")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("test")
+     * @Groups("roster")
+     * @Groups("player")
      */
     private $rostername;
 
@@ -47,9 +51,20 @@ class Roster implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups("test")
+     * @Groups("roster")
      */
     private $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Player", mappedBy="roster")
+     * @Groups("roster")
+     */
+    private $player;
+
+    public function __construct()
+    {
+        $this->player = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -155,6 +170,37 @@ class Roster implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Player[]
+     */
+    public function getPlayer(): Collection
+    {
+        return $this->player;
+    }
+
+    public function addPlayer(Player $player): self
+    {
+        if (!$this->player->contains($player)) {
+            $this->player[] = $player;
+            $player->setRoster($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): self
+    {
+        if ($this->player->contains($player)) {
+            $this->player->removeElement($player);
+            // set the owning side to null (unless already changed)
+            if ($player->getRoster() === $this) {
+                $player->setRoster(null);
+            }
+        }
 
         return $this;
     }

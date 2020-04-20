@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
 use App\Entity\Roster;
-use App\Form\RosterType;
+use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,7 @@ class RosterController extends AbstractController
     public function index(RosterRepository $rosterRepository ): Response
     {
         $rosters = $rosterRepository->findAll();
-        $respond = $this->json($rosters, 200, [], ['groups'=> 'test']);
+        $respond = $this->json($rosters, 200, [], ['groups'=> 'roster']);
         return $respond;
     }
 
@@ -53,37 +54,34 @@ class RosterController extends AbstractController
         $roster->setPassword($encode);
         $em->persist($roster);
         $em->flush();
-        $respond = $this->json($roster, 200, [], ['groups'=> 'test']);
+        $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
         return $respond;
     }
 
     /**
      * @Route("/{id}", name="roster_show", methods={"GET"})
      */
-    public function show(Roster $roster, SerializerInterface $serializer): Response
+    public function show(Roster $roster): Response
     {
-        $respond = $this->json($roster, 200, [], ['groups'=> 'test']);
+        $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
         return $respond;
     }
 
     /**
-     * @Route("/{id}/edit", name="roster_edit", methods={"GET","POST"})
+     * @Route("/patch/{id}", name="roster_patch", methods={"PATCH"})
      */
-    public function edit(Request $request, Roster $roster): Response
-    {
-        $form = $this->createForm(RosterType::class, $roster);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('roster_index');
+    public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository,Roster $roster, EntityManagerInterface $em){
+        $jsonPost = $request->getContent();
+        $json = $serializer->decode($jsonPost, 'json');
+        $playerIds = $json['playersId'];
+        foreach ($playerIds as $playerId){
+            $player = $playerRepository->find($playerId);
+            $roster->addPlayer($player);
+            $em->persist($roster);
+            $em->flush();
         }
-
-        return $this->render('roster/edit.html.twig', [
-            'roster' => $roster,
-            'form' => $form->createView(),
-        ]);
+        $respond = $this->json($json, 200, []);
+        return $respond;
     }
 
     /**
