@@ -1,12 +1,11 @@
-<div *ngIf="isSubmitted">
-  <img src="{{newChar.Avatar}}">
+<div *ngIf="isSubmitted" class="d-flex align-items-center justify-content-around" style="color: #FFF; border: solid #FFF">
+  <img style="border-radius: 20px" src="{{newChar.Avatar}}">
   <p>{{newChar.Name}}</p>
+  <p>{{newChar.Server}}</p>
+  <button mat-mini-fab (click)="remove(newChar)"><mat-icon>clear</mat-icon></button>
 </div>
 <div *ngIf="!isSubmitted">
-  <div *ngIf="notFound">
-    <p> This Character does not exist </p>
-  </div>
-  <form style="background: aliceblue" [formGroup]="newPlayerFrom">
+  <form [formGroup]="newPlayerFrom">
     <mat-form-field color="primary" appearance="outline">
       <input matInput placeholder="First name" type="text" formControlName="fname" autocomplete="on" required/>
     </mat-form-field>
@@ -19,5 +18,9 @@
       <input  matInput placeholder="Server" type="text" formControlName="server" autocomplete="on" required/>
     </mat-form-field>
     <button (click)="submit()"> Submit </button>
+    <div *ngIf="notFound">
+      <p style="color: red; font-weight: bold; font-style: italic"> This Character does not exist </p>
+    </div>
   </form>
+
 </div>

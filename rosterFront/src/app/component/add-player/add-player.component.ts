@@ -42,5 +42,11 @@ export class AddPlayerComponent implements OnInit {
       }
     });
   }
+  remove(result){
+    this.newChar = '';
+    this.isSubmitted = false;
+    this.searchServ.removePlayer(result);
+
+  }
 
 }

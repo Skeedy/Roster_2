@@ -8,10 +8,13 @@ import {Player} from "../../class/player";
 })
 export class PlayerComponent implements OnInit {
 
+  private maxPlayer = 8;
   players: Player[];
   constructor() { }
 
   ngOnInit(): void {
   }
+  addCharForm(){
 
+  }
 }

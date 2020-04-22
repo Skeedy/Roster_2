@@ -9,4 +9,8 @@ export class PlayerList {
     this.player.push(player);
     console.log(this.player);
   }
+  removePlayer(index: string){
+    let playerIndex = this.player.findIndex(index);
+    console.log(playerIndex);
+      }
 }

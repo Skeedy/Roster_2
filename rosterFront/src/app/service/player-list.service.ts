@@ -15,6 +15,9 @@ public playerList: PlayerList;
   addPlayer(result: Result){
     this.playerList.addPlayer(result)
   }
+  removePlayer(result){
+    this.playerList.removePlayer(result);
+  }
   searchPlayer(fname, lname, server) {
     return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)
   }
