@@ -47,6 +47,8 @@ import { LoginComponent } from './component/login/login.component';
 import { NewRosterComponent } from './component/new-roster/new-roster.component';
 import { AuthComponent } from './page/auth/auth.component';
 import { RosterComponent } from './page/roster/roster.component';
+import { AddPlayerComponent } from './component/add-player/add-player.component';
+import { PlayerComponent } from './page/player/player.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { RosterComponent } from './page/roster/roster.component';
     AppComponent,
     LoginComponent,
     RosterComponent,
-    AuthComponent
+    AuthComponent,
+    AddPlayerComponent,
+    PlayerComponent
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
