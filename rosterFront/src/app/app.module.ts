@@ -105,6 +105,7 @@ import { PlayerComponent } from './page/player/player.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddPlayerComponent]
 })
 export class AppModule { }

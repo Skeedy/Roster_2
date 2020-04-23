@@ -1,16 +1,15 @@
-import { Result} from "./result";
-
 export class PlayerList {
-  player: Result[];
+  playersIds : number[]
   constructor() {
-    this.player = [];
+    this.playersIds = [];
   }
-  addPlayer(player: Result){
-    this.player.push(player);
-    console.log(this.player);
+  addPlayer(id){
+    this.playersIds.push(id);
+    console.log(this.playersIds);
   }
-  removePlayer(index: string){
-    let playerIndex = this.player.findIndex(index);
-    console.log(playerIndex);
+  removePlayer(index){
+    let playerIndex = this.playersIds.indexOf(index);
+    this.playersIds.splice(playerIndex, 1);
+    console.log(this.playersIds);
       }
 }

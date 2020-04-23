@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {PlayerListService} from "../../service/player-list.service";
@@ -9,13 +9,15 @@ import {PlayerListService} from "../../service/player-list.service";
   styleUrls: ['./add-player.component.scss']
 })
 export class AddPlayerComponent implements OnInit {
+  @Output() close = new EventEmitter();
   public search : any;
+  public isSearching = false;
   private loading: boolean;
   public newPlayerFrom : FormGroup;
   public isSubmitted = false;
   public notFound = false;
   public newChar: any;
-  constructor(private fb: FormBuilder, private http: HttpClient, public searchServ: PlayerListService) { }
+  constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService) { }
 
   ngOnInit(): void {
     this.newPlayerFrom = this.fb.group({
@@ -28,25 +30,30 @@ export class AddPlayerComponent implements OnInit {
   submit(){
     const val = this.newPlayerFrom.value;
     this.loading = true;
+    this.isSearching = true;
     this.searchServ.searchPlayer(val.fname,val.lname,val.server).subscribe(data => {
         this.search = data;
       if(this.search.Results[0]) {
         this.newChar = this.search.Results[0];
-        this.searchServ.addPlayer(this.newChar);
+        this.searchServ.addPlayer(this.newChar.ID);
         this.isSubmitted = true;
         this.notFound = false;
         console.log(this.newChar);
       }
       else{
         this.notFound = true;
+        this.isSearching = false;
+        this.loading = false;
       }
     });
   }
-  remove(result){
-    this.newChar = '';
+  remove(){
     this.isSubmitted = false;
-    this.searchServ.removePlayer(result);
-
+    this.searchServ.removePlayer(this.newChar.ID);
+    this.newChar = ''
+    this.onCloseClicked();
   }
-
+  onCloseClicked() {
+    this.host.nativeElement.remove();
+  }
 }
