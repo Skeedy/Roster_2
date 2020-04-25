@@ -58,7 +58,7 @@ import { PlayerComponent } from './page/player/player.component';
     RosterComponent,
     AuthComponent,
     AddPlayerComponent,
-    PlayerComponent
+    PlayerComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

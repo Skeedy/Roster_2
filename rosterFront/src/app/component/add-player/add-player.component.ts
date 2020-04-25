@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {PlayerListService} from "../../service/player-list.service";
@@ -20,6 +20,7 @@ export class AddPlayerComponent implements OnInit {
   constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService) { }
 
   ngOnInit(): void {
+
     this.newPlayerFrom = this.fb.group({
       fname: [ null, Validators.required ],
       lname: [ null, Validators.required ],
@@ -56,4 +57,5 @@ export class AddPlayerComponent implements OnInit {
   onCloseClicked() {
     this.host.nativeElement.remove();
   }
+
 }

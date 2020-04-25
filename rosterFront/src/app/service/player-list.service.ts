@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PlayerList } from '../class/player-list';
 import {HttpClient} from '@angular/common/http';
 import {Result} from "../class/result";
+import {Globals} from "../globals";
 
 
 @Injectable({
@@ -20,5 +21,8 @@ public playerList: PlayerList;
   }
   searchPlayer(fname, lname, server) {
     return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)
+  }
+  postPlayer(){
+    return this.http.post(Globals.APP_API + '/player/new', this.playerList);
   }
 }

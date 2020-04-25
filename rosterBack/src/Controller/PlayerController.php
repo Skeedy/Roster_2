@@ -29,7 +29,7 @@ class PlayerController extends AbstractController
     public function index(PlayerRepository $playerRepository)
     {
         $player = $playerRepository->findAll();
-        $response = $this->json($player, 200, [], ['groups'=>'player']);
+        $response = $this->json($player, 200, [], ['groups' => 'player']);
         return $response;
     }
 
@@ -38,31 +38,46 @@ class PlayerController extends AbstractController
      */
     public function show(Player $player): Response
     {
-        $respond = $this->json($player, 200, [], ['groups'=>'player']);
+        $respond = $this->json($player, 200, [], ['groups' => 'player']);
         return $respond;
     }
 
     /**
      * @Route("/new", name="player_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer, JobRepository $jobRepository, EntityManagerInterface $em, PlayerJobRepository $playerJob): Response
+    public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, PlayerRepository $playerRepository): Response
     {
         $jsonPost = $request->getContent();
-        $player = $serializer->deserialize($jsonPost, Player::class, 'json');
-        $playerLod = $player->getIDLodestone();
-        $playerData = file_get_contents('https://xivapi.com/character/'. $playerLod .'?&private_key='. APIKey);
-        $playerData = $serializer->decode($playerData, 'json');
-        $playername = $playerData['Character']['Name'];
-        $playerServer = $playerData['Character']['Server'];
-        $player->setName($playername);
-        $player->setServer($playerServer);
-        $em->persist($player);
-        $em->flush();
-
-
-        $respond = $this->json($player, 200, []);
+        $playersIds = $serializer->decode($jsonPost, 'json')['playersIds'];
+        $i = 0;
+        foreach ($playersIds as $playersId) {
+            $check[$i] = $playerRepository->findOneBy(['IDLodestone' => $playersId]);
+            if ($check[$i]) {
+                $stringError = '';
+                $names[$i] = $check[$i]->getName();
+                foreach ($names as $name) {
+                    $stringError .= $name . ' ';
+                }
+                $response = JsonResponse::fromJsonString('{"response": "' . $stringError . ' is already in a roster" }', 403);
+                return $response;
+            } else {
+                $player = new Player();
+                $playerData = file_get_contents('https://xivapi.com/character/' . $playersId . '?&private_key=' . APIKey);
+                $playerData = $serializer->decode($playerData, 'json');
+                $playername = $playerData['Character']['Name'];
+                $playerServer = $playerData['Character']['Server'];
+                $player->setIDLodestone($playersId);
+                $player->setName($playername);
+                $player->setServer($playerServer);
+                $em->persist($player);
+                $em->flush();
+            }
+            $i++;
+        }
+        $respond = $this->json($i, 200, []);
         return $respond;
     }
+
 
     /**
      * @Route("/patch/{id}", name="player_patch", methods={"PATCH"})
