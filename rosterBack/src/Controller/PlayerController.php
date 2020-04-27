@@ -50,17 +50,26 @@ class PlayerController extends AbstractController
         $jsonPost = $request->getContent();
         $playersIds = $serializer->decode($jsonPost, 'json')['playersIds'];
         $i = 0;
+        $nbError = 0;
+        $error = false;
         foreach ($playersIds as $playersId) {
             $check[$i] = $playerRepository->findOneBy(['IDLodestone' => $playersId]);
             if ($check[$i]) {
+                $error = true;
+                $nbError ++;
                 $stringError = '';
                 $names[$i] = $check[$i]->getName();
                 foreach ($names as $name) {
-                    $stringError .= $name . ' ';
+                    $stringError .= $name . ($i == count($playersIds) ? ' ' : ', ');
                 }
-                $response = JsonResponse::fromJsonString('{"response": "' . $stringError . ' is already in a roster" }', 403);
-                return $response;
-            } else {
+            }
+            $i++;
+        }
+        if ($error) {
+            $response = JsonResponse::fromJsonString('{"response": "' . $stringError . ($nbError>1 ? 'are': 'is').' already in a roster" }', 403);
+            return $response;
+        } else {
+            foreach ($playersIds as $playersId) {
                 $player = new Player();
                 $playerData = file_get_contents('https://xivapi.com/character/' . $playersId . '?&private_key=' . APIKey);
                 $playerData = $serializer->decode($playerData, 'json');
@@ -72,10 +81,9 @@ class PlayerController extends AbstractController
                 $em->persist($player);
                 $em->flush();
             }
-            $i++;
+            $respond = JsonResponse::fromJsonString('{"response": "All players are registred !"}', 200);
+            return $respond;
         }
-        $respond = $this->json($i, 200, []);
-        return $respond;
     }
 
 
