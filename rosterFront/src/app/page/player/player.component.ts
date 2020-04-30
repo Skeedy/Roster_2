@@ -2,6 +2,8 @@ import {Component, ComponentFactoryResolver, OnInit, Output, ViewChild, ViewCont
 import {Player} from "../../class/player";
 import {AddPlayerComponent} from "../../component/add-player/add-player.component";
 import {PlayerListService} from "../../service/player-list.service";
+import {RosterService} from "../../service/roster.service";
+import {Roster} from "../../class/roster";
 
 
 @Component({
@@ -11,16 +13,21 @@ import {PlayerListService} from "../../service/player-list.service";
 })
 export class PlayerComponent implements OnInit {
   @ViewChild(AddPlayerComponent)
-  @Output() servers: any;
+  roster: Roster;
   private maxPlayer = 8;
   players: Player[];
 
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
-              public searchServ: PlayerListService) {
+              public searchServ: PlayerListService,
+              public rosterServ: RosterService) {
   }
 
   ngOnInit(): void {
+    this.rosterServ.fillRoster();
+    this.rosterServ.currentResponse.subscribe(data => {
+      this.players = data.player;
+    });
   }
 
   addCharForm() {
