@@ -10,6 +10,7 @@ import {Globals} from "../globals";
 })
 export class PlayerListService {
 public playerList: PlayerList;
+public nbPlayer: number;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();
   }

@@ -1,11 +1,11 @@
-<h1 style="color: #FFF"> {{nbPlayer }} max : {{maxPlayer}}</h1>
+<h1 style="color: #FFF"> {{searchServ.nbPlayer }} max : {{maxPlayer}}</h1>
 <div *ngFor="let player of players">
   <div>
     <img src="{{player.imgUrl}}">
   <p>{{player.name}}</p>
   </div>
 </div>
-<div *ngIf="nbPlayer < maxPlayer" class="position-absolute">
+<div *ngIf="searchServ.nbPlayer < maxPlayer" class="position-absolute">
   <button mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
   <button mat-fab (click)="submitPlayers()">Go</button>
 </div>

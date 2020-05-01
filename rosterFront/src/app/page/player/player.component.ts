@@ -14,7 +14,6 @@ import {Roster} from "../../class/roster";
 export class PlayerComponent implements OnInit{
   @ViewChild(AddPlayerComponent)
   players: Player[];
-  public nbPlayer : number;
   public maxPlayer : number;
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -26,19 +25,18 @@ export class PlayerComponent implements OnInit{
     this.maxPlayer = 8;
     this.rosterServ.getRosters().subscribe(data => {
       this.players = data.player;
-      this.nbPlayer = this.players.length;
+      this.searchServ.nbPlayer = this.players.length;
     });
   }
 
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.viewContainerRef.createComponent(componentFactory)
-    this.nbPlayer ++
+    this.searchServ.nbPlayer ++
   }
 
   submitPlayers() {
     this.searchServ.postPlayer().subscribe((data) => {
-      console.log(data)
     })
   }
 }
