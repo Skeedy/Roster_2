@@ -9,7 +9,6 @@ import {PlayerListService} from "../../service/player-list.service";
   styleUrls: ['./add-player.component.scss']
 })
 export class AddPlayerComponent implements OnInit {
-  @Output() close = new EventEmitter();
   public search : any;
   public isSearching = false;
   private loading: boolean;
@@ -20,7 +19,6 @@ export class AddPlayerComponent implements OnInit {
   constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService) { }
 
   ngOnInit(): void {
-
     this.newPlayerFrom = this.fb.group({
       fname: [ null, Validators.required ],
       lname: [ null, Validators.required ],

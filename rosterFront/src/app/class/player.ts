@@ -5,4 +5,5 @@ export class Player {
   server: string;
   LodId : number;
   playerJobs : PlayerJob[];
+  imgUrl : string
 }

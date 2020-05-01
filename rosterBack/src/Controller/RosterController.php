@@ -63,6 +63,7 @@ class RosterController extends AbstractController
      */
     public function show(Roster $roster): Response
     {
+        $nbPlayer = count($roster->getPlayer());
         $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
         return $respond;
     }

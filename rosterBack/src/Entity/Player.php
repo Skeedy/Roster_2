@@ -56,6 +56,13 @@ class Player
      */
     private $roster;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("player")
+     * @Groups("roster")
+     */
+    private $imgUrl;
+
     public function __construct()
     {
         $this->playerJobs = new ArrayCollection();
@@ -141,6 +148,18 @@ class Player
     public function setRoster(?Roster $roster): self
     {
         $this->roster = $roster;
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(?string $imgUrl): self
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

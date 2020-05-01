@@ -9,18 +9,10 @@ import {Roster} from '../class/roster';
   providedIn: 'root'
 })
 export class RosterService {
-
-  response: any = {};
-  private messageResponse = new BehaviorSubject(this.response);
-  currentResponse = this.messageResponse.asObservable();
-
   constructor(private http: HttpClient) { }
   url= Globals.APP_API +'/roster/27';
-  public getRosters():Observable<any> {
-    return this.http.get<Roster[]>(`${this.url}`);
-  }
-  public fillRoster(){
-    this.getRosters().subscribe(res => { this.messageResponse.next(res)})
+  public getRosters() {
+    return this.http.get<any>(`${this.url}`);
   }
 
   public register(data) {

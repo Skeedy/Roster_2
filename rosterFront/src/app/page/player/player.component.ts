@@ -11,12 +11,11 @@ import {Roster} from "../../class/roster";
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit{
   @ViewChild(AddPlayerComponent)
-  roster: Roster;
-  private maxPlayer = 8;
   players: Player[];
-
+  public nbPlayer : number;
+  public maxPlayer : number;
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
               public searchServ: PlayerListService,
@@ -24,15 +23,17 @@ export class PlayerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rosterServ.fillRoster();
-    this.rosterServ.currentResponse.subscribe(data => {
+    this.maxPlayer = 8;
+    this.rosterServ.getRosters().subscribe(data => {
       this.players = data.player;
+      this.nbPlayer = this.players.length;
     });
   }
 
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.viewContainerRef.createComponent(componentFactory)
+    this.nbPlayer ++
   }
 
   submitPlayers() {

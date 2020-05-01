@@ -75,6 +75,8 @@ class PlayerController extends AbstractController
                 $playerData = $serializer->decode($playerData, 'json');
                 $playername = $playerData['Character']['Name'];
                 $playerServer = $playerData['Character']['Server'];
+                $playerImg = $playerData['Character']['Avatar'];
+                $player->setImgUrl($playerImg);
                 $player->setIDLodestone($playersId);
                 $player->setName($playername);
                 $player->setServer($playerServer);

@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-center" style="margin-bottom: 20px;">
           <mat-spinner style="margin: 0 10px" *ngIf="loading" [diameter]="40"></mat-spinner>
           <button *ngIf="!isSearching" mat-mini-fab class="confirm-button" type="button" (click)="submit()"> <mat-icon>done</mat-icon> </button>
-          <button mat-mini-fab class="delete-button" type="button" (click)="onCloseClicked()"><mat-icon>clear</mat-icon></button>
+          <button mat-mini-fab class="delete-button" type="button" (click)="onCloseClicked(nbPlayer)"><mat-icon>clear</mat-icon></button>
         </div>
       </div>
       <div *ngIf="notFound">
