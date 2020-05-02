@@ -96,14 +96,13 @@ class PlayerController extends AbstractController
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
         $jobList = $json['playerJobs'];
-        $playerId = $playerRepository->find($json['id']);
         foreach ($jobList as $job){
             $playerJob = new PlayerJob();
             $jobId = $jobRepository->find($job['job']);
             $playerJob->setJob($jobId);
             $playerJob->setIsMain($job['isMain']);
             $playerJob->setIsSub($job['isSub']);
-            $playerJob->setPlayer($playerId);
+            $playerJob->setPlayer($player);
             $em->persist($playerJob);
         }
         $em->flush();

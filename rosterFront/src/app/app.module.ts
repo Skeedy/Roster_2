@@ -49,6 +49,7 @@ import { AuthComponent } from './page/auth/auth.component';
 import { RosterComponent } from './page/roster/roster.component';
 import { AddPlayerComponent } from './component/add-player/add-player.component';
 import { PlayerComponent } from './page/player/player.component';
+import { ImgPipe } from './pipe/img.pipe';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { PlayerComponent } from './page/player/player.component';
     AuthComponent,
     AddPlayerComponent,
     PlayerComponent,
+    ImgPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

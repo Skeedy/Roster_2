@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -18,11 +21,13 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("roster")
      */
     private $path;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("roster")
      */
     private $imgpath;
     /**
