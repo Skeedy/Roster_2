@@ -11,14 +11,18 @@ import {Globals} from "../globals";
 export class PlayerListService {
 public playerList: PlayerList;
 public nbPlayer: number;
+public formUp :boolean;
+public nbForm = 0;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();
   }
   addPlayer(result: Result){
-    this.playerList.addPlayer(result)
+    this.playerList.addPlayer(result);
+    this.formUp = true;
   }
   removePlayer(result){
     this.playerList.removePlayer(result);
+    this.formUp = false;
   }
   searchPlayer(fname, lname, server) {
     return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)

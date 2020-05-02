@@ -54,6 +54,9 @@ export class AddPlayerComponent implements OnInit {
   onCloseClicked() {
     this.host.nativeElement.remove();
     this.searchServ.nbPlayer --;
+    this.searchServ.nbForm --;
+    this.searchServ.formUp = false;
+    console.log(this.searchServ.nbForm);
   }
 
 }

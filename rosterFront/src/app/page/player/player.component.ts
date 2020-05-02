@@ -32,7 +32,10 @@ export class PlayerComponent implements OnInit{
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.viewContainerRef.createComponent(componentFactory)
-    this.searchServ.nbPlayer ++
+    this.searchServ.nbPlayer ++;
+    this.searchServ.formUp = true;
+    this.searchServ.nbForm ++;
+    console.log(this.searchServ.nbForm);
   }
 
   submitPlayers() {
