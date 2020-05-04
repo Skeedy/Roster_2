@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ComponentFactoryResolver,
+  ComponentFactoryResolver, Input,
   OnInit,
   Output,
   ViewChild,
@@ -19,9 +19,10 @@ import {Roster} from "../../class/roster";
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements AfterViewInit, OnInit{
+export class PlayerComponent implements OnInit, AfterViewInit{
   @ViewChild(AddPlayerComponent)
   players: Player[];
+  roster: any;
   public maxPlayer : number;
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
@@ -30,16 +31,18 @@ export class PlayerComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit(): void {
-    this.maxPlayer = 8;
+
   }
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.rosterServ.getRosters().subscribe(data => {
-        this.players = data.player;
-        this.searchServ.nbPlayer = this.players.length;
-      });
-    })
+    this.maxPlayer = 8;
+    this.rosterServ.getRosters().subscribe(data => {
+      this.roster = this.rosterServ._rosterSub.value;
+      this.players = this.roster.player;
+      this.searchServ.nbPlayer = this.players.length;
+      console.log(this.players)
+    });
   }
+
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.viewContainerRef.createComponent(componentFactory)
