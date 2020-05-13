@@ -21,9 +21,8 @@ import {Roster} from "../../class/roster";
 })
 export class PlayerComponent implements OnInit, AfterViewInit{
   @ViewChild(AddPlayerComponent)
-  players: Player[];
   roster: any;
-  public maxPlayer : number;
+  public maxPlayer = 8;
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
               public searchServ: PlayerListService,
@@ -31,25 +30,19 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-
+    this.rosterServ.getRosters();
+    console.log('nbFrom : ' + this.searchServ.nbForm +'/ nbPlayer : '+ this.rosterServ.nbPlayer)
   }
   ngAfterViewInit() {
-    this.maxPlayer = 8;
-    this.rosterServ.getRosters().subscribe(data => {
-      this.roster = this.rosterServ._rosterSub.value;
-      this.players = this.roster.player;
-      this.searchServ.nbPlayer = this.players.length;
-      console.log(this.players)
-    });
   }
 
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.viewContainerRef.createComponent(componentFactory)
-    this.searchServ.nbPlayer ++;
     this.searchServ.formUp = true;
-    this.searchServ.nbForm ++;
-    console.log(this.searchServ.nbForm);
+    this.searchServ.nbForm++;
+    console.log('nbFrom : ' + this.searchServ.nbForm +'/ nbPlayer : '+ this.rosterServ.nbPlayer)
+    console.log(this.rosterServ.nbPlayer);
   }
 
   submitPlayers() {

@@ -10,9 +10,9 @@ import {Globals} from "../globals";
 })
 export class PlayerListService {
 public playerList: PlayerList;
-public nbPlayer: number;
+
 public formUp :boolean;
-public nbForm = 0;
+public nbForm :number;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();
   }

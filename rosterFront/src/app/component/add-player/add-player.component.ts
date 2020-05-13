@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angul
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {PlayerListService} from "../../service/player-list.service";
+import {RosterService} from "../../service/roster.service";
 
 @Component({
   selector: 'app-add-player',
@@ -16,7 +17,8 @@ export class AddPlayerComponent implements OnInit {
   public isSubmitted = false;
   public notFound = false;
   public newChar: any;
-  constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService) { }
+  constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService,
+              public rosterServ: RosterService) { }
 
   ngOnInit(): void {
     this.newPlayerFrom = this.fb.group({
@@ -53,7 +55,6 @@ export class AddPlayerComponent implements OnInit {
   }
   onCloseClicked() {
     this.host.nativeElement.remove();
-    this.searchServ.nbPlayer --;
     this.searchServ.nbForm --;
     this.searchServ.formUp = false;
     console.log(this.searchServ.nbForm);

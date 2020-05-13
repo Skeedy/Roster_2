@@ -15,9 +15,7 @@ export class RosterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getRosters();
+
   }
-  getRosters(){
-    this.rosterService.getRosters().subscribe((data: any) => {this.rosters = data;});
-  }
+
 }

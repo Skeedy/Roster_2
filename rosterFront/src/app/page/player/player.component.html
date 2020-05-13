@@ -1,4 +1,4 @@
-<div *ngFor="let player of players">
+<div *ngFor="let player of rosterServ._rosterSub.value.player">
   <div class="d-flex ">
     <img src="{{player.imgUrl}}">
     <div style="color: #FFF">
@@ -20,9 +20,10 @@
     </div>
     </div>
 </div>
-<div *ngIf="searchServ.nbPlayer < maxPlayer">
-  <button mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
+<div >
+  <button *ngIf="rosterServ.nbPlayer + searchServ.nbForm < maxPlayer" mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
+  <button *ngIf="searchServ.formUp && searchServ.nbForm >= 1" mat-fab (click)="submitPlayers()">Go</button>
 </div>
-<button *ngIf="searchServ.formUp || searchServ.nbForm >= 1" mat-fab (click)="submitPlayers()">Go</button>
+<app-add-player *ngIf="rosterServ.nbPlayer < 8"></app-add-player>
 
 

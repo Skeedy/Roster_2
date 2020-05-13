@@ -4,6 +4,7 @@ import {Globals} from '../globals';
 import {catchError, delay, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {Roster} from '../class/roster';
+import {PlayerListService} from "./player-list.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,22 @@ import {Roster} from '../class/roster';
 export class RosterService {
   public _rosterSub = new BehaviorSubject<Roster>(new Roster());
   public _roster: Observable<Roster>;
-  constructor(private http: HttpClient) { }
+  public nbPlayer: number;
+  constructor(private http: HttpClient, private searchServ: PlayerListService) { }
   url= Globals.APP_API +'/roster/27';
 
   public getRosters() {
-    return this.http.get<Roster>(`${this.url}`).pipe(map((roster: Roster) => {
-      if (roster) {
-        this._roster = this._rosterSub.asObservable().pipe(delay(0));
-        this._rosterSub.next(roster);
+    return this.http.get<Roster>(`${this.url}`).subscribe((data: Roster) => {
+      if (data) {
+        this._roster = this._rosterSub.asObservable();
+        this._rosterSub.next(data);
+        this.nbPlayer = this._rosterSub.value.player.length;
+        if (this.nbPlayer < 8) {
+          this.searchServ.formUp = true;
+          this.searchServ.nbForm = 1;
+        }
       }
-      return this._rosterSub.value;
-    }
-    ));
+    });
   }
 
   public register(data) {

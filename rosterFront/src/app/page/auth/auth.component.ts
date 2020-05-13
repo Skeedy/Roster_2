@@ -59,9 +59,7 @@ export class AuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getRosters();
+
   }
-  getRosters(){
-    this.rosterService.getRosters().subscribe((data: any) => {this.rosters = data;});
-  }
+
 }
