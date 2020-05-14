@@ -46,7 +46,13 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   }
 
   submitPlayers() {
-    this.searchServ.postPlayer().subscribe((data) => {
-    })
+    this.searchServ.postPlayer().subscribe(_ =>
+      this.rosterServ.getRosters()
+    );
+  }
+  deleteChar(id) {
+    this.searchServ.deleteChar(id).subscribe( _ =>
+      this.rosterServ.getRosters()
+    );
   }
 }

@@ -1,5 +1,6 @@
 <div *ngFor="let player of rosterServ._rosterSub.value.player">
   <div class="d-flex ">
+    <button mat-button color="warn" (click)="deleteChar(player)"><mat-icon>delete_forever</mat-icon></button>
     <img src="{{player.imgUrl}}">
     <div style="color: #FFF">
       <div>{{player.name}}</div>

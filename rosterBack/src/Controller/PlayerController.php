@@ -109,4 +109,15 @@ class PlayerController extends AbstractController
         $respond = $this->json($json, 200, []);
         return $respond;
     }
+    /**
+     * @Route("/{id}", name="player_delete", methods={"DELETE"})
+     */
+    public function delete(Player $player, EntityManagerInterface $em){
+        if ($player){
+            $em->remove($player);
+            $em->flush();
+        }
+        $response = JsonResponse::fromJsonString('{ "response": "'. $player->getName() .' has been deleted" }', 200);
+        return $response;
+    }
 }
