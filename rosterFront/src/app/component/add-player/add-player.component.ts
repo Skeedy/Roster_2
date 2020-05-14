@@ -14,11 +14,9 @@ export class AddPlayerComponent implements OnInit {
   public isSearching = false;
   private loading: boolean;
   public newPlayerFrom : FormGroup;
-  public isSubmitted = false;
   public notFound = false;
   public newChar: any;
-  constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService,
-              public rosterServ: RosterService) { }
+  constructor(private fb: FormBuilder, private host: ElementRef<HTMLElement>, public searchServ: PlayerListService) { }
 
   ngOnInit(): void {
     this.newPlayerFrom = this.fb.group({
@@ -37,7 +35,7 @@ export class AddPlayerComponent implements OnInit {
       if(this.search.Results[0]) {
         this.newChar = this.search.Results[0];
         this.searchServ.addPlayer(this.newChar.ID);
-        this.isSubmitted = true;
+        this.searchServ.isSubmitted = true;
         this.notFound = false;
       }
       else{
@@ -48,7 +46,7 @@ export class AddPlayerComponent implements OnInit {
     });
   }
   remove(){
-    this.isSubmitted = false;
+    this.searchServ.isSubmitted = false;
     this.searchServ.removePlayer(this.newChar.ID);
     this.newChar = ''
     this.onCloseClicked();

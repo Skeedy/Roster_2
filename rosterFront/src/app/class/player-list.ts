@@ -1,5 +1,6 @@
 export class PlayerList {
-  playersIds : number[]
+  playersIds : number[];
+  rosterID: number;
   constructor() {
     this.playersIds = [];
   }

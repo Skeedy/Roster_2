@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center align-items-center">
-  <div *ngIf="isSubmitted" class="d-flex align-items-center justify-content-around" style="font-weight: boldwidth: 50%; color: #FFF; border: solid #FFF">
+  <div #newchar *ngIf="searchServ.isSubmitted" class="d-flex align-items-center justify-content-around" style="font-weight: boldwidth: 50%; color: #FFF; border: solid #FFF">
     <img style="border-radius: 20px" src="{{newChar.Avatar}}">
     <div class="d-flex flex-column">
       <p>{{newChar.Name}}</p>
@@ -7,7 +7,7 @@
     </div>
     <button class="delete-button" mat-mini-fab type="button" (click)="remove()"><mat-icon>clear</mat-icon></button>
   </div>
-  <div *ngIf="!isSubmitted">
+  <div *ngIf="!searchServ.isSubmitted && !searchServ.isDone">
     <form [formGroup]="newPlayerFrom">
       <div class="d-flex justify-content-center align-items-center">
         <mat-form-field appearance="fill">

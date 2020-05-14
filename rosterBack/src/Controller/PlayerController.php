@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PlayerJob;
 use App\Repository\JobRepository;
 use App\Repository\PlayerJobRepository;
+use App\Repository\RosterRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,10 +46,12 @@ class PlayerController extends AbstractController
     /**
      * @Route("/new", name="player_new", methods={"POST"})
      */
-    public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $em, PlayerRepository $playerRepository): Response
+    public function new(Request $request,RosterRepository$rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, PlayerRepository $playerRepository): Response
     {
         $jsonPost = $request->getContent();
         $playersIds = $serializer->decode($jsonPost, 'json')['playersIds'];
+        $rosterID = $serializer->decode($jsonPost, 'json')['rosterID'];
+        $roster = $rosterRepository->findOneBy(['id'=> $rosterID]);
         $i = 0;
         $nbError = 0;
         $error = false;
@@ -80,6 +83,7 @@ class PlayerController extends AbstractController
                 $player->setIDLodestone($playersId);
                 $player->setName($playername);
                 $player->setServer($playerServer);
+                $player->setRoster($roster);
                 $em->persist($player);
                 $em->flush();
             }

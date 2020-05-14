@@ -13,6 +13,7 @@ export class RosterService {
   public _rosterSub = new BehaviorSubject<Roster>(new Roster());
   public _roster: Observable<Roster>;
   public nbPlayer: number;
+  public rosterID: number;
   constructor(private http: HttpClient, private searchServ: PlayerListService) { }
   url= Globals.APP_API +'/roster/27';
 
@@ -22,14 +23,20 @@ export class RosterService {
         this._roster = this._rosterSub.asObservable();
         this._rosterSub.next(data);
         this.nbPlayer = this._rosterSub.value.player.length;
+        this.rosterID = this._rosterSub.value.id;
+        console.log(this.nbPlayer);
         if (this.nbPlayer < 8) {
           this.searchServ.formUp = true;
           this.searchServ.nbForm = 1;
         }
+        console.log(this.searchServ.nbForm)
       }
     });
   }
-
+  postPlayer(){
+    this.searchServ.playerList.rosterID = this.rosterID;
+    return this.http.post(Globals.APP_API + '/player/new', this.searchServ.playerList);
+  }
   public register(data) {
     const obj = {
       rostername: data.rostername,

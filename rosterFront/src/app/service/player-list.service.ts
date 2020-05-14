@@ -13,7 +13,8 @@ import {tap, catchError} from "rxjs/operators";
 })
 export class PlayerListService {
 public playerList: PlayerList;
-
+public isSubmitted = false;
+public isDone = false;
 public formUp :boolean;
 public nbForm :number;
   constructor(private http: HttpClient) {
@@ -35,9 +36,7 @@ public nbForm :number;
   searchPlayer(fname, lname, server) {
     return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)
   }
-  postPlayer(){
-    return this.http.post(Globals.APP_API + '/player/new', this.playerList);
-  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(error);
