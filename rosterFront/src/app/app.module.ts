@@ -50,6 +50,9 @@ import { RosterComponent } from './page/roster/roster.component';
 import { AddPlayerComponent } from './component/add-player/add-player.component';
 import { PlayerComponent } from './page/player/player.component';
 import { ImgPipe } from './pipe/img.pipe';
+import { DeleteConfirmationComponent } from './component/delete-confirmation/delete-confirmation.component';
+import { PlayerInfoComponent } from './component/player-info/player-info.component';
+import { JobsComponent } from './component/jobs/jobs.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +64,9 @@ import { ImgPipe } from './pipe/img.pipe';
     AddPlayerComponent,
     PlayerComponent,
     ImgPipe,
+    DeleteConfirmationComponent,
+    PlayerInfoComponent,
+    JobsComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center align-items-center">
-  <div #newchar *ngIf="searchServ.isSubmitted" class="d-flex align-items-center justify-content-around" style="font-weight: boldwidth: 50%; color: #FFF; border: solid #FFF">
+  <div *ngIf="searchServ.isSubmitted" class="d-flex align-items-center justify-content-around" style="font-weight: boldwidth: 50%; color: #FFF; border: solid #FFF">
     <img style="border-radius: 20px" src="{{newChar.Avatar}}">
     <div class="d-flex flex-column">
       <p>{{newChar.Name}}</p>

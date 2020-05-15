@@ -1,0 +1,6 @@
+<div *ngIf="jobList">
+  <div *ngFor="let job of jobServ._jobSub.value">
+    <img src="{{job.image.imgpath |imgpath}}">
+  </div>
+</div>
+<div *ngIf="jobList" class="overlay" (click)="close()"></div>

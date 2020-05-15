@@ -15,7 +15,7 @@ export class PlayerListService {
 public playerList: PlayerList;
 public isSubmitted = false;
 public isDone = false;
-public formUp :boolean;
+public formUp = false;
 public nbForm :number;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();

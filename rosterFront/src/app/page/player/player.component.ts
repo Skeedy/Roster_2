@@ -3,7 +3,6 @@ import {
   Component,
   ComponentFactoryResolver, Input,
   OnInit,
-  Output,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -12,6 +11,7 @@ import {AddPlayerComponent} from "../../component/add-player/add-player.componen
 import {PlayerListService} from "../../service/player-list.service";
 import {RosterService} from "../../service/roster.service";
 import {Roster} from "../../class/roster";
+import {JobService} from "../../service/job.service";
 
 
 @Component({
@@ -26,11 +26,13 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   constructor(public viewContainerRef: ViewContainerRef,
               private componentFactoryResolver: ComponentFactoryResolver,
               public searchServ: PlayerListService,
-              public rosterServ: RosterService) {
+              public rosterServ: RosterService,
+              public jobServ: JobService) {
   }
 
   ngOnInit(): void {
     this.rosterServ.getRosters();
+    this.jobServ.getJobs();
   }
   ngAfterViewInit() {
   }
@@ -50,13 +52,8 @@ export class PlayerComponent implements OnInit, AfterViewInit{
         this.rosterServ.getRosters();
         this.searchServ.isSubmitted = false;
         this.searchServ.isDone = true;
+        this.searchServ.formUp=false;
       }
     });
-  }
-
-  deleteChar(id) {
-    this.searchServ.deleteChar(id).subscribe( _ =>
-      this.rosterServ.getRosters()
-    );
   }
 }
