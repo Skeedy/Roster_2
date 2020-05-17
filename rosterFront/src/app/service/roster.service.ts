@@ -37,6 +37,19 @@ export class RosterService {
     this.searchServ.playerList.rosterID = this.rosterID;
     return this.http.post(Globals.APP_API + '/player/new', this.searchServ.playerList);
   }
+  patchJob(bool, job, player, ddbId){
+    const obj ={
+      ddbId: ddbId,
+      job: job,
+      isMain: !bool,
+      isSub: bool
+    }
+    console.log(obj);
+    return this.http.patch(Globals.APP_API + '/player/patch/'+ player, obj);
+  }
+  deleteJob(id){
+    return this.http.delete( Globals.APP_API + '/playerjob/'+ id);
+  }
   public register(data) {
     const obj = {
       rostername: data.rostername,

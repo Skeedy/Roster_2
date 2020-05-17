@@ -15,6 +15,7 @@ class PlayerJob
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $id;
 

@@ -53,6 +53,11 @@ import { ImgPipe } from './pipe/img.pipe';
 import { DeleteConfirmationComponent } from './component/delete-confirmation/delete-confirmation.component';
 import { PlayerInfoComponent } from './component/player-info/player-info.component';
 import { JobsComponent } from './component/jobs/jobs.component';
+import { TankJobsPipe } from './pipe/tank-jobs.pipe';
+import { HealerJobsPipe } from './pipe/healer-jobs.pipe';
+import { RangeddpsPipe } from './pipe/rangeddps.pipe';
+import { MeleedpsPipe } from './pipe/meleedps.pipe';
+import { MagicdpsPipe } from './pipe/magicdps.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +72,11 @@ import { JobsComponent } from './component/jobs/jobs.component';
     DeleteConfirmationComponent,
     PlayerInfoComponent,
     JobsComponent,
+    TankJobsPipe,
+    HealerJobsPipe,
+    RangeddpsPipe,
+    MeleedpsPipe,
+    MagicdpsPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -96,22 +96,44 @@ class PlayerController extends AbstractController
     /**
      * @Route("/patch/{id}", name="player_patch", methods={"PATCH"})
      */
-    public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
+    public function patch(Request $request, SerializerInterface $serializer,PlayerJobRepository $playerJobRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
-        $jobList = $json['playerJobs'];
-        foreach ($jobList as $job){
+        $playerJob = $playerJobRepository->findOneBy(['id' => $json['ddbId']]);
+        $jobId = $jobRepository->findOneBy(['id' =>$json['job']]);
+        $check = false;
+        if ($playerJob){
+            $jobs = $player->getPlayerJobs();
+            foreach ($jobs as $job){
+                if ($job->getJob() === $jobId){
+                    $check = true;
+                }
+            }
+            if ($check){
+                $response = JsonResponse::fromJsonString('{"error" : true, "response":"This job is already in use"}', 403);
+                return $response;
+            }
+            else {
+                $playerJob->setJob($jobId);
+                $playerJob->setIsMain($json['isMain']);
+                $playerJob->setIsSub($json['isSub']);
+                $playerJob->setPlayer($player);
+                $em->persist($playerJob);
+                $em->flush();
+                $respond = $this->json($json, 200, []);
+                return $respond;
+            }
+        }else {
             $playerJob = new PlayerJob();
-            $jobId = $jobRepository->find($job['job']);
             $playerJob->setJob($jobId);
-            $playerJob->setIsMain($job['isMain']);
-            $playerJob->setIsSub($job['isSub']);
+            $playerJob->setIsMain($json['isMain']);
+            $playerJob->setIsSub($json['isSub']);
             $playerJob->setPlayer($player);
             $em->persist($playerJob);
+            $em->flush();
+            $respond = $this->json($json, 200, []);
+            return $respond;
         }
-        $em->flush();
-        $respond = $this->json($json, 200, []);
-        return $respond;
     }
     /**
      * @Route("/{id}", name="player_delete", methods={"DELETE"})
@@ -124,4 +146,5 @@ class PlayerController extends AbstractController
         $response = JsonResponse::fromJsonString('{ "response": "'. $player->getName() .' has been deleted" }', 200);
         return $response;
     }
+
 }

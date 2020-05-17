@@ -2,26 +2,26 @@
   <button mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
   <img src="{{player.imgUrl}}">
   <div style="color: #FFF">
-    <div>{{player.name}}</div>
-    <div>{{player.server}}</div>
-    <div *ngIf="player.playerJobs" class="d-flex">
-      <div *ngFor="let job of player.playerJobs">
-        <div *ngIf="job.isMain">
-          <img height="60px" (click)="showJob= !showJob" src="{{job.job.image.imgpath |imgpath }}">
-          <app-jobs [(jobList)]="showJob"></app-jobs>
-        </div>
-        <div *ngIf="job.isSub" >
-          <img height="40px" src="{{job.job.image.imgpath |imgpath }}">
-          <app-jobs [(jobList)]="showJob"></app-jobs>
+    <div>{{player.name}} ({{player.server}})</div>
+    <div class="d-flex">
+      <div *ngIf="player.playerJobs" class="d-flex">
+        <div *ngFor="let job of player.playerJobs">
+          <div *ngIf="job.isMain" (click)="showJob= !showJob; isSub = false; ddbId = job.id">
+            <img height="60px" src="{{job.job.image.imgpath |imgpath }}">
+          </div>
+          <div *ngIf="job.isSub" (click)="showJob= !showJob; isSub = true; ddbId = job.id">
+            <img height="40px"  src="{{job.job.image.imgpath |imgpath }}">
+          </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="player.playerJobs!">
-      <button (click)="showJob= !showJob"> + </button>
-      <app-jobs [(jobList)]="showJob"></app-jobs>
+      <div *ngIf="player.playerJobs.length == 0">
+        <button (click)="showJob= !showJob; isSub = false; ddbId = null"> + </button>
+      </div>
+      <div *ngIf="player.playerJobs.length>0">
+        <button (click)="showJob= !showJob; isSub = true; ddbId = null"> + </button>
+      </div>
     </div>
   </div>
 </div>
-<app-delete-confirmation [player]="player" [(visible)]="showDialog">
-  <button (click)="showDialog = !showDialog" class="btn">Close</button>
-</app-delete-confirmation>
+<app-jobs [player]="player" [ddbId]= "ddbId" [isSub]="isSub" [(jobList)]="showJob"></app-jobs>
+<app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>

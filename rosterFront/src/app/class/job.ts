@@ -5,4 +5,5 @@ export class Job {
   name: string;
   role: string;
   image: Image;
+  subrole: string;
 }

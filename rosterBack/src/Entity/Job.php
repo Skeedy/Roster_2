@@ -35,6 +35,11 @@ class Job
      */
     private $role;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subrole;
+
 
     public function getId(): ?int
     {
@@ -73,6 +78,18 @@ class Job
     public function setRole(string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getSubrole(): ?string
+    {
+        return $this->subrole;
+    }
+
+    public function setSubrole(?string $subrole): self
+    {
+        $this->subrole = $subrole;
 
         return $this;
     }

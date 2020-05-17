@@ -1,8 +1,9 @@
 import {Job} from "./job";
 
 export class PlayerJob {
-isMain: boolean;
-isSub: boolean;
-job: Job;
+  id: number;
+  isMain: boolean;
+  isSub: boolean;
+  job: Job;
 
 }

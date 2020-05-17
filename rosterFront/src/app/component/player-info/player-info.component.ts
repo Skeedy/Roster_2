@@ -13,6 +13,8 @@ export class PlayerInfoComponent implements OnInit {
   @Input() player: Player;
   showDialog = false;
   showJob = false;
+  isSub: boolean;
+  ddbId: number;
   constructor() { }
 
   ngOnInit(): void {
