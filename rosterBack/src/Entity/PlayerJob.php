@@ -15,18 +15,21 @@ class PlayerJob
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $id;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $isMain;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups("player")
+     * @Groups("roster")
      */
     private $isSub;
 
@@ -39,6 +42,7 @@ class PlayerJob
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("roster")
      */
     private $job;
 

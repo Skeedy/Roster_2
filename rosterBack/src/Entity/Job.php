@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -13,18 +14,33 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("roster")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("roster")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups("roster")
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $role;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subrole;
+
 
     public function getId(): ?int
     {
@@ -43,15 +59,40 @@ class Job
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?Image
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(Image $image): self
     {
         $this->image = $image;
 
         return $this;
     }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getSubrole(): ?string
+    {
+        return $this->subrole;
+    }
+
+    public function setSubrole(?string $subrole): self
+    {
+        $this->subrole = $subrole;
+
+        return $this;
+    }
+
 }

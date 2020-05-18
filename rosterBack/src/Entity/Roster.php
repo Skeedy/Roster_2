@@ -51,7 +51,6 @@ class Roster implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups("roster")
      */
     private $email;
 

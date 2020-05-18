@@ -47,6 +47,17 @@ import { LoginComponent } from './component/login/login.component';
 import { NewRosterComponent } from './component/new-roster/new-roster.component';
 import { AuthComponent } from './page/auth/auth.component';
 import { RosterComponent } from './page/roster/roster.component';
+import { AddPlayerComponent } from './component/add-player/add-player.component';
+import { PlayerComponent } from './page/player/player.component';
+import { ImgPipe } from './pipe/img.pipe';
+import { DeleteConfirmationComponent } from './component/delete-confirmation/delete-confirmation.component';
+import { PlayerInfoComponent } from './component/player-info/player-info.component';
+import { JobsComponent } from './component/jobs/jobs.component';
+import { TankJobsPipe } from './pipe/tank-jobs.pipe';
+import { HealerJobsPipe } from './pipe/healer-jobs.pipe';
+import { RangeddpsPipe } from './pipe/rangeddps.pipe';
+import { MeleedpsPipe } from './pipe/meleedps.pipe';
+import { MagicdpsPipe } from './pipe/magicdps.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +65,18 @@ import { RosterComponent } from './page/roster/roster.component';
     AppComponent,
     LoginComponent,
     RosterComponent,
-    AuthComponent
+    AuthComponent,
+    AddPlayerComponent,
+    PlayerComponent,
+    ImgPipe,
+    DeleteConfirmationComponent,
+    PlayerInfoComponent,
+    JobsComponent,
+    TankJobsPipe,
+    HealerJobsPipe,
+    RangeddpsPipe,
+    MeleedpsPipe,
+    MagicdpsPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
@@ -101,6 +123,7 @@ import { RosterComponent } from './page/roster/roster.component';
     BrowserAnimationsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddPlayerComponent]
 })
 export class AppModule { }

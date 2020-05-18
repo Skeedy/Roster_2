@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div *ngIf="searchServ.isSubmitted" class="d-flex align-items-center justify-content-around" style="font-weight: boldwidth: 50%; color: #FFF; border: solid #FFF">
+    <img style="border-radius: 20px" src="{{newChar.Avatar}}">
+    <div class="d-flex flex-column">
+      <p>{{newChar.Name}}</p>
+      <p>{{newChar.Server}}</p>
+    </div>
+    <button class="delete-button" mat-mini-fab type="button" (click)="remove()"><mat-icon>clear</mat-icon></button>
+  </div>
+  <div *ngIf="!searchServ.isSubmitted && !searchServ.isDone">
+    <form [formGroup]="newPlayerFrom">
+      <div class="d-flex justify-content-center align-items-center">
+        <mat-form-field appearance="fill">
+          <mat-label>First name</mat-label>
+          <input matInput placeholder="First name" type="text" formControlName="fname" autocomplete="on" required/>
+        </mat-form-field>
+        <span class="mx-2"></span>
+        <mat-form-field appearance="fill">
+          <mat-label>Last name</mat-label>
+          <input  matInput placeholder="Last name" type="text" formControlName="lname" autocomplete="on" required/>
+        </mat-form-field>
+        <span class="mx-2"></span>
+        <mat-form-field appearance="fill">
+          <mat-label>Server</mat-label>
+          <input  matInput placeholder="Last name" type="text" formControlName="server" autocomplete="on" required>
+        </mat-form-field>
+        <div class="d-flex justify-content-center" style="margin-bottom: 20px;">
+          <mat-spinner style="margin: 0 10px" *ngIf="loading" [diameter]="40"></mat-spinner>
+          <button *ngIf="!isSearching" mat-mini-fab class="confirm-button" type="button" (click)="submit()"> <mat-icon>done</mat-icon> </button>
+          <button mat-mini-fab class="delete-button" type="button" (click)="onCloseClicked()"><mat-icon>clear</mat-icon></button>
+        </div>
+      </div>
+      <div *ngIf="notFound">
+        <p style="color: red; font-weight: bold; font-style: italic"> This Character does not exist </p>
+      </div>
+    </form>
+  </div>
+</div>

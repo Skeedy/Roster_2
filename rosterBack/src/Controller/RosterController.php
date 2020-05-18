@@ -63,6 +63,7 @@ class RosterController extends AbstractController
      */
     public function show(Roster $roster): Response
     {
+        $nbPlayer = count($roster->getPlayer());
         $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
         return $respond;
     }
@@ -73,7 +74,7 @@ class RosterController extends AbstractController
     public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository,Roster $roster, EntityManagerInterface $em){
         $jsonPost = $request->getContent();
         $json = $serializer->decode($jsonPost, 'json');
-        $playerIds = $json['playersId'];
+        $playerIds = $json['playersIds'];
         foreach ($playerIds as $playerId){
             $player = $playerRepository->find($playerId);
             $roster->addPlayer($player);

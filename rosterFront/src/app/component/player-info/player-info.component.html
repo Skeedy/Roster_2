@@ -1,0 +1,27 @@
+<div class="d-flex ">
+  <button mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
+  <img src="{{player.imgUrl}}">
+  <div style="color: #FFF">
+    <div>{{player.name}} ({{player.server}})</div>
+    <div class="d-flex">
+      <div *ngIf="player.playerJobs" class="d-flex">
+        <div *ngFor="let job of player.playerJobs">
+          <div *ngIf="job.isMain" (click)="showJob= !showJob; isSub = false; ddbId = job.id">
+            <img height="60px" src="{{job.job.image.imgpath |imgpath }}">
+          </div>
+          <div *ngIf="job.isSub" (click)="showJob= !showJob; isSub = true; ddbId = job.id">
+            <img height="40px"  src="{{job.job.image.imgpath |imgpath }}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="player.playerJobs.length == 0">
+        <button (click)="showJob= !showJob; isSub = false; ddbId = null"> + </button>
+      </div>
+      <div *ngIf="player.playerJobs.length>0">
+        <button (click)="showJob= !showJob; isSub = true; ddbId = null"> + </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-jobs [player]="player" [ddbId]= "ddbId" [isSub]="isSub" [(jobList)]="showJob"></app-jobs>
+<app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>

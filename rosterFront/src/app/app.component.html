@@ -2,7 +2,7 @@
   <mat-drawer #drawer>
     <ul>
       <li><a (click)="drawer.toggle()" routerLink="/roster" routerLinkActive="active">Roster</a></li>
-      <li>Characters</li>
+      <li><a (click)="drawer.toggle()" routerLink="/player" routerLinkActive="active">Player</a></li>
       <li>Items</li>
     </ul>
   </mat-drawer>
@@ -14,6 +14,7 @@
       <div class="d-flex justify-content-center mt-3" style="height:150px">
         <img src="../assets/img/logoFF.png">
       </div>
+      <div style="height: 100px;"></div>
     <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>

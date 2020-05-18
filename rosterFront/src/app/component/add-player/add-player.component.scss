@@ -1,0 +1,15 @@
+.delete-button{
+  background-color: #af0000 !important;
+}
+.confirm-button{
+  margin: 0 10px;
+  background-color: #1b9448 !important;
+}
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex{
+  background-color: rgba(255, 255, 255, 0.78);
+  border-bottom: solid red;
+  padding: 2px .75em 0 .75em;
+}
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-infix{
+  padding: 0;
+}
