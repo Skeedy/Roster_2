@@ -124,15 +124,27 @@ class PlayerController extends AbstractController
                 return $respond;
             }
         }else {
-            $playerJob = new PlayerJob();
-            $playerJob->setJob($jobId);
-            $playerJob->setIsMain($json['isMain']);
-            $playerJob->setIsSub($json['isSub']);
-            $playerJob->setPlayer($player);
-            $em->persist($playerJob);
-            $em->flush();
-            $respond = $this->json($json, 200, []);
-            return $respond;
+            $jobs = $player->getPlayerJobs();
+            foreach ($jobs as $job){
+                if ($job->getJob() === $jobId){
+                    $check = true;
+                }
+                if ($check){
+                    $response = JsonResponse::fromJsonString('{"error" : true, "response":"This job is already in use"}', 403);
+                    return $response;
+                }
+                else {
+                    $playerJob = new PlayerJob();
+                    $playerJob->setJob($jobId);
+                    $playerJob->setIsMain($json['isMain']);
+                    $playerJob->setIsSub($json['isSub']);
+                    $playerJob->setPlayer($player);
+                    $em->persist($playerJob);
+                    $em->flush();
+                    $respond = $this->json($json, 200, []);
+                    return $respond;
+                }
+            }
         }
     }
     /**

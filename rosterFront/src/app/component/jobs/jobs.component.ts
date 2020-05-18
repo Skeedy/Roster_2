@@ -39,7 +39,6 @@ export class JobsComponent implements OnInit {
     return !this.player.playerJobs.filter((playerJob: PlayerJob) => {
       return playerJob.job.id;
     }).some(( playerJob: PlayerJob) => {
-      console.log(this.isSet);
       return playerJob.job.id === jobId;
     })
   }
