@@ -29,6 +29,7 @@ export class JobsComponent implements OnInit {
   @Input() isSub: boolean;
   @Input() jobList: boolean;
   @Input() ddbId: number;
+  @Input() jobOrder: number;
   @Input() player: Player;
   @Output() jobListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(private jobServ: JobService,private rosterServ: RosterService) { }
@@ -48,7 +49,7 @@ export class JobsComponent implements OnInit {
     this.html = undefined;
   }
   patchJob(bool, job, player){
-    this.rosterServ.patchJob(bool, job, player, this.ddbId).subscribe(data =>{
+    this.rosterServ.patchJob(bool, job, player, this.ddbId, this.jobOrder).subscribe(data =>{
       this.rosterServ.getRosters();
       this.html = 'Changed succeeds !';
       console.log(this.html)

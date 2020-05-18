@@ -17,7 +17,6 @@ export class JobService {
         this._job = this._jobSub.asObservable();
         this._jobSub.next(data);
       }
-      console.log(data)
     })
   }
 }

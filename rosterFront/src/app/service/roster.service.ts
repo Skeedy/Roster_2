@@ -24,12 +24,10 @@ export class RosterService {
         this._rosterSub.next(data);
         this.nbPlayer = this._rosterSub.value.player.length;
         this.rosterID = this._rosterSub.value.id;
-        console.log(this.nbPlayer);
         if (this.nbPlayer < 8) {
           this.searchServ.formUp = true;
           this.searchServ.nbForm = 1;
         }
-        console.log(this.searchServ.nbForm)
       }
     });
   }
@@ -37,12 +35,13 @@ export class RosterService {
     this.searchServ.playerList.rosterID = this.rosterID;
     return this.http.post(Globals.APP_API + '/player/new', this.searchServ.playerList);
   }
-  patchJob(bool, job, player, ddbId){
+  patchJob(bool, job, player, ddbId, order){
     const obj ={
       ddbId: ddbId,
       job: job,
       isMain: !bool,
-      isSub: bool
+      isSub: bool,
+      ord: !bool ? 1 : order
     }
     console.log(obj);
     return this.http.patch(Globals.APP_API + '/player/patch/'+ player, obj);

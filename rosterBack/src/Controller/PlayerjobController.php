@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Player;
 use App\Entity\PlayerJob;
 use App\Repository\PlayerJobRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,9 +27,18 @@ class PlayerjobController extends AbstractController
     /**
      * @Route("/{id}", name="playerjob_delete", methods={"DELETE"})
      */
-    public function delete(PlayerJob $playerjob, EntityManagerInterface $em){
+    public function delete(PlayerJob $playerjob, PlayerJobRepository $playerJobRepository, EntityManagerInterface $em){
         if ($playerjob){
+            $player = $playerjob->getPlayer();
+            $playerjobList = $player->getPlayerJobs();
+            $i = 1;
             $em->remove($playerjob);
+            $em->flush();
+            foreach ($playerjobList as $job){
+                $job->setOrd($job->getIsMain() ? 1 : $i);
+                $i++;
+            }
+            $em->persist($job);
             $em->flush();
         }
         $response = JsonResponse::fromJsonString('{ "response": "the job has been deleted" }', 200);

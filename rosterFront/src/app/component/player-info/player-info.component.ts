@@ -15,6 +15,7 @@ export class PlayerInfoComponent implements OnInit {
   showJob = false;
   isSub: boolean;
   ddbId: number;
+  jobOrder: number;
   constructor() { }
 
   ngOnInit(): void {
