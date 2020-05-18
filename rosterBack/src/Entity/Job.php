@@ -14,6 +14,7 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("roster")
      */
     private $id;
 

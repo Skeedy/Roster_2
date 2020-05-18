@@ -4,6 +4,7 @@ import {Job} from "../../class/job";
 import {Player} from "../../class/player";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {RosterService} from "../../service/roster.service";
+import {PlayerJob} from "../../class/player-job";
 
 @Component({
   selector: 'app-jobs',
@@ -23,15 +24,24 @@ import {RosterService} from "../../service/roster.service";
 })
 export class JobsComponent implements OnInit {
   private html: string;
-@Input() closable = true;
-@Input() isSub: boolean;
-@Input() jobList: boolean;
-@Input() ddbId: number;
-@Input() player: Player;
-@Output() jobListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  private isSet: boolean;
+  @Input() closable = true;
+  @Input() isSub: boolean;
+  @Input() jobList: boolean;
+  @Input() ddbId: number;
+  @Input() player: Player;
+  @Output() jobListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(private jobServ: JobService,private rosterServ: RosterService) { }
 
   ngOnInit(): void {
+  }
+  checkJob(jobId){
+    return !this.player.playerJobs.filter((playerJob: PlayerJob) => {
+      return playerJob.job.id;
+    }).some(( playerJob: PlayerJob) => {
+      console.log(this.isSet);
+      return playerJob.job.id === jobId;
+    })
   }
   close() {
     this.jobList = false;
