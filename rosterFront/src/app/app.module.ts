@@ -58,6 +58,7 @@ import { HealerJobsPipe } from './pipe/healer-jobs.pipe';
 import { RangeddpsPipe } from './pipe/rangeddps.pipe';
 import { MeleedpsPipe } from './pipe/meleedps.pipe';
 import { MagicdpsPipe } from './pipe/magicdps.pipe';
+import { InstanceComponent } from './page/instance/instance.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { MagicdpsPipe } from './pipe/magicdps.pipe';
     RangeddpsPipe,
     MeleedpsPipe,
     MagicdpsPipe,
+    InstanceComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
