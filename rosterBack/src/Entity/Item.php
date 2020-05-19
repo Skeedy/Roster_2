@@ -41,6 +41,11 @@ class Item
      */
     private $LodId;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $jobType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Item
     public function setLodId(int $LodId): self
     {
         $this->LodId = $LodId;
+
+        return $this;
+    }
+
+    public function getJobType(): ?string
+    {
+        return $this->jobType;
+    }
+
+    public function setJobType(?string $jobType): self
+    {
+        $this->jobType = $jobType;
 
         return $this;
     }

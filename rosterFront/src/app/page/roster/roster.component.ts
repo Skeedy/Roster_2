@@ -4,6 +4,8 @@ import {Roster} from '../../class/roster';
 import {trigger,state,style,animate,transition} from '@angular/animations';
 import {InstanceService} from "../../service/instance.service";
 import {Raid} from "../../class/raid";
+import {ItemService} from "../../service/item.service";
+import {Item} from "../../class/item";
 
 @Component({
   selector: 'app-roster',
@@ -12,8 +14,10 @@ import {Raid} from "../../class/raid";
 })
 export class RosterComponent implements OnInit {
 public raids: Raid[];
+public items: Item[];
   constructor(
-    private instanceServ: InstanceService
+    private instanceServ: InstanceService,
+    private itemServ: ItemService
   ) { }
 
   ngOnInit(): void {
@@ -22,6 +26,11 @@ public raids: Raid[];
       this.raids = data;
     }
   })
+    this.itemServ.getItems().subscribe((data)=> {
+      if (data) {
+        this.items = data;
+      }
+    })
   }
 
 }

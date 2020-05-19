@@ -21,10 +21,11 @@ class ItemController extends AbstractController
     /**
      * @Route("/", name="item_index", methods={"GET"})
      */
-    public function index(ItemRepository $instanceRepository): Response
+    public function index(ItemRepository $itemRepository): Response
     {
-        $instance = $instanceRepository->findAll();
-        $respond = $this->json($instance, 200, []);
+        $items = $itemRepository->findBy(
+            ['jobType'=> 'Fending']);
+        $respond = $this->json($items, 200, []);
         return $respond;
     }
 
@@ -60,8 +61,34 @@ class ItemController extends AbstractController
                 $item->setName($itemName);
                 $item->setImgUrl('https://xivapi.com' . $data['Icon']);
                 $item->setIlvl($ilvl);
+                $pieces = explode(' ', $itemName);
+                $last_word = array_pop($pieces);
+                $jobType = null;
+                switch ($last_word) {
+                    case 'Casting':
+                       $jobType = 'Casting';
+                        break;
+                    case 'Fending':
+                        $jobType = 'Fending';
+                        break;
+                    case 'Maiming':
+                        $jobType = 'Maiming';
+                        break;
+                    case 'Striking':
+                        $jobType = 'Striking';
+                        break;
+                    case 'Healing':
+                        $jobType = 'Healing';
+                        break;
+                    case 'Scouting':
+                        $jobType = 'Scouting';
+                        break;
+                    case 'Aiming':
+                        $jobType = 'Aiming';
+                }
                 $item->setIsSavage($checkSavage);
                 $item->setLodId($data['ID']);
+                $item->setJobType($jobType);
                 $em->persist($item);
                 $em->flush();
             }
