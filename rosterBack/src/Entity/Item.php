@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -18,21 +19,25 @@ class Item
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("item")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("item")
      */
     private $imgUrl;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups("item")
      */
     private $ilvl;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups("item")
      */
     private $isSavage;
 
@@ -45,6 +50,11 @@ class Item
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $jobType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Slot", inversedBy="items")
+     */
+    private $slot;
 
     public function getId(): ?int
     {
@@ -119,6 +129,18 @@ class Item
     public function setJobType(?string $jobType): self
     {
         $this->jobType = $jobType;
+
+        return $this;
+    }
+
+    public function getSlot(): ?Slot
+    {
+        return $this->slot;
+    }
+
+    public function setSlot(?Slot $slot): self
+    {
+        $this->slot = $slot;
 
         return $this;
     }
