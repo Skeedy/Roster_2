@@ -14,45 +14,53 @@ class Item
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("instance")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("item")
+     * @Groups("instance")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("item")
+     * @Groups("instance")
      */
     private $imgUrl;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups("item")
+     * @Groups("instance")
      */
     private $ilvl;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups("item")
+     * @Groups("instance")
      */
     private $isSavage;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("instance")
      */
     private $LodId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("instance")
      */
     private $jobType;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Slot", inversedBy="items")
+     * @Groups("instance")
      */
     private $slot;
 

@@ -14,23 +14,16 @@ import {Item} from "../../class/item";
 })
 export class RosterComponent implements OnInit {
 public raids: Raid[];
-public items: Item[];
   constructor(
-    private instanceServ: InstanceService,
-    private itemServ: ItemService
+    private instanceServ: InstanceService
   ) { }
 
   ngOnInit(): void {
-  this.instanceServ.getInstances().subscribe((data) => {
-    if (data){
-      this.raids = data;
-    }
-  })
-    this.itemServ.getItems().subscribe((data)=> {
+    this.instanceServ.getInstances().subscribe((data) => {
       if (data) {
-        this.items = data;
+        this.raids = data;
+        console.log(this.raids);
       }
     })
   }
-
 }

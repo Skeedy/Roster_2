@@ -1,12 +1,12 @@
 <div *ngFor="let raid of raids">
-  <img src="{{raid.imgUrl}}">
-  <h3> {{raid.name}}</h3>
-</div>
-<div *ngFor="let item of items">
-  <div style="color: #fff">
-    <img src="{{item.imgUrl}}">
-    <div>{{item.name}}</div>
-    <div>{{item.LodId}}</div>
-    <div>{{item.ilvl}}</div>
+  <div>
+    <img src="{{raid.imgUrl}}">
+    <h3 style="color: #FFF">{{raid.id}} {{raid.name}}</h3>
   </div>
+  <div *ngFor="let ite of raid.item">
+    <div>
+      <img src="{{ite.imgUrl}}">
+      <h6 style="color: #FFF">{{ite.name}}</h6>
+    </div>
+    </div>
 </div>
