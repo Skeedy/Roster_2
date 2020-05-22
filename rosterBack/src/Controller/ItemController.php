@@ -67,36 +67,64 @@ class ItemController extends AbstractController
                     switch ($last_word) {
                         case 'Casting':
                             $jobType = 'Casting';
+                            $jobs = $jobRepository->findBy(['id'=> [16,17,18]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Fending':
                             $jobType = 'Fending';
+                            $jobs = $jobRepository->findBy(['id'=> [2,3,4]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Maiming':
                             $jobType = 'Maiming';
+                            $jobs = $jobRepository->findBy(['id'=> 10]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Striking':
                             $jobType = 'Striking';
+                            $jobs = $jobRepository->findBy(['id'=> [9,13]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Healing':
                             $jobType = 'Healing';
+                            $jobs = $jobRepository->findBy(['id'=> [6,7,8]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Scouting':
                             $jobType = 'Scouting';
+                            $jobs = $jobRepository->findBy(['id'=> [11]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                             break;
                         case 'Aiming':
                             $jobType = 'Aiming';
+                            $jobs = $jobRepository->findBy(['id'=> [13,14,15]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
                     }
                     $convertSlotId = $data['EquipSlotCategoryTargetID'] === 13 ? 1 : $data['EquipSlotCategoryTargetID'];
                     $slot = $slotRepository->findOneBy(['lodId' => $convertSlotId]);
                     $item->setSlot($convertSlotId === 0 ? null : $slot);
-                    if($data['ClassJobUseTargetID'] || $data['EquipSlotCategoryTargetID'] == 2){
-                        if ($data['ClassJobUseTargetID']) {
+                    if($data['ClassJobUseTargetID'] !== 0 || $data['EquipSlotCategoryTargetID'] == 2){
+                        if ($data['ClassJobUseTargetID'] !== 0) {
                             $job = $jobRepository->findOneBy(['lodId' => $data['ClassJobUseTargetID']]);
                         }
-                        if ($data['EquipSlotCategoryTargetID']){
+                        if ($data['EquipSlotCategoryTargetID'] == 2){
                             $job = $jobRepository->findOneBy(['lodId' => 1]);
                         }
-                        $item->setJob($job);
+                        $item->addJob($job);
                     }
                     $item->setIsSavage($checkSavage);
                     $item->setLodId($data['ID']);

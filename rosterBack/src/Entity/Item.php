@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -22,6 +24,7 @@ class Item
      * @ORM\Column(type="string", length=255)
      * @Groups("item")
      * @Groups("instance")
+     * @Groups("jobStuff")
      */
     private $name;
 
@@ -29,6 +32,7 @@ class Item
      * @ORM\Column(type="string", length=255)
      * @Groups("item")
      * @Groups("instance")
+     * @Groups("jobStuff")
      */
     private $imgUrl;
 
@@ -36,6 +40,7 @@ class Item
      * @ORM\Column(type="integer", nullable=true)
      * @Groups("item")
      * @Groups("instance")
+     * @Groups("jobStuff")
      */
     private $ilvl;
 
@@ -65,9 +70,15 @@ class Item
     private $slot;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="items")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Job", inversedBy="items")
      */
-    private $job;
+    private $jobs;
+
+    public function __construct()
+    {
+        $this->jobs = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -158,15 +169,31 @@ class Item
         return $this;
     }
 
-    public function getJob(): ?Job
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
     {
-        return $this->job;
+        return $this->jobs;
     }
 
-    public function setJob(?Job $job): self
+    public function addJob(Job $job): self
     {
-        $this->job = $job;
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+        }
 
         return $this;
     }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->contains($job)) {
+            $this->jobs->removeElement($job);
+        }
+
+        return $this;
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Job;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,10 @@ class JobController extends AbstractController
         $respond = $this->json($jobs, 200, []);
         return $respond;
     }
-
-
+    /**
+     * @Route("/{id}", name="job_show", methods={"GET"})
+     */
+    public function showJobStuff(Job $job): Response{
+        return  $this->json($job, 200, [], ['groups' => 'jobStuff']);
+    }
 }

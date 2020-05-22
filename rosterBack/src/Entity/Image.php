@@ -22,12 +22,14 @@ class Image
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $path;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $imgpath;
     /**

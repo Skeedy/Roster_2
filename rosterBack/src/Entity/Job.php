@@ -23,6 +23,7 @@ class Job
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $name;
 
@@ -30,6 +31,7 @@ class Job
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $image;
 
@@ -49,7 +51,8 @@ class Job
     private $lodId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="job")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="jobs")
+     * @Groups("jobStuff")
      */
     private $items;
 
@@ -136,7 +139,7 @@ class Job
     {
         if (!$this->items->contains($item)) {
             $this->items[] = $item;
-            $item->setJob($this);
+            $item->addJob($this);
         }
 
         return $this;
@@ -146,10 +149,7 @@ class Job
     {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
-            // set the owning side to null (unless already changed)
-            if ($item->getJob() === $this) {
-                $item->setJob(null);
-            }
+            $item->removeJob($this);
         }
 
         return $this;
