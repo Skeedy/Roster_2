@@ -1,0 +1,20 @@
+<div style="color: #FFF" *ngFor="let player of rosterServ._rosterSub.value.player">
+  <div class="d-flex">
+  <img src="{{player.imgUrl}}">
+  <div>{{player.name}}</div>
+  <div *ngFor="let job of player.playerJobs">
+    <div *ngIf="player.playerJobs" class="d-flex">
+        <div *ngIf="job.isMain">
+          <img height="60px" src="{{job.job.image.imgpath |imgpath }}">
+          <div style="color: #fff">
+          </div>
+        </div>
+        <div *ngIf="job.isSub">
+          <img height="40px"  src="{{job.job.image.imgpath |imgpath }}">
+          <div style="color: #fff">
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</div>

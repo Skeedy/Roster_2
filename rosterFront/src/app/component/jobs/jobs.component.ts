@@ -32,7 +32,7 @@ export class JobsComponent implements OnInit {
   @Input() jobOrder: number;
   @Input() player: Player;
   @Output() jobListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(private jobServ: JobService,private rosterServ: RosterService) { }
+  constructor(public jobServ: JobService,private rosterServ: RosterService) { }
 
   ngOnInit(): void {
   }

@@ -16,6 +16,7 @@ class Image
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\Column(type="jobShow")
      */
     private $id;
 
@@ -23,6 +24,7 @@ class Image
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("jobShow")
      */
     private $path;
 
@@ -30,6 +32,7 @@ class Image
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("jobShow")
      */
     private $imgpath;
     /**

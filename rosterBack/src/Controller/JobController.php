@@ -22,7 +22,7 @@ class JobController extends AbstractController
     public function index(JobRepository $jobRepository ): Response
     {
         $jobs = $jobRepository->findAll();
-        $respond = $this->json($jobs, 200, []);
+        $respond = $this->json($jobs, 200, [], ['groups' => 'jobShow']);
         return $respond;
     }
     /**

@@ -17,6 +17,7 @@ class Job
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("roster")
+     * @Groups("jobShow")
      */
     private $id;
 
@@ -24,6 +25,7 @@ class Job
      * @ORM\Column(type="string", length=255)
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("jobShow")
      */
     private $name;
 
@@ -32,21 +34,25 @@ class Job
      * @ORM\JoinColumn(nullable=false)
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("jobShow")
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("jobShow")
      */
     private $role;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("jobShow")
      */
     private $subrole;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups("jobShow")
      */
     private $lodId;
 
