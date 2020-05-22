@@ -64,6 +64,11 @@ class Item
      */
     private $slot;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="items")
+     */
+    private $job;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +154,18 @@ class Item
     public function setSlot(?Slot $slot): self
     {
         $this->slot = $slot;
+
+        return $this;
+    }
+
+    public function getJob(): ?Job
+    {
+        return $this->job;
+    }
+
+    public function setJob(?Job $job): self
+    {
+        $this->job = $job;
 
         return $this;
     }

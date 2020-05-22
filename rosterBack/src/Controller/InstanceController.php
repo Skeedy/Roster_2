@@ -59,7 +59,7 @@ class InstanceController extends AbstractController
 
             }
             if($instance->getValue() == 4){
-                $items = $itemRepository->findBy(['slot' => [1,4], 'ilvl'=> 500, 'isSavage'=>true]);
+                $items = $itemRepository->findBy(['slot' => [1,4], 'ilvl'=> [500,505], 'isSavage'=>true]);
                 foreach ($items as $item) {
                     $instance->addItem($item);
                 }
