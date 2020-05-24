@@ -1,0 +1,28 @@
+<div [@playerShow] *ngIf="playerShow" class="dialog">
+ <div class="title d-flex">
+   <img src="{{player.imgUrl}}">
+   <h4> {{player.name}}</h4>
+   <div *ngIf="player.playerJobs" class="d-flex">
+     <div *ngFor="let job of player.playerJobs">
+       <div *ngIf="job.isMain">
+         <img height="60px" src="{{job.job.image.imgpath |imgpath }}">
+       </div>
+       <div *ngIf="job.isSub">
+         <img height="40px"  src="{{job.job.image.imgpath |imgpath }}">
+       </div>
+     </div>
+   </div>
+ </div>
+  <div>
+    <div>
+      <div>
+        <div>Head</div>
+        <div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="playerShow" class="overlay" (click)="close()"></div>
+

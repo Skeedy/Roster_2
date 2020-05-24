@@ -74,7 +74,7 @@ class ItemController extends AbstractController
                             break;
                         case 'Fending':
                             $jobType = 'Fending';
-                            $jobs = $jobRepository->findBy(['id'=> [2,3,4]]);
+                            $jobs = $jobRepository->findBy(['id'=> [2,3,4,5]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
@@ -88,7 +88,7 @@ class ItemController extends AbstractController
                             break;
                         case 'Striking':
                             $jobType = 'Striking';
-                            $jobs = $jobRepository->findBy(['id'=> [9,13]]);
+                            $jobs = $jobRepository->findBy(['id'=> [9,12]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }

@@ -11,14 +11,17 @@ import {PlayerListService} from "../../service/player-list.service";
 })
 export class PlayerInfoComponent implements OnInit {
   @Input() player: Player;
+  showPlayer = false;
   showDialog = false;
+  idJobMain : number;
   showJob = false;
   isSub: boolean;
-  ddbId: number;
   jobOrder: number;
+  ddbId: number;
   constructor() { }
 
   ngOnInit(): void {
+    this.idJobMain = this.player.playerJobs[0].job.id
   }
 
 }

@@ -59,6 +59,7 @@ import { RangeddpsPipe } from './pipe/rangeddps.pipe';
 import { MeleedpsPipe } from './pipe/meleedps.pipe';
 import { MagicdpsPipe } from './pipe/magicdps.pipe';
 import { InstanceComponent } from './page/instance/instance.component';
+import { PlayerShowComponent } from './component/player-show/player-show.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { InstanceComponent } from './page/instance/instance.component';
     MeleedpsPipe,
     MagicdpsPipe,
     InstanceComponent,
+    PlayerShowComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
