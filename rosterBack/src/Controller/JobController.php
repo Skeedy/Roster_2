@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Repository\ItemRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,8 @@ class JobController extends AbstractController
     /**
      * @Route("/{id}", name="job_show", methods={"GET"})
      */
-    public function showJobStuff(Job $job): Response{
-        return  $this->json($job, 200, [], ['groups' => 'jobStuff']);
+    public function showJobStuff(ItemRepository $itemRepository, Job $job): Response{
+        $json = $job->getItems();
+        return  $this->json($json, 200, [], ['groups' => 'jobStuff']);
     }
 }

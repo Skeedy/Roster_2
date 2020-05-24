@@ -13,4 +13,12 @@ export class ItemService {
   getItems():Observable<Item[]>{
     return this.http.get<Item[]>(Globals.APP_API+ '/item');
   }
+  changeGear(itemId, PlayerJobId, slotId){
+    const obj ={
+      itemId: itemId,
+      slotId: slotId
+    }
+    return this.http.patch(Globals.APP_API + '/playerjob/patchgear/' + PlayerJobId, obj);
+  }
+
 }

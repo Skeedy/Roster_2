@@ -118,6 +118,72 @@ class PlayerJob
      */
     private $ring2;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishHead;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishBody;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishHand;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishWaist;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishLeg;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishFeet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishEarring;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishNeck;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishBracelet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishRing1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("roster")
+     */
+    private $wishRing2;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -311,6 +377,138 @@ class PlayerJob
     public function setRing2(?bool $ring2): self
     {
         $this->ring2 = $ring2;
+
+        return $this;
+    }
+
+    public function getWishHead(): ?Item
+    {
+        return $this->wishHead;
+    }
+
+    public function setWishHead(?Item $wishHead): self
+    {
+        $this->wishHead = $wishHead;
+
+        return $this;
+    }
+
+    public function getWishBody(): ?Item
+    {
+        return $this->wishBody;
+    }
+
+    public function setWishBody(?Item $wishBody): self
+    {
+        $this->wishBody = $wishBody;
+
+        return $this;
+    }
+
+    public function getWishHand(): ?Item
+    {
+        return $this->wishHand;
+    }
+
+    public function setWishHand(?Item $wishHand): self
+    {
+        $this->wishHand = $wishHand;
+
+        return $this;
+    }
+
+    public function getWishWaist(): ?Item
+    {
+        return $this->wishWaist;
+    }
+
+    public function setWishWaist(?Item $wishWaist): self
+    {
+        $this->wishWaist = $wishWaist;
+
+        return $this;
+    }
+
+    public function getWishLeg(): ?Item
+    {
+        return $this->wishLeg;
+    }
+
+    public function setWishLeg(?Item $wishLeg): self
+    {
+        $this->wishLeg = $wishLeg;
+
+        return $this;
+    }
+
+    public function getWishFeet(): ?Item
+    {
+        return $this->wishFeet;
+    }
+
+    public function setWishFeet(?Item $wishFeet): self
+    {
+        $this->wishFeet = $wishFeet;
+
+        return $this;
+    }
+
+    public function getWishEarring(): ?Item
+    {
+        return $this->wishEarring;
+    }
+
+    public function setWishEarring(?Item $wishEarring): self
+    {
+        $this->wishEarring = $wishEarring;
+
+        return $this;
+    }
+
+    public function getWishNeck(): ?Item
+    {
+        return $this->wishNeck;
+    }
+
+    public function setWishNeck(?Item $wishNeck): self
+    {
+        $this->wishNeck = $wishNeck;
+
+        return $this;
+    }
+
+    public function getWishBracelet(): ?Item
+    {
+        return $this->wishBracelet;
+    }
+
+    public function setWishBracelet(?Item $wishBracelet): self
+    {
+        $this->wishBracelet = $wishBracelet;
+
+        return $this;
+    }
+
+    public function getWishRing1(): ?Item
+    {
+        return $this->wishRing1;
+    }
+
+    public function setWishRing1(?Item $wishRing1): self
+    {
+        $this->wishRing1 = $wishRing1;
+
+        return $this;
+    }
+
+    public function getWishRing2(): ?Item
+    {
+        return $this->wishRing2;
+    }
+
+    public function setWishRing2(?Item $wishRing2): self
+    {
+        $this->wishRing2 = $wishRing2;
 
         return $this;
     }

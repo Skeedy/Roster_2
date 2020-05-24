@@ -43,7 +43,6 @@ export class RosterService {
       isSub: bool,
       ord: !bool ? 1 : order
     }
-    console.log(obj);
     return this.http.patch(Globals.APP_API + '/player/patch/'+ player, obj);
   }
   deleteJob(id){

@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {Player} from "../../class/player";
 import {PlayerList} from "../../class/player-list";
 import {RosterService} from "../../service/roster.service";
 import {PlayerListService} from "../../service/player-list.service";
+import {JobService} from "../../service/job.service";
+import {Item} from "../../class/item";
 
 @Component({
   selector: 'app-player-info',
@@ -11,6 +13,7 @@ import {PlayerListService} from "../../service/player-list.service";
 })
 export class PlayerInfoComponent implements OnInit {
   @Input() player: Player;
+  @Output() items: Item[];
   showPlayer = false;
   showDialog = false;
   idJobMain : number;
@@ -18,10 +21,15 @@ export class PlayerInfoComponent implements OnInit {
   isSub: boolean;
   jobOrder: number;
   ddbId: number;
-  constructor() { }
+  constructor(public jobServ: JobService) { }
 
   ngOnInit(): void {
     this.idJobMain = this.player.playerJobs[0].job.id
   }
-
+  getJobStuff(){
+    this.showPlayer= !this.showPlayer;
+    this.jobServ.getJobStuff(this.idJobMain).subscribe((data) =>{
+      this.items= data;
+      }
+    )}
 }

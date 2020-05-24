@@ -17,6 +17,7 @@ class Item
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("instance")
+     * @Groups("jobStuff")
      */
     private $id;
 
@@ -25,6 +26,7 @@ class Item
      * @Groups("item")
      * @Groups("instance")
      * @Groups("jobStuff")
+     * @Groups("roster")
      */
     private $name;
 
@@ -33,6 +35,7 @@ class Item
      * @Groups("item")
      * @Groups("instance")
      * @Groups("jobStuff")
+     * @Groups("roster")
      */
     private $imgUrl;
 
@@ -41,6 +44,7 @@ class Item
      * @Groups("item")
      * @Groups("instance")
      * @Groups("jobStuff")
+     * @Groups("roster")
      */
     private $ilvl;
 
@@ -48,24 +52,31 @@ class Item
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups("item")
      * @Groups("instance")
+     * @Groups("roster")
      */
     private $isSavage;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $LodId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $jobType;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Slot", inversedBy="items")
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
      */
     private $slot;
 

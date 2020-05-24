@@ -4,6 +4,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {JobService} from "../../service/job.service";
 import {Item} from "../../class/item";
 import {Observable} from "rxjs";
+import {ItemService} from "../../service/item.service";
 
 @Component({
   selector: 'app-player-show',
@@ -21,21 +22,35 @@ import {Observable} from "rxjs";
     ])
   ]
 })
-export class PlayerShowComponent implements OnChanges {
+export class PlayerShowComponent implements OnInit {
   @Input() player:Player;
+  @Input() items: Item[];
   @Input() closable = true;
   @Input() playerShow: boolean;
   @Output() playerShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() idMain : number;
+  public jobItems: any;
+  public slotId: number;
+  gearShow = false;
+  public index = 0;
+  constructor(public jobServ: JobService, public itemServ: ItemService) { }
 
-  public items: Item[];
-  constructor(public jobServ: JobService) { }
+  ngOnInit(): void {
 
-  ngOnChanges(): void {
-     this.jobServ.getJobStuff(this.idMain).subscribe((data) =>{
-       this.items= data;
-        console.log(this.items);
-     });
+  }
+
+  getGear(jobId){
+    this.jobServ.getJobStuff(jobId).subscribe(data => {
+    this.items = data;
+    console.log(this.items)
+    })
+  }
+
+  getSlotStuff(id) {
+    this.jobItems = this.items.filter((item: Item) => {
+      return item.slot.id === id;
+    })
+    console.log(this.jobItems);
   }
   close() {
     this.playerShow = false;

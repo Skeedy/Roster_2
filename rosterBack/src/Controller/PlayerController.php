@@ -138,7 +138,7 @@ class PlayerController extends AbstractController
             $ordcount = count($player->getPlayerJobs());
             $playerJob->setPlayer($player);
             $playerJob->setJob($jobId);
-            $playerJob->setOrd($ordcount === 0? 1 : $ordcount + 1);
+            $playerJob->setOrd($ordcount === 0? 0 : $ordcount + 1);
             $playerJob->setIsMain($json['isMain']);
             $playerJob->setIsSub($json['isSub']);
             $em->persist($playerJob);

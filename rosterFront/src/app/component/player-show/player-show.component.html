@@ -1,28 +1,76 @@
 <div [@playerShow] *ngIf="playerShow" class="dialog">
- <div class="title d-flex">
-   <img src="{{player.imgUrl}}">
-   <h4> {{player.name}}</h4>
-   <div *ngIf="player.playerJobs" class="d-flex">
-     <div *ngFor="let job of player.playerJobs">
-       <div *ngIf="job.isMain">
-         <img height="60px" src="{{job.job.image.imgpath |imgpath }}">
-       </div>
-       <div *ngIf="job.isSub">
-         <img height="40px"  src="{{job.job.image.imgpath |imgpath }}">
-       </div>
-     </div>
-   </div>
- </div>
-  <div>
-    <div>
-      <div>
-        <div>Head</div>
-        <div>
+  <div class="title d-flex">
+    <img src="{{player.imgUrl}}">
+    <h4> {{player.name}}</h4>
+    <div *ngIf="player.playerJobs" class="d-flex">
+      <div *ngFor="let job of player.playerJobs">
+        <div *ngIf="job.isMain">
+          <img (click)="getGear(job.job.id); index = 0" height="60px" src="{{job.job.image.imgpath |imgpath }}">
+        </div>
+        <div *ngIf="job.isSub">
+          <img height="40px" (click)="getGear(job.job.id); index = job.ord" src="{{job.job.image.imgpath |imgpath }}">
         </div>
       </div>
     </div>
   </div>
+  <div>
+    <div>
+      <div>Head</div>
+      <div *ngIf="!player.playerJobs[index].wishHead">
+        <img (click)="gearShow= !gearShow; getSlotStuff(3); slotId = 3" src="https://xivapi.com/img-misc/gear/head.png">
+      </div>
+      <div *ngIf="player.playerJobs[index].wishHead">
+        <img (click)="gearShow= !gearShow;getSlotStuff(3); slotId = 3" matTooltip="{{player.playerJobs[index].wishHead.name}}" src="{{player.playerJobs[index].wishHead.imgUrl}}"/>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>Body</div>
+    <div *ngIf="!player.playerJobs[index].wishBody">
+      <img (click)="gearShow= !gearShow;getSlotStuff(4); slotId = 4" src="https://xivapi.com/img-misc/gear/body.png">
+    </div>
+    <div *ngIf="player.playerJobs[index].wishBody">
+      <img (click)="gearShow= !gearShow;getSlotStuff(4); slotId = 4" matTooltip="{{player.playerJobs[index].wishBody.name}}" src="{{player.playerJobs[index].wishBody.imgUrl}}"/>
+    </div>
+  </div>
+  <div>
+    <div>Hand</div>
+    <div *ngIf="!player.playerJobs[index].wishHand">
+      <img (click)="gearShow= !gearShow;getSlotStuff(5); slotId = 5" src="https://xivapi.com/img-misc/gear/hands.png">
+    </div>
+    <div *ngIf="player.playerJobs[index].wishHand">
+      <img (click)="gearShow= !gearShow;getSlotStuff(5); slotId = 5" matTooltip="{{player.playerJobs[index].wishHand.name}}" src="{{player.playerJobs[index].wishHand.imgUrl}}"/>
+    </div>
+  </div>
+  <div>
+    <div>Waist</div>
+    <div *ngIf="!player.playerJobs[index].wishWaist">
+      <img (click)="gearShow= !gearShow;getSlotStuff(6); slotId = 6" src="https://xivapi.com/img-misc/gear/waist.png">
+    </div>
+    <div *ngIf="player.playerJobs[index].wishWaist">
+    <img (click)="gearShow= !gearShow;getSlotStuff(6); slotId = 6" matTooltip="{{player.playerJobs[index].wishWaist.name}}" src="{{player.playerJobs[index].wishWaist.imgUrl}}"/>
+  </div>
+  </div>
+  <div>
+    <div>Legs</div>
+    <div *ngIf="!player.playerJobs[index].wishLeg">
+      <img (click)="getSlotStuff(7); slotId = 7; gearShow= !gearShow;" src="https://xivapi.com/img-misc/gear/legs.png">
+    </div>
+    <div *ngIf="player.playerJobs[index].wishLeg">
+    <img (click)="gearShow= !gearShow;getSlotStuff(7); slotId = 7" matTooltip="{{player.playerJobs[index].wishLeg.name}}" src="{{player.playerJobs[index].wishLeg.imgUrl}}"/>
+  </div>
+  </div>
+  <div>
+    <div>Feet</div>
+    <div *ngIf="!player.playerJobs[index].wishFeet">
+      <img (click)="gearShow= !gearShow;getSlotStuff(8); slotId = 8" src="https://xivapi.com/img-misc/gear/feet.png">
+    </div>
+    <div *ngIf="player.playerJobs[index].wishFeet">
+    <img (click)="gearShow= !gearShow;getSlotStuff(8); slotId = 8" matTooltip="{{player.playerJobs[index].wishFeet.name}}" src="{{player.playerJobs[index].wishFeet.imgUrl}}"/>
+  </div>
+  </div>
 </div>
+<app-select-gear [jobItems]="jobItems" [slotId]="slotId" [playerJobId]="player.playerJobs[index].id" [(gearShow)]="gearShow"></app-select-gear>
 
 <div *ngIf="playerShow" class="overlay" (click)="close()"></div>
 
