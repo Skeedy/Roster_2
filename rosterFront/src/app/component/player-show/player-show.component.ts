@@ -47,9 +47,11 @@ export class PlayerShowComponent implements OnInit {
   }
 
   getSlotStuff(id) {
-    this.jobItems = this.items.filter((item: Item) => {
-      return item.slot.id === id;
-    })
+    if( id !== undefined) {
+      this.jobItems = this.items.filter((item: Item) => {
+        return item.slot.id === id;
+      })
+    }
     console.log(this.jobItems);
   }
   close() {

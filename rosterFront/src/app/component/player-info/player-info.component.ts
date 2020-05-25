@@ -24,7 +24,9 @@ export class PlayerInfoComponent implements OnInit {
   constructor(public jobServ: JobService) { }
 
   ngOnInit(): void {
-    this.idJobMain = this.player.playerJobs[0].job.id
+    if(this.player.playerJobs[0]) {
+      this.idJobMain = this.player.playerJobs[0].job.id;
+    }
   }
   getJobStuff(){
     this.showPlayer= !this.showPlayer;

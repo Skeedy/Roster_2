@@ -70,7 +70,7 @@
   </div>
   </div>
 </div>
-<app-select-gear [jobItems]="jobItems" [slotId]="slotId" [playerJobId]="player.playerJobs[index].id" [(gearShow)]="gearShow"></app-select-gear>
+<app-select-gear *ngIf="jobItems? [jobItems] == jobItems : ''"  [slotId]="slotId" [playerJobId]="player.playerJobs[index].id" [(gearShow)]="gearShow"></app-select-gear>
 
 <div *ngIf="playerShow" class="overlay" (click)="close()"></div>
 

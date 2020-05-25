@@ -46,8 +46,7 @@ class ItemController extends AbstractController
         if($ilvl) {
             $rawDatas = file_get_contents('https://xivapi.com/search?filters=LevelItem=' . $ilvl . '&columns=Name,ID,EquipSlotCategoryTargetID,ClassJobUseTargetID,Icon,LevelItem&limit=3000&private_key=73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
             $datas = $serializer->decode($rawDatas, 'json');
-            $nbPage = $datas['Pagination']['PageTotal'];
-            $nbItems = $datas['Pagination']['ResultsTotal'];
+            $nbItems = 0;
             foreach ($datas['Results'] as $data){
                 $check= $itemRepository->findOneBy(['LodId' => $data['ID']]);
                 if(!$check) {
@@ -155,6 +154,7 @@ class ItemController extends AbstractController
                         $em->persist($instance);
                         $em->flush();
                     }
+                    $nbItems ++;
                 }
             }
             return JsonResponse::fromJsonString('{'.$nbItems.' items have been created}');
