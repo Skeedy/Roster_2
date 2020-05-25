@@ -25,13 +25,19 @@ export class PlayerInfoComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.player.playerJobs[0]) {
-      this.idJobMain = this.player.playerJobs[0].job.id;
+      this.idJobMain = this.player.playerJobs[0].job.id
     }
   }
-  getJobStuff(){
-    this.showPlayer= !this.showPlayer;
-    this.jobServ.getJobStuff(this.idJobMain).subscribe((data) =>{
-      this.items= data;
-      }
-    )}
+  getJobStuff() {
+    if (this.player.playerJobs.length > 0) {
+      this.showPlayer = !this.showPlayer;
+      this.jobServ.getJobStuff(this.idJobMain).subscribe((data) => {
+          this.items = data;
+      })
+    }
+    else{
+      this.showPlayer = !this.showPlayer;
+      this.items = [];
+    }
+  }
 }

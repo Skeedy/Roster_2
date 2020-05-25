@@ -4,6 +4,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {PlayerJob} from "../../class/player-job";
 import {ItemService} from "../../service/item.service";
 import {RosterService} from "../../service/roster.service";
+import {Player} from "../../class/player";
 
 @Component({
   selector: 'app-select-gear',
@@ -27,6 +28,7 @@ export class SelectGearComponent implements OnChanges {
   @Input() closable = true;
   @Input() gearShow: boolean;
   @Input() playerJobId : number;
+  public player : Player;
   @Output() gearShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(private itemServ: ItemService, public rosterServ: RosterService) { }
 

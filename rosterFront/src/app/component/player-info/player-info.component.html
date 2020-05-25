@@ -23,6 +23,6 @@
     </div>
   </div>
 </div>
-<app-player-show [items]="items" [player]="player" [idMain]="idJobMain" [(playerShow)]="showPlayer"></app-player-show>
 <app-jobs [player]="player" [jobOrder]="jobOrder" [ddbId]= "ddbId" [isSub]="isSub" [(jobList)]="showJob"></app-jobs>
+<app-player-show [items]="items" [player]="player" [idMain]="idJobMain" [(playerShow)]="showPlayer"></app-player-show>
 <app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>

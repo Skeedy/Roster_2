@@ -40,18 +40,18 @@ export class PlayerShowComponent implements OnInit {
   }
 
   getGear(jobId){
-    this.jobServ.getJobStuff(jobId).subscribe(data => {
-    this.items = data;
-    console.log(this.items)
-    })
+    if(this.player.playerJobs.length < 0) {
+      this.jobServ.getJobStuff(jobId).subscribe(data => {
+        this.items = data;
+        console.log(this.items)
+      })
+    }
   }
 
   getSlotStuff(id) {
-    if( id !== undefined) {
-      this.jobItems = this.items.filter((item: Item) => {
-        return item.slot.id === id;
-      })
-    }
+    this.jobItems = this.items.filter((item: Item) => {
+      return item.slot.id === id;
+    })
     console.log(this.jobItems);
   }
   close() {
