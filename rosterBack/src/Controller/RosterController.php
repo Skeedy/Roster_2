@@ -8,11 +8,13 @@ use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -34,23 +36,27 @@ class RosterController extends AbstractController
     /**
      * @Route("/new", name="roster_new", methods={"POST"})
      */
-    public function new(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    public function register(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
+
         $jsonPost = $request->getContent();
         $roster = $serializer->deserialize($jsonPost, Roster::class, 'json');
         $newName = $roster->getRostername();
         $newEmail = $roster->getEmail();
-            if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
-                $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 403);
-                return $response;
-            }
-            if ($rosterRepository->findOneBy(['rostername'=> $newName])){
-                $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 403);
-                return $response;
-            }
+        if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
+            $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 403);
+            return $response;
+        }
+        if ($rosterRepository->findOneBy(['rostername'=> $newName])){
+            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 403);
+            return $response;
+        }
         $roster->setRoles(['ROLE_USER']);
         $rawPassword = $roster->getPassword();
         $encode = $encoder->encodePassword($roster, $rawPassword);
+        if (empty($newName) || empty($rawPassword) || empty($newEmail)){
+            return JsonResponse::fromJsonString("Invalid Username or Password or Email");
+        }
         $roster->setPassword($encode);
         $em->persist($roster);
         $em->flush();
@@ -83,6 +89,15 @@ class RosterController extends AbstractController
         }
         $respond = $this->json($json, 200, []);
         return $respond;
+    }
+    /**
+     * @param UserInterface $user
+     * @param JWTTokenManagerInterface $JWTManager
+     * @return JsonResponse
+     */
+    public function getTokenUser(UserInterface $user, JWTTokenManagerInterface $JWTManager)
+    {
+        return new JsonResponse(['token' => $JWTManager->create($user)]);
     }
 
     /**

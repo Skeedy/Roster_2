@@ -1,7 +1,9 @@
 security:
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
     encoders:
         App\Entity\Roster:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -11,20 +13,29 @@ security:
                 class: App\Entity\Roster
                 property: rostername
     firewalls:
+        login:
+            pattern:  ^/login
+            stateless: true
+            anonymous: true
+            json_login:
+                username_path: rostername
+                check_path:               /login_check
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+
+        api:
+            pattern:   ^/
+            stateless: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
-            logout: ~
-            json_login:
-                check_path: app_login
-                username_path: rostername
-                password_path: password
-            guard:
-                authenticators:
-                    - App\Security\TokenAuthenticator
-
+            anonymous: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -35,6 +46,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/roster, roles: IS_AUTHENTICATED_ANONYMOUSLY, host: api\.roster\.fr  }
-
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
