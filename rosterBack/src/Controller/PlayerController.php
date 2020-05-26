@@ -114,6 +114,7 @@ class PlayerController extends AbstractController
                 return $response;
             }
             else {
+                $this->clearStuff($playerJob);
                 $playerJob->setJob($jobId);
                 $playerJob->setIsMain($json['isMain']);
                 $playerJob->setIsSub($json['isSub']);
@@ -138,7 +139,7 @@ class PlayerController extends AbstractController
             $ordcount = count($player->getPlayerJobs());
             $playerJob->setPlayer($player);
             $playerJob->setJob($jobId);
-            $playerJob->setOrd($ordcount === 0? 0 : $ordcount + 1);
+            $playerJob->setOrd($ordcount === 0? 0 : $ordcount);
             $playerJob->setIsMain($json['isMain']);
             $playerJob->setIsSub($json['isSub']);
             $em->persist($playerJob);
@@ -159,4 +160,19 @@ class PlayerController extends AbstractController
         return $response;
     }
 
+    public function clearStuff(PlayerJob $playerJob){
+        //            $playerjob->setWishWeapon($item);
+        //            $playerjob->setWishWeapon($item);
+        $playerJob->setWishHead(NULL);
+        $playerJob->setWishBody(NULL);
+        $playerJob->setWishHand(NULL);
+        $playerJob->setWishWaist(NULL);
+        $playerJob->setWishLeg(NULL);
+        $playerJob->setWishFeet(NULL);
+        $playerJob->setWishEarring(NULL);
+        $playerJob->setWishNeck(NULL);
+        $playerJob->setWishBracelet(NULL);
+        $playerJob->setWishRing1(NULL);
+        $playerJob->setWishRing2(NULL);
+    }
 }

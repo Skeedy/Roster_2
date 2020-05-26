@@ -11,6 +11,7 @@
           </div>
           <div *ngIf="job.isSub">
             <img height="40px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = true; ddbId = job.id; jobOrder=job.ord">
+          <p>{{job.ord}}</p>
           </div>
         </div>
       </div>

@@ -42,11 +42,11 @@ class PlayerjobController extends AbstractController
         if ($playerjob){
             $player = $playerjob->getPlayer();
             $playerjobList = $player->getPlayerJobs();
-            $i = 1;
+            $i = 0;
             $em->remove($playerjob);
             $em->flush();
             foreach ($playerjobList as $job){
-                $job->setOrd($job->getIsMain() ? 1 : $i);
+                $job->setOrd($job->getIsMain() ? 0 : $i);
                 $i++;
             }
             $em->persist($job);

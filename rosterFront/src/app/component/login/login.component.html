@@ -9,7 +9,7 @@
     </mat-form-field>
     </div>
     <button mat-raised-button color="primary"
-            [disabled]="loading"
+            [disabled]="loading || loginForm.invalid"
             (click)="login()">Log in</button>
   </form>
   <div class="text-center mt-4">

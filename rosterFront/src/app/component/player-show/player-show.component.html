@@ -16,6 +16,9 @@
   <div *ngIf="player.playerJobs.length > 0">
     <div>
       <div>
+        <h1 class="" style="font-family: FFXIV;text-align: center; color: #FFF;">{{player.playerJobs[index].job.name}}</h1>
+      </div>
+      <div>
         <div>Head</div>
         <div *ngIf="!player.playerJobs[index].wishHead">
           <img (click)="gearShow= !gearShow; getSlotStuff(3); slotId = 3" src="https://xivapi.com/img-misc/gear/head.png">
