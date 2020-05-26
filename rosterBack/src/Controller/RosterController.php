@@ -101,6 +101,15 @@ class RosterController extends AbstractController
     }
 
     /**
+     * @Route("/profile", name="roster_auth", methods={"POST"})
+     */
+    public function profile(){
+        $roster = $this->getUser();
+        return $this->json($roster, 200, [], ['groups'=> 'roster']);
+    }
+
+
+    /**
      * @Route("/{id}", name="roster_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Roster $roster): Response

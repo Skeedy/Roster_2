@@ -39,7 +39,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +61,8 @@ import { MagicdpsPipe } from './pipe/magicdps.pipe';
 import { InstanceComponent } from './page/instance/instance.component';
 import { PlayerShowComponent } from './component/player-show/player-show.component';
 import { SelectGearComponent } from './component/select-gear/select-gear.component';
+import {JwtInterceptor} from "./class/jwtinterceptor";
+import {ErrorInterceptor} from "./class/errorinterceptor";
 
 @NgModule({
   declarations: [
@@ -128,7 +130,8 @@ import { SelectGearComponent } from './component/select-gear/select-gear.compone
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+              { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
   bootstrap: [AppComponent],
   entryComponents: [AddPlayerComponent]
 })

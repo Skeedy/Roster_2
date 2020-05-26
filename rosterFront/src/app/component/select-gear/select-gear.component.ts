@@ -36,7 +36,7 @@ export class SelectGearComponent implements OnChanges {
   }
   changeGear(itemId, playerJobId, slotId){
     return this.itemServ.changeGear(itemId, playerJobId, slotId).subscribe(_=>
-    this.rosterServ.getRosters())
+    this.rosterServ.getRoster().subscribe())
   }
   close() {
     this.gearShow = false;

@@ -31,7 +31,9 @@ public nbForm :number;
   }
   removePlayer(result){
     this.playerList.removePlayer(result);
-    this.formUp = false;
+    if (this.nbForm === 0) {
+      this.formUp = false;
+    }
   }
   searchPlayer(fname, lname, server) {
     return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)

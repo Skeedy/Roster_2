@@ -6,16 +6,25 @@
       <li>Items</li>
     </ul>
   </mat-drawer>
+
   <mat-drawer-content>
-    <button mat-raised-button (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div *ngIf="isConnected()">
+      <button class="menu" mat-raised-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="isConnected()" class="logout">
+      <button mat-button (click)="logout()">
+        <mat-icon style="">account_box</mat-icon>
+        <span class="ml-2">Log out</span>
+      </button>
+    </div>
     <div class="container crystal-background" style="height: 100vh; z-index: 1">
       <div class="d-flex justify-content-center mt-3" style="height:150px">
         <img src="../assets/img/logoFF.png">
       </div>
       <div style="height: 100px;"></div>
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-drawer-content>
 

@@ -10,40 +10,50 @@ mat-drawer-content {
   align-items: flex-start;
   background-color: black;
 }
-mat-drawer-content div{
-  width: 100%;
 
-}
-mat-drawer-content button{
+
+mat-drawer-content button.menu{
 position: absolute;
   top: 50px;
   left: 50px;
   background: none;
   color: #fff;
 }
+mat-drawer-content div.logout{
+  background-color: #872222!important;
+  border-radius: 50px;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  color: #fff;
+}
+
+
 mat-drawer-content button:focus, mat-drawer-content button:active:focus, mat-drawer-content button.active:focus {
   outline: none !important;
 }
 
 .mat-icon {
   font-size: 35px;
+  height: unset!important;
+  width: unset!important;
 }
 mat-drawer{
-  padding: 35px;
+padding: 35px;
 }
 .crystal-background{
-  background-color: black;
-  background-image: url("../assets/img/bg.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+background-color: black;
+background-image: url("../assets/img/bg.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
 }
 mat-drawer{
-  background: linear-gradient(to left, #476b8a, #000);
-  color: white;
-  font-family: FFXIV;
-  font-size: 30px;
+background: linear-gradient(to left, #476b8a, #000);
+color: white;
+font-family: FFXIV;
+font-size: 30px;
 }
 mat-drawer ul li{
-  list-style: none;
+list-style: none;
 }

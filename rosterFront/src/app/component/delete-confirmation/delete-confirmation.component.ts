@@ -35,7 +35,7 @@ export class DeleteConfirmationComponent implements OnInit {
   }
   deleteChar(id) {
     this.searchServ.deleteChar(id).subscribe( _ => {
-        this.rosterServ.getRosters();
+        this.rosterServ.getRoster().subscribe();
       }
     );
   }

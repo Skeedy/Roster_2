@@ -3,7 +3,8 @@
 </div>
 <div>
   <button *ngIf="rosterServ.nbPlayer+searchServ.nbForm < 8" mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
-  <button *ngIf="searchServ.formUp && searchServ.nbForm >= 1" mat-fab (click)="submitPlayers()">Go</button>
+  <button *ngIf="searchServ.formUp && searchServ.nbForm >= 1 && searchServ.playerList.playersIds.length === searchServ.nbForm"
+          mat-fab (click)="submitPlayers()">Go</button>
 </div>
 <app-add-player *ngIf="rosterServ.nbPlayer < 8"></app-add-player>
 

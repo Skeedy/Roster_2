@@ -6,6 +6,7 @@ import {InstanceService} from "../../service/instance.service";
 import {Raid} from "../../class/raid";
 import {ItemService} from "../../service/item.service";
 import {Item} from "../../class/item";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-roster',
@@ -15,7 +16,9 @@ import {Item} from "../../class/item";
 export class RosterComponent implements OnInit {
 public raids: Raid[];
   constructor(
-    private instanceServ: InstanceService
+    private instanceServ: InstanceService,
+    private router: Router,
+    private rosterServ: RosterService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +27,9 @@ public raids: Raid[];
         this.raids = data;
         console.log(this.raids);
       }
+    },(_)=>{
+      this.router.navigate(['/']);
+      this.rosterServ.logout();
     })
   }
 }

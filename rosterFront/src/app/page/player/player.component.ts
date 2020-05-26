@@ -12,6 +12,7 @@ import {PlayerListService} from "../../service/player-list.service";
 import {RosterService} from "../../service/roster.service";
 import {Roster} from "../../class/roster";
 import {JobService} from "../../service/job.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -27,11 +28,16 @@ export class PlayerComponent implements OnInit, AfterViewInit{
               private componentFactoryResolver: ComponentFactoryResolver,
               public searchServ: PlayerListService,
               public rosterServ: RosterService,
+              private router: Router,
               public jobServ: JobService) {
   }
 
   ngOnInit(): void {
-    this.rosterServ.getRosters();
+    this.rosterServ.getRoster().subscribe(_=>{
+    },
+        _=> {this.router.navigate(['/']);
+          this.rosterServ.logout()
+    });
     this.jobServ.getJobs();
   }
   ngAfterViewInit() {
@@ -47,13 +53,18 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   }
 
   submitPlayers() {
-    this.rosterServ.postPlayer().subscribe((data) => {
+    if(this.searchServ.playerList.playersIds.length === this.searchServ.nbForm){
+      this.rosterServ.postPlayer().subscribe((data) => {
       if (data) {
-        this.rosterServ.getRosters();
+        this.rosterServ.getRoster().subscribe();
         this.searchServ.isSubmitted = false;
         this.searchServ.isDone = true;
-        this.searchServ.formUp=false;
-      }
-    });
+        this.searchServ.formUp = false;
+        }
+      });
+    }
+    else{
+      console.log('erreur')
+    }
   }
 }
