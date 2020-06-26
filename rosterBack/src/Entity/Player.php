@@ -63,6 +63,7 @@ class Player
      */
     private $imgUrl;
 
+
     public function __construct()
     {
         $this->playerJobs = new ArrayCollection();
@@ -163,4 +164,5 @@ class Player
 
         return $this;
     }
+
 }

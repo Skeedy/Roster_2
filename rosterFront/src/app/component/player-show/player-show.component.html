@@ -5,10 +5,12 @@
     <div *ngIf="player.playerJobs" class="d-flex">
       <div *ngFor="let job of player.playerJobs">
         <div *ngIf="job.isMain">
-          <img (click)="getGear(job.job.id); index = 0" height="60px" src="{{job.job.image.imgpath |imgpath }}">
+          <img (click)="getGear(job.job.id, job.wishitem.id); index = 0" height="60px" src="{{job.job.image.imgpath |imgpath }}">
+          <div style="color: #FFF; font-weight: bold"> {{job.wishitem.id}}</div>
         </div>
         <div *ngIf="job.isSub">
-          <img height="40px" (click)="getGear(job.job.id); index = job.ord" src="{{job.job.image.imgpath |imgpath }}">
+          <img height="40px" (click)="getGear(job.job.id, job.wishitem.id); index = job.ord" src="{{job.job.image.imgpath |imgpath }}">
+          <div style="color: #FFF; font-weight: bold"> {{job.wishitem.id}}</div>
         </div>
       </div>
     </div>
@@ -20,61 +22,60 @@
       </div>
       <div>
         <div>Head</div>
-        <div *ngIf="!player.playerJobs[index].wishHead">
-          <img (click)="gearShow= !gearShow; getSlotStuff(3); slotId = 3" src="https://xivapi.com/img-misc/gear/head.png">
+        <div *ngIf="!wishItem.head">
+          <img (click)="gearShow= !gearShow; getSlotStuff(3)" src="https://xivapi.com/img-misc/gear/head.png">
         </div>
-        <div *ngIf="player.playerJobs[index].wishHead">
-          <img (click)="gearShow= !gearShow;getSlotStuff(3); slotId = 3" matTooltip="{{player.playerJobs[index].wishHead.name}}" src="{{player.playerJobs[index].wishHead.imgUrl}}"/>
+        <div *ngIf="wishItem.head">
+          <img (click)="gearShow= !gearShow;getSlotStuff(3)" matTooltip="{{wishItem.head.name}}" src="{{wishItem.head.imgUrl}}"/>
         </div>
       </div>
     </div>
     <div>
       <div>Body</div>
-      <div *ngIf="!player.playerJobs[index].wishBody">
-        <img (click)="gearShow= !gearShow;getSlotStuff(4); slotId = 4" src="https://xivapi.com/img-misc/gear/body.png">
+      <div *ngIf="!wishItem.body">
+        <img (click)="gearShow= !gearShow;getSlotStuff(4)" src="https://xivapi.com/img-misc/gear/body.png">
       </div>
-      <div *ngIf="player.playerJobs[index].wishBody">
-        <img (click)="gearShow= !gearShow;getSlotStuff(4); slotId = 4" matTooltip="{{player.playerJobs[index].wishBody.name}}" src="{{player.playerJobs[index].wishBody.imgUrl}}"/>
+      <div *ngIf="wishItem.body">
+        <img (click)="gearShow= !gearShow;getSlotStuff(4)" matTooltip="{{wishItem.body.name}}" src="{{wishItem.body.imgUrl}}"/>
       </div>
     </div>
     <div>
       <div>Hand</div>
-      <div *ngIf="!player.playerJobs[index].wishHand">
-        <img (click)="gearShow= !gearShow;getSlotStuff(5); slotId = 5" src="https://xivapi.com/img-misc/gear/hands.png">
+      <div *ngIf="!wishItem.hands">
+        <img (click)="gearShow= !gearShow;getSlotStuff(5)" src="https://xivapi.com/img-misc/gear/hands.png">
       </div>
-      <div *ngIf="player.playerJobs[index].wishHand">
-        <img (click)="gearShow= !gearShow;getSlotStuff(5); slotId = 5" matTooltip="{{player.playerJobs[index].wishHand.name}}" src="{{player.playerJobs[index].wishHand.imgUrl}}"/>
+      <div *ngIf="wishItem.hands">
+        <img (click)="gearShow= !gearShow;getSlotStuff(5)" matTooltip="{{wishItem.hands.name}}" src="{{wishItem.hands.imgUrl}}"/>
       </div>
     </div>
     <div>
       <div>Waist</div>
-      <div *ngIf="!player.playerJobs[index].wishWaist">
-        <img (click)="gearShow= !gearShow;getSlotStuff(6); slotId = 6" src="https://xivapi.com/img-misc/gear/waist.png">
+      <div *ngIf="!wishItem.belt">
+        <img (click)="gearShow= !gearShow;getSlotStuff(6)" src="https://xivapi.com/img-misc/gear/waist.png">
       </div>
-      <div *ngIf="player.playerJobs[index].wishWaist">
-        <img (click)="gearShow= !gearShow;getSlotStuff(6); slotId = 6" matTooltip="{{player.playerJobs[index].wishWaist.name}}" src="{{player.playerJobs[index].wishWaist.imgUrl}}"/>
+      <div *ngIf="wishItem.belt">
+        <img (click)="gearShow= !gearShow;getSlotStuff(6)" matTooltip="{{player.playerJobs[index].wishitem.belt.name}}" src="{{player.playerJobs[index].wishitem.belt.imgUrl}}"/>
       </div>
     </div>
     <div>
       <div>Legs</div>
-      <div *ngIf="!player.playerJobs[index].wishLeg">
-        <img (click)="getSlotStuff(7); slotId = 7; gearShow= !gearShow;" src="https://xivapi.com/img-misc/gear/legs.png">
+      <div *ngIf="!wishItem.legs">
+        <img (click)="getSlotStuff(7); gearShow= !gearShow;" src="https://xivapi.com/img-misc/gear/legs.png">
       </div>
-      <div *ngIf="player.playerJobs[index].wishLeg">
-        <img (click)="gearShow= !gearShow;getSlotStuff(7); slotId = 7" matTooltip="{{player.playerJobs[index].wishLeg.name}}" src="{{player.playerJobs[index].wishLeg.imgUrl}}"/>
+      <div *ngIf="wishItem.legs">
+        <img (click)="gearShow= !gearShow;getSlotStuff(7);" matTooltip="{{player.playerJobs[index].wishitem.legs.name}}" src="{{player.playerJobs[index].wishitem.legs.imgUrl}}"/>
       </div>
     </div>
     <div>
       <div>Feet</div>
-      <div *ngIf="!player.playerJobs[index].wishFeet">
-        <img (click)="gearShow= !gearShow;getSlotStuff(8); slotId = 8" src="https://xivapi.com/img-misc/gear/feet.png">
+      <div *ngIf="!wishItem.feet">
+        <img (click)="gearShow= !gearShow;getSlotStuff(8)" src="https://xivapi.com/img-misc/gear/feet.png">
       </div>
-      <div *ngIf="player.playerJobs[index].wishFeet">
-        <img (click)="gearShow= !gearShow;getSlotStuff(8); slotId = 8" matTooltip="{{player.playerJobs[index].wishFeet.name}}" src="{{player.playerJobs[index].wishFeet.imgUrl}}"/>
+      <div *ngIf="wishItem.feet">
+        <img (click)="gearShow= !gearShow;getSlotStuff(8)" matTooltip="{{player.playerJobs[index].wishitem.feet.name}}" src="{{player.playerJobs[index].wishitem.feet.imgUrl}}"/>
       </div>
     </div>
-    <app-select-gear [slotId]="slotId"
-                     [playerJobId]="player.playerJobs[index].id"
+    <app-select-gear [playerJobId]="player.playerJobs[index].id"
                      [jobItems]="jobItems"
                      [(gearShow)]="gearShow">
     </app-select-gear>

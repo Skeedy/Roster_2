@@ -1,5 +1,6 @@
 import {Job} from "./job";
 import {Item} from "./item";
+import {Wishitem} from "./wishitem";
 
 export class PlayerJob {
   id: number;
@@ -7,26 +8,5 @@ export class PlayerJob {
   isSub: boolean;
   job: Job;
   ord: number;
-  head: boolean;
-  body: boolean;
-  hand: boolean;
-  belt: boolean;
-  leg: boolean;
-  feet: boolean;
-  neck: boolean;
-  earring: boolean;
-  bracelet: boolean;
-  ring1: boolean;
-  ring2: boolean;
-  wishHead : Item;
-  wishBody : Item;
-  wishHand : Item;
-  wishLeg : Item;
-  wishFeet : Item;
-  wishWaist : Item;
-  wishEarring : Item;
-  wishBracelet : Item;
-  wishRing1 : Item;
-  wishRing2 : Item;
-  wishNeck : Item;
+  wishitem: Wishitem;
 }

@@ -55,9 +55,12 @@ class PlayerjobController extends AbstractController
         $response = JsonResponse::fromJsonString('{ "response": "the job has been deleted" }', 200);
         return $response;
     }
+
     /**
      * @Route("/patchgear/{id}", name="playerjob_patch", methods={"PATCH"})
      */
+
+    /*
     public function updateGear(ItemRepository $itemRepository, PlayerJob $playerjob, SerializerInterface $serializer, Request $request, EntityManagerInterface $em){
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
@@ -106,4 +109,5 @@ class PlayerjobController extends AbstractController
         $em->flush();
         return JsonResponse::fromJsonString('{"response" :"Fait !"}', 200);
     }
+    */
 }
