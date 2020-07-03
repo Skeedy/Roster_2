@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from '@angular/core';
 import {Item} from "../../class/item";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {PlayerJob} from "../../class/player-job";
 import {ItemService} from "../../service/item.service";
 import {RosterService} from "../../service/roster.service";
 import {Player} from "../../class/player";
+import {Wishitem} from "../../class/wishitem";
+import {WhishitemService} from "../../service/whishitem.service";
 
 @Component({
   selector: 'app-select-gear',
@@ -22,24 +24,27 @@ import {Player} from "../../class/player";
     ])
   ]
 })
-export class SelectGearComponent implements OnChanges {
+export class SelectGearComponent implements OnDestroy {
   @Input() jobItems: Item[];
   @Input() slotId: number;
   @Input() closable = true;
   @Input() gearShow: boolean;
-  @Input() playerJobId : number;
+  @Input() wishId : number;
+  @Output() wishItem: Wishitem;
   public player : Player;
   @Output() gearShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(private itemServ: ItemService, public rosterServ: RosterService) { }
+  constructor(private wishitemServ: WhishitemService) { }
 
-  ngOnChanges(): void {
+  ngOnDestroy(): void {
   }
-  changeGear(itemId, playerJobId, slotId){
-    return this.itemServ.changeGear(itemId, playerJobId, slotId).subscribe(_=>
-    this.rosterServ.getRoster().subscribe())
+  changeGear(itemId, wishId){
+    return this.wishitemServ.changeGear(itemId, wishId).subscribe(data => {
+      this.close(wishId);
+    })
   }
-  close() {
+  close(wishId) {
     this.gearShow = false;
+    this.wishitemServ.refreshWishItem(wishId).subscribe();
     this.gearShowChange.emit(this.gearShow);
   }
 }

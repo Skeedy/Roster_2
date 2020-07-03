@@ -21,7 +21,7 @@ export class PlayerInfoComponent implements OnInit {
   idJobMain : number;
   showJob = false;
   isSub: boolean;
-  @Output() wishItem: Wishitem;
+  wishItem: Wishitem;
   jobOrder: number;
   ddbId: number;
   constructor(public jobServ: JobService, public wishitemServ: WhishitemService) { }

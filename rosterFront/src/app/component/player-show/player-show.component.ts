@@ -39,7 +39,6 @@ export class PlayerShowComponent implements OnInit {
   constructor(public jobServ: JobService, public wishitemServ: WhishitemService,public itemServ: ItemService) { }
 
   ngOnInit(): void {
-
   }
 
   getGear(jobId, wishId){

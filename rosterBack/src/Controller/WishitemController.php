@@ -88,6 +88,6 @@ class WishitemController extends AbstractController
 
         $em->persist($wishItem);
         $em->flush();
-        return JsonResponse::fromJsonString('{"response" :'.$slotId.''. $ring1 .' '. $ring2 .'}', 200);
+        return $this->json($wishItem, 200, [], ['groups'=> 'wishItem']);
     }
 }

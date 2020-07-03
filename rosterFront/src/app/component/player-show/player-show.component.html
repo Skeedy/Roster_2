@@ -20,72 +20,153 @@
       <div>
         <h1 class="" style="font-family: FFXIV;text-align: center; color: #FFF;">{{player.playerJobs[index].job.name}}</h1>
       </div>
-      <div>
-        <div>Head</div>
-        <div *ngIf="!wishItem.head">
-          <img (click)="gearShow= !gearShow; getSlotStuff(3)" src="https://xivapi.com/img-misc/gear/head.png">
+      <div class="d-flex">
+        <div>
+          <div>
+            <div>Main hand</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).mainHand">
+              <img (click)="gearShow= !gearShow; getSlotStuff(1)" src="https://xivapi.com/img-misc/gear/mainhand.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).mainHand">
+              <img (click)="gearShow= !gearShow;getSlotStuff(1)" matTooltip="{{(wishitemServ._wishItemSub|async).mainHand.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).mainHand.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Head</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).head">
+              <img (click)="gearShow= !gearShow; getSlotStuff(3)" src="https://xivapi.com/img-misc/gear/head.png">
+            </div>
+            <div *ngIf="wishItem.head">
+              <img (click)="gearShow= !gearShow;getSlotStuff(3)" matTooltip="{{(wishitemServ._wishItemSub|async).head.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).head.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Body</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).body">
+              <img (click)="gearShow= !gearShow;getSlotStuff(4)" src="https://xivapi.com/img-misc/gear/body.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).body">
+              <img (click)="gearShow= !gearShow;getSlotStuff(4)" matTooltip="{{(wishitemServ._wishItemSub|async).body.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).body.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Hand</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).hands">
+              <img (click)="gearShow= !gearShow;getSlotStuff(5)" src="https://xivapi.com/img-misc/gear/hands.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).hands">
+              <img (click)="gearShow= !gearShow;getSlotStuff(5)" matTooltip="{{(wishitemServ._wishItemSub|async).hands.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).hands.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Waist</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).belt">
+              <img (click)="gearShow= !gearShow;getSlotStuff(6)" src="https://xivapi.com/img-misc/gear/waist.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).belt">
+              <img (click)="gearShow= !gearShow;getSlotStuff(6)" matTooltip="{{(wishitemServ._wishItemSub|async).belt.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).belt.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Legs</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).legs">
+              <img (click)="getSlotStuff(7); gearShow= !gearShow;" src="https://xivapi.com/img-misc/gear/legs.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).legs">
+              <img (click)="gearShow= !gearShow;getSlotStuff(7);" matTooltip="{{(wishitemServ._wishItemSub|async).legs.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).legs.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Feet</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).feet">
+              <img (click)="gearShow= !gearShow;getSlotStuff(8)" src="https://xivapi.com/img-misc/gear/feet.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).feet">
+              <img (click)="gearShow= !gearShow;getSlotStuff(8)" matTooltip="{{(wishitemServ._wishItemSub|async).feet.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).feet.imgUrl}}"/>
+            </div>
+          </div>
         </div>
-        <div *ngIf="wishItem.head">
-          <img (click)="gearShow= !gearShow;getSlotStuff(3)" matTooltip="{{wishItem.head.name}}" src="{{wishItem.head.imgUrl}}"/>
+        <div>
+          <div>
+            <div>Off hand</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).offHand">
+              <img (click)="gearShow= !gearShow;getSlotStuff(2)" src="https://xivapi.com/img-misc/gear/offhand.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).offHand">
+              <img (click)="gearShow= !gearShow;getSlotStuff(2)" matTooltip="{{(wishitemServ._wishItemSub|async).offHand.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).offHand.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Earring</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).earring">
+              <img (click)="gearShow= !gearShow;getSlotStuff(9)" src="https://xivapi.com/img-misc/gear/ear.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).earring">
+              <img (click)="gearShow= !gearShow;getSlotStuff(9)" matTooltip="{{(wishitemServ._wishItemSub|async).earring.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).earring.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Necklace</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).neck">
+              <img (click)="gearShow= !gearShow;getSlotStuff(10)" src="https://xivapi.com/img-misc/gear/neck.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).neck">
+              <img (click)="gearShow= !gearShow;getSlotStuff(10)" matTooltip="{{(wishitemServ._wishItemSub|async).neck.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).neck.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Bracelet</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).bracelet">
+              <img (click)="gearShow= !gearShow;getSlotStuff(11)" src="https://xivapi.com/img-misc/gear/wrist.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).bracelet">
+              <img (click)="gearShow= !gearShow;getSlotStuff(11)" matTooltip="{{(wishitemServ._wishItemSub|async).bracelet.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).bracelet.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Left ring</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).ring1">
+              <img (click)="gearShow= !gearShow;getSlotStuff(12)" src="https://xivapi.com/img-misc/gear/ring1.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).ring1">
+              <img (click)="gearShow= !gearShow;getSlotStuff(12)" matTooltip="{{(wishitemServ._wishItemSub|async).ring1.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).ring1.imgUrl}}"/>
+            </div>
+          </div>
+          <div>
+            <div>Right ring</div>
+            <div *ngIf="!(wishitemServ._wishItemSub|async).ring2">
+              <img (click)="gearShow= !gearShow;getSlotStuff(12)" src="https://xivapi.com/img-misc/gear/ring2.png">
+            </div>
+            <div *ngIf="(wishitemServ._wishItemSub|async).ring2">
+              <img (click)="gearShow= !gearShow;getSlotStuff(12)" matTooltip="{{(wishitemServ._wishItemSub|async).ring2.name}}"
+                   src="{{(wishitemServ._wishItemSub|async).ring2.imgUrl}}"/>
+            </div>
+          </div>
         </div>
       </div>
+      <app-select-gear [wishId]="player.playerJobs[index].wishitem.id"
+                       [jobItems]="jobItems"
+                       [(gearShow)]="gearShow">
+      </app-select-gear>
     </div>
-    <div>
-      <div>Body</div>
-      <div *ngIf="!wishItem.body">
-        <img (click)="gearShow= !gearShow;getSlotStuff(4)" src="https://xivapi.com/img-misc/gear/body.png">
-      </div>
-      <div *ngIf="wishItem.body">
-        <img (click)="gearShow= !gearShow;getSlotStuff(4)" matTooltip="{{wishItem.body.name}}" src="{{wishItem.body.imgUrl}}"/>
-      </div>
+    <div *ngIf="player.playerJobs.length == 0">
+      <h5 style="color: #FFF">
+        Please, choose a job to proceed
+      </h5>
     </div>
-    <div>
-      <div>Hand</div>
-      <div *ngIf="!wishItem.hands">
-        <img (click)="gearShow= !gearShow;getSlotStuff(5)" src="https://xivapi.com/img-misc/gear/hands.png">
-      </div>
-      <div *ngIf="wishItem.hands">
-        <img (click)="gearShow= !gearShow;getSlotStuff(5)" matTooltip="{{wishItem.hands.name}}" src="{{wishItem.hands.imgUrl}}"/>
-      </div>
-    </div>
-    <div>
-      <div>Waist</div>
-      <div *ngIf="!wishItem.belt">
-        <img (click)="gearShow= !gearShow;getSlotStuff(6)" src="https://xivapi.com/img-misc/gear/waist.png">
-      </div>
-      <div *ngIf="wishItem.belt">
-        <img (click)="gearShow= !gearShow;getSlotStuff(6)" matTooltip="{{player.playerJobs[index].wishitem.belt.name}}" src="{{player.playerJobs[index].wishitem.belt.imgUrl}}"/>
-      </div>
-    </div>
-    <div>
-      <div>Legs</div>
-      <div *ngIf="!wishItem.legs">
-        <img (click)="getSlotStuff(7); gearShow= !gearShow;" src="https://xivapi.com/img-misc/gear/legs.png">
-      </div>
-      <div *ngIf="wishItem.legs">
-        <img (click)="gearShow= !gearShow;getSlotStuff(7);" matTooltip="{{player.playerJobs[index].wishitem.legs.name}}" src="{{player.playerJobs[index].wishitem.legs.imgUrl}}"/>
-      </div>
-    </div>
-    <div>
-      <div>Feet</div>
-      <div *ngIf="!wishItem.feet">
-        <img (click)="gearShow= !gearShow;getSlotStuff(8)" src="https://xivapi.com/img-misc/gear/feet.png">
-      </div>
-      <div *ngIf="wishItem.feet">
-        <img (click)="gearShow= !gearShow;getSlotStuff(8)" matTooltip="{{player.playerJobs[index].wishitem.feet.name}}" src="{{player.playerJobs[index].wishitem.feet.imgUrl}}"/>
-      </div>
-    </div>
-    <app-select-gear [playerJobId]="player.playerJobs[index].id"
-                     [jobItems]="jobItems"
-                     [(gearShow)]="gearShow">
-    </app-select-gear>
-  </div>
-  <div *ngIf="player.playerJobs.length == 0">
-    <h5 style="color: #FFF">
-      Please, choose a job to proceed
-    </h5>
   </div>
 </div>
-
 <div *ngIf="playerShow" class="overlay" (click)="close()"></div>
 

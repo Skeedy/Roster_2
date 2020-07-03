@@ -57,6 +57,7 @@ class WishItem
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("wishItem")
      */
     private $earring;
 
