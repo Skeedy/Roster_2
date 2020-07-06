@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PlayerJob;
+use App\Entity\WishItem;
 use App\Repository\JobRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\RosterRepository;
@@ -136,7 +137,9 @@ class PlayerController extends AbstractController
                 }
             }
             $playerJob = new PlayerJob();
+            $wishItem = new WishItem();
             $ordcount = count($player->getPlayerJobs());
+            $playerJob->setWishItem($wishItem);
             $playerJob->setPlayer($player);
             $playerJob->setJob($jobId);
             $playerJob->setOrd($ordcount === 0? 0 : $ordcount);

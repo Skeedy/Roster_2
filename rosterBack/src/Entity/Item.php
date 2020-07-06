@@ -27,6 +27,7 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("roster")
+     * @Groups("wishItem")
      */
     private $name;
 
@@ -36,6 +37,7 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("roster")
+     * @Groups("wishItem")
      */
     private $imgUrl;
 
@@ -45,6 +47,7 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("roster")
+     * @Groups("wishItem")
      */
     private $ilvl;
 
@@ -53,6 +56,7 @@ class Item
      * @Groups("item")
      * @Groups("instance")
      * @Groups("roster")
+     * @Groups("wishItem")
      */
     private $isSavage;
 
@@ -61,6 +65,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("wishItem")
      */
     private $LodId;
 
@@ -69,6 +74,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("wishItem")
      */
     private $jobType;
 
@@ -77,6 +83,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("jobStuff")
+     * @Groups("wishItem")
      */
     private $slot;
 
@@ -205,6 +212,8 @@ class Item
 
         return $this;
     }
-
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

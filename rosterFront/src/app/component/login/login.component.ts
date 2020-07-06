@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   });
   public connexionFailed: boolean;
   public loading: boolean;
+  public html: string;
 
   constructor(private fb: FormBuilder, private rosterServ: RosterService, private router: Router) { }
 
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
             console.log(err);
             this.connexionFailed = true;
             this.loading = false;
+            this.html = 'Roster name or Password invalid'
           } );
     }
   }

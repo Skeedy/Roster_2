@@ -5,6 +5,8 @@ import {RosterService} from "../../service/roster.service";
 import {PlayerListService} from "../../service/player-list.service";
 import {JobService} from "../../service/job.service";
 import {Item} from "../../class/item";
+import {Wishitem} from "../../class/wishitem";
+import {WhishitemService} from "../../service/whishitem.service";
 
 @Component({
   selector: 'app-player-info',
@@ -19,21 +21,25 @@ export class PlayerInfoComponent implements OnInit {
   idJobMain : number;
   showJob = false;
   isSub: boolean;
+  wishItem: Wishitem;
   jobOrder: number;
   ddbId: number;
-  constructor(public jobServ: JobService) { }
+  constructor(public jobServ: JobService, public wishitemServ: WhishitemService) { }
 
   ngOnInit(): void {
     if(this.player.playerJobs[0]) {
-      this.idJobMain = this.player.playerJobs[0].job.id
+      this.idJobMain = this.player.playerJobs[0].job.id;
     }
   }
-  getJobStuff() {
+  getJobStuff(wishId) {
     if (this.player.playerJobs.length > 0) {
-      this.showPlayer = !this.showPlayer;
       this.jobServ.getJobStuff(this.idJobMain).subscribe((data) => {
           this.items = data;
       })
+      this.wishitemServ.getWishItem(wishId).subscribe((data)=>{
+        this.wishItem = data;
+      })
+      this.showPlayer = !this.showPlayer;
     }
     else{
       this.showPlayer = !this.showPlayer;

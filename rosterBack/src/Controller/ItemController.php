@@ -33,7 +33,7 @@ class ItemController extends AbstractController
      */
     public function index(ItemRepository $itemRepository): Response
     {
-        $items = $itemRepository->findBy(['ilvl'=> 500, 'slot'=> 4, 'jobType' => 'Aiming']);
+        $items = $itemRepository->findAll();
         $respond = $this->json($items, 200, [], ['groups' => 'item']);
         return $respond;
     }

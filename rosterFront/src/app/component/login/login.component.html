@@ -8,6 +8,7 @@
       <input matInput placeholder="Password" type="password" formControlName="password" autocomplete="off" required/>
     </mat-form-field>
     </div>
+    <div style="color: red; font-style: italic; font-weight: bold" class="pb-2">{{html}}</div>
     <button mat-raised-button color="primary"
             [disabled]="loading || loginForm.invalid"
             (click)="login()">Log in</button>
