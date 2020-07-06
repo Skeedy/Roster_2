@@ -15,10 +15,11 @@ import {Router} from "@angular/router";
 })
 export class RosterComponent implements OnInit {
 public raids: Raid[];
+public players: any;
   constructor(
     private instanceServ: InstanceService,
     private router: Router,
-    private rosterServ: RosterService
+    public rosterServ: RosterService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +31,8 @@ public raids: Raid[];
     },(_)=>{
       this.router.navigate(['/']);
       this.rosterServ.logout();
-    })
+    });
+    this.players = this.rosterServ._rosterSub.value.player;
   }
+
 }

@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -59,6 +60,7 @@ class Job
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="jobs")
      * @Groups("jobStuff")
+     * @OrderBy({"name" = "DESC"})
      */
     private $items;
 
