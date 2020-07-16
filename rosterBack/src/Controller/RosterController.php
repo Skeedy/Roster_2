@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
+use App\Repository\WeekRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -65,16 +67,6 @@ class RosterController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="roster_show", methods={"GET"})
-     */
-    public function show(Roster $roster): Response
-    {
-        $nbPlayer = count($roster->getPlayer());
-        $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
-        return $respond;
-    }
-
-    /**
      * @Route("/patch/{id}", name="roster_patch", methods={"PATCH"})
      */
     public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository,Roster $roster, EntityManagerInterface $em){
@@ -101,13 +93,21 @@ class RosterController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="roster_auth", methods={"POST"})
+     * @Route("/profile", name="roster_auth", methods={"GET"})
      */
     public function profile(){
         $roster = $this->getUser();
         return $this->json($roster, 200, [], ['groups'=> 'roster']);
     }
-
+    /**
+     * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
+     */
+    public function profileCurrentWeek(WeekRepository $weekRepository, LootRepository $lootRepository){
+        $roster = $this->getUser();
+        $currentWeek = $weekRepository->findOneBy(['weekNumber'=> date('W')]);
+        $loot= $lootRepository->findBy(['week'=> $currentWeek, 'roster'=>$roster]);
+        return $this->json($loot, 200, [], ['groups'=> 'loots']);
+    }
 
     /**
      * @Route("/{id}", name="roster_delete", methods={"DELETE"})

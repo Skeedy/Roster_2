@@ -17,6 +17,8 @@ class Slot
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("jobStuff")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -24,12 +26,15 @@ class Slot
      * @ORM\Column(type="string", length=255)
      * @Groups("wishItem")
      * @Groups("jobStuff")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups("jobStuff")
+     * @Groups("loots")
      */
     private $lodId;
 

@@ -28,6 +28,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $name;
 
@@ -38,6 +39,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $imgUrl;
 
@@ -48,6 +50,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $ilvl;
 
@@ -57,6 +60,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $isSavage;
 
@@ -75,6 +79,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $jobType;
 
@@ -84,6 +89,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $slot;
 

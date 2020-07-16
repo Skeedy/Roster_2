@@ -17,18 +17,24 @@ class Instance
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $imgUrl;
 
@@ -43,9 +49,15 @@ class Instance
      */
     private $value;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="instance")
+     */
+    private $loots;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
+        $this->loots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +123,37 @@ class Instance
     public function setValue(int $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Loot[]
+     */
+    public function getLoots(): Collection
+    {
+        return $this->loots;
+    }
+
+    public function addLoot(Loot $loot): self
+    {
+        if (!$this->loots->contains($loot)) {
+            $this->loots[] = $loot;
+            $loot->setInstance($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoot(Loot $loot): self
+    {
+        if ($this->loots->contains($loot)) {
+            $this->loots->removeElement($loot);
+            // set the owning side to null (unless already changed)
+            if ($loot->getInstance() === $this) {
+                $loot->setInstance(null);
+            }
+        }
 
         return $this;
     }

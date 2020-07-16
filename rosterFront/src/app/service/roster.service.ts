@@ -39,7 +39,7 @@ export class RosterService {
       }));
   }
   public getRoster() {
-    return this.http.post<Roster>(Globals.APP_API + '/roster/profile', {}).pipe(map((roster) => {
+    return this.http.get<Roster>(Globals.APP_API + '/roster/profile', {}).pipe(map((roster) => {
       if (roster) {
         localStorage.setItem(Globals.APP_USER, JSON.stringify(roster));
         this._roster = this._rosterSub.asObservable();

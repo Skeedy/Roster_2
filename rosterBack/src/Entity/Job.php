@@ -27,6 +27,7 @@ class Job
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $name;
 
@@ -36,12 +37,15 @@ class Job
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("jobShow")
+     * @Groups("roster")
+     * @Groups("loots")
      */
     private $role;
 

@@ -60,9 +60,16 @@ class Roster implements UserInterface
      */
     private $player;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="roster")
+     * @Groups("roster")
+     */
+    private $loots;
+
     public function __construct()
     {
         $this->player = new ArrayCollection();
+        $this->loots = new ArrayCollection();
     }
 
 
@@ -198,6 +205,37 @@ class Roster implements UserInterface
             // set the owning side to null (unless already changed)
             if ($player->getRoster() === $this) {
                 $player->setRoster(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Loot[]
+     */
+    public function getLoots(): Collection
+    {
+        return $this->loots;
+    }
+
+    public function addLoot(Loot $loot): self
+    {
+        if (!$this->loots->contains($loot)) {
+            $this->loots[] = $loot;
+            $loot->setRoster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoot(Loot $loot): self
+    {
+        if ($this->loots->contains($loot)) {
+            $this->loots->removeElement($loot);
+            // set the owning side to null (unless already changed)
+            if ($loot->getRoster() === $this) {
+                $loot->setRoster(null);
             }
         }
 

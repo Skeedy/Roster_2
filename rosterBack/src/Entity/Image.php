@@ -25,6 +25,7 @@ class Image
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $path;
 
@@ -33,6 +34,7 @@ class Image
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $imgpath;
     /**
