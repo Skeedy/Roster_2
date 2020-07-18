@@ -7,6 +7,7 @@ use App\Entity\WishItem;
 use App\Repository\JobRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\RosterRepository;
+use App\Repository\WishItemRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -97,7 +98,7 @@ class PlayerController extends AbstractController
     /**
      * @Route("/patch/{id}", name="player_patch", methods={"PATCH"})
      */
-    public function patch(Request $request, SerializerInterface $serializer,PlayerJobRepository $playerJobRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
+    public function patch(Request $request, SerializerInterface $serializer,WishItemRepository $wishItemRepository, PlayerJobRepository $playerJobRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['ddbId']]);
@@ -115,7 +116,11 @@ class PlayerController extends AbstractController
                 return $response;
             }
             else {
-                $this->clearStuff($playerJob);
+                $wishItem = $wishItemRepository->find($playerJob->getWishItem()->getId());
+                $playerJob->setWishItem(NULL);
+                $em->remove($wishItem);
+                $newWishItem = new WishItem();
+                $playerJob->setWishItem($newWishItem);
                 $playerJob->setJob($jobId);
                 $playerJob->setIsMain($json['isMain']);
                 $playerJob->setIsSub($json['isSub']);
@@ -163,19 +168,4 @@ class PlayerController extends AbstractController
         return $response;
     }
 
-    public function clearStuff(PlayerJob $playerJob){
-        //            $playerjob->setWishWeapon($item);
-        //            $playerjob->setWishWeapon($item);
-        $playerJob->setWishHead(NULL);
-        $playerJob->setWishBody(NULL);
-        $playerJob->setWishHand(NULL);
-        $playerJob->setWishWaist(NULL);
-        $playerJob->setWishLeg(NULL);
-        $playerJob->setWishFeet(NULL);
-        $playerJob->setWishEarring(NULL);
-        $playerJob->setWishNeck(NULL);
-        $playerJob->setWishBracelet(NULL);
-        $playerJob->setWishRing1(NULL);
-        $playerJob->setWishRing2(NULL);
-    }
 }

@@ -64,15 +64,6 @@ class RosterController extends AbstractController
         return $respond;
     }
 
-    /**
-     * @Route("/{id}", name="roster_show", methods={"GET"})
-     */
-    public function show(Roster $roster): Response
-    {
-        $nbPlayer = count($roster->getPlayer());
-        $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
-        return $respond;
-    }
 
     /**
      * @Route("/patch/{id}", name="roster_patch", methods={"PATCH"})
@@ -101,7 +92,7 @@ class RosterController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="roster_auth", methods={"POST"})
+     * @Route("/profile", name="roster_auth", methods={"GET"})
      */
     public function profile(){
         $roster = $this->getUser();
