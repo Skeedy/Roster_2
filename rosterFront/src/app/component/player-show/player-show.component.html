@@ -37,7 +37,7 @@
             <div *ngIf="!(wishitemServ._wishItemSub|async).head">
               <img (click)="gearShow= !gearShow; getSlotStuff(3)" src="https://xivapi.com/img-misc/gear/head.png">
             </div>
-            <div *ngIf="wishItem.head">
+            <div *ngIf="(wishitemServ._wishItemSub|async).head">
               <img (click)="gearShow= !gearShow;getSlotStuff(3)" matTooltip="{{(wishitemServ._wishItemSub|async).head.name}}"
                    src="{{(wishitemServ._wishItemSub|async).head.imgUrl}}"/>
             </div>

@@ -51,6 +51,7 @@ class Instance
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="instance")
+     * @Groups("loots")
      */
     private $loots;
 
@@ -157,4 +158,6 @@ class Instance
 
         return $this;
     }
+
+
 }

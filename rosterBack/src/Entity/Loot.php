@@ -20,12 +20,6 @@ class Loot
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Instance", inversedBy="loots")
-     * @Groups("roster")
-     * @Groups("loots")
-     */
-    private $instance;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlayerJob", inversedBy="loots")
@@ -53,6 +47,18 @@ class Loot
      */
     private $roster;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups("roster")
+     * @Groups("loots")
+     */
+    private $coffer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Instance", inversedBy="loots")
+     */
+    private $instance;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -61,18 +67,6 @@ class Loot
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getInstance(): ?Instance
-    {
-        return $this->instance;
-    }
-
-    public function setInstance(?Instance $instance): self
-    {
-        $this->instance = $instance;
-
-        return $this;
     }
 
     public function getPlayerjob(): ?PlayerJob
@@ -136,4 +130,29 @@ class Loot
 
         return $this;
     }
+
+    public function getCoffer(): ?int
+    {
+        return $this->coffer;
+    }
+
+    public function setCoffer(int $coffer): self
+    {
+        $this->coffer = $coffer;
+
+        return $this;
+    }
+
+    public function getInstance(): ?Instance
+    {
+        return $this->instance;
+    }
+
+    public function setInstance(?Instance $instance): self
+    {
+        $this->instance = $instance;
+
+        return $this;
+    }
+
 }

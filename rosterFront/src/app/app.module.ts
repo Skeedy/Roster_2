@@ -63,6 +63,10 @@ import { PlayerShowComponent } from './component/player-show/player-show.compone
 import { SelectGearComponent } from './component/select-gear/select-gear.component';
 import {JwtInterceptor} from "./class/jwtinterceptor";
 import {ErrorInterceptor} from "./class/errorinterceptor";
+import { PoolComponent } from './component/pool/pool.component';
+import { RaidPipe } from './pipe/raid.pipe';
+
+
 
 @NgModule({
   declarations: [
@@ -85,6 +89,8 @@ import {ErrorInterceptor} from "./class/errorinterceptor";
     InstanceComponent,
     PlayerShowComponent,
     SelectGearComponent,
+    PoolComponent,
+    RaidPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

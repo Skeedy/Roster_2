@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Instance;
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Repository\InstanceRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
@@ -102,11 +104,16 @@ class RosterController extends AbstractController
     /**
      * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
      */
-    public function profileCurrentWeek(WeekRepository $weekRepository, LootRepository $lootRepository){
-        $roster = $this->getUser();
-        $currentWeek = $weekRepository->findOneBy(['weekNumber'=> date('W')]);
-        $loot= $lootRepository->findBy(['week'=> $currentWeek, 'roster'=>$roster]);
-        return $this->json($loot, 200, [], ['groups'=> 'loots']);
+    public function profileCurrentWeek(WeekRepository $weekRepository,EntityManagerInterface $em, InstanceRepository $instanceRepository, LootRepository $lootRepository){
+//        $conn = $em->getConnection();
+//        $sql ='SELECT * FROM instance INNER JOIN loot ON instance.id = loot.instance_id AND week_id = :week AND roster_id = :roster INNER JOIN player_job ON loot.id = player_job.id';
+//        $stmt = $conn->prepare($sql);
+//        $stmt->execute(['week' => $currentWeek, 'roster' => $roster]);
+//        $response =  $stmt->fetchAll();
+        $roster = $this->getUser()->getId();
+        $currentWeek = $weekRepository->findOneBy(['weekNumber'=> date('W')])->getId();
+        $instances = $instanceRepository->findBy(['loots'=> [1,2,3,4]]);
+        return $this->json($instances, 200, [], ['groups'=> 'loots']);
     }
 
     /**

@@ -1,12 +1,41 @@
+<h3 style="color: #FFF" class="d-flex justify-content-center">Week n°{{ week | date:'w' }}</h3>
 <div *ngFor="let raid of raids">
   <div>
     <img src="{{raid.imgUrl}}">
-    <h3 style="color: #FFF">{{raid.id}} {{raid.name}}</h3>
-  </div>
-  <div *ngFor="let ite of raid.item">
+    <h5 style="color: #FFF">{{raid.name}}</h5>
     <div>
-      <img src="{{ite.imgUrl}}">
-      <h6 style="color: #FFF">{{ite.name}}</h6>
+      <div>
+        <img (click)="showPool= !showPool;
+         numberChest = 1;
+         idRaid = raid.id;
+         nameRaid = raid.name;
+         itemRaid = raid.item"
+             src="https://xivapi.com/img-misc/chest1.png">
+      </div>
+      <div>
+        <img (click)="showPool= !showPool;
+        numberChest = 2;
+        idRaid = raid.id;
+        nameRaid = raid.name;
+        itemRaid = raid.item"
+             src="https://xivapi.com/img-misc/chest2.png">
+      </div>
+      <div>
+        <img (click)="showPool= !showPool;
+         numberChest = 3;
+         idRaid = raid.id;
+         nameRaid = raid.name;
+         itemRaid = raid.item"
+             src="https://xivapi.com/img-misc/chest3.png">
+      </div>
     </div>
-    </div>
+  </div>
+
 </div>
+<app-pool [players]="rosterServ._rosterSub.value.player"
+          [(poolList)]="showPool"
+          [idRaid]="idRaid"
+          [nameRaid]="nameRaid"
+          [numberChest] ="numberChest"
+          [itemRaid]="itemRaid" >
+</app-pool>
