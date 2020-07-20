@@ -1,0 +1,17 @@
+<div [@pool] *ngIf="poolList" class="dialog">
+  <h1 style="color: #fff"> {{nameRaid}}</h1>
+  <h2 style="color: #FFF; text-align: center"> Chest n°{{numberChest}}</h2>
+  <div>
+    <div class="d-flex justify-content-around">
+      <div *ngFor="let item of itemRaid">
+        <img src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+      </div>
+    </div>
+    <div class="d-flex justify-content-around">
+      <div *ngFor="let player of players" class="d-flex">
+        <img src="{{player.imgUrl}}" matTooltip="{{player.name}}">
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="poolList" class="overlay" (click)="close()"></div>

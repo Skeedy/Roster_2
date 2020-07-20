@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -16,6 +18,7 @@ class PlayerJob
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -36,6 +39,7 @@ class PlayerJob
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Player", inversedBy="playerJobs")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("loots")
      */
     private $player;
 
@@ -57,6 +61,16 @@ class PlayerJob
      * @Groups("roster")
      */
     private $wishitem;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="playerJob")
+     */
+    private $loots;
+
+    public function __construct()
+    {
+        $this->loots = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -131,6 +145,37 @@ class PlayerJob
     public function setWishItem(?WishItem $wishitem): self
     {
         $this->wishitem = $wishitem;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Loot[]
+     */
+    public function getLoots(): Collection
+    {
+        return $this->loots;
+    }
+
+    public function addLoot(Loot $loot): self
+    {
+        if (!$this->loots->contains($loot)) {
+            $this->loots[] = $loot;
+            $loot->setPlayerJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoot(Loot $loot): self
+    {
+        if ($this->loots->contains($loot)) {
+            $this->loots->removeElement($loot);
+            // set the owning side to null (unless already changed)
+            if ($loot->getPlayerJob() === $this) {
+                $loot->setPlayerJob(null);
+            }
+        }
 
         return $this;
     }

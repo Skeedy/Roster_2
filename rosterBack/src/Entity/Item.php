@@ -18,6 +18,7 @@ class Item
      * @ORM\Column(type="integer")
      * @Groups("instance")
      * @Groups("jobStuff")
+     * @Groups("loots")
      */
     private $id;
 
@@ -28,6 +29,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $name;
 
@@ -38,6 +40,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $imgUrl;
 
@@ -57,6 +60,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("loots")
      */
     private $isSavage;
 
@@ -92,9 +96,11 @@ class Item
      */
     private $jobs;
 
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
+
     }
 
 

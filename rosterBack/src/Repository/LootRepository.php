@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Lootpool;
+use App\Entity\Loot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Lootpool|null find($id, $lockMode = null, $lockVersion = null)
- * @method Lootpool|null findOneBy(array $criteria, array $orderBy = null)
- * @method Lootpool[]    findAll()
- * @method Lootpool[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Loot|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Loot|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Loot[]    findAll()
+ * @method Loot[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LootpoolRepository extends ServiceEntityRepository
+class LootRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Lootpool::class);
+        parent::__construct($registry, Loot::class);
     }
 
     // /**
-    //  * @return Lootpool[] Returns an array of Lootpool objects
+    //  * @return Loot[] Returns an array of Loot objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class LootpoolRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Lootpool
+    public function findOneBySomeField($value): ?Loot
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.exampleField = :val')

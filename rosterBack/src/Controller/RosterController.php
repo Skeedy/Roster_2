@@ -4,8 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Repository\InstanceRepository;
+use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -23,15 +26,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class RosterController extends AbstractController
 {
-    /**
-     * @Route("/", name="roster_index", methods={"GET"})
-     */
-    public function index(RosterRepository $rosterRepository ): Response
-    {
-        $rosters = $rosterRepository->findAll();
-        $respond = $this->json($rosters, 200, [], ['groups'=> 'roster']);
-        return $respond;
-    }
 
     /**
      * @Route("/new", name="roster_new", methods={"POST"})
@@ -94,12 +88,64 @@ class RosterController extends AbstractController
     /**
      * @Route("/profile", name="roster_auth", methods={"GET"})
      */
-    public function profile(){
+    public function profile(PlayerRepository $playerRepository, EntityManagerInterface $em, SerializerInterface $serializer){
         $roster = $this->getUser();
+        $players = $roster->getPlayer();
+        foreach($players as $player){
+            $playerData = file_get_contents('https://xivapi.com/character/' . $player->getIdLodestone() . '?&private_key= 73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+            $playerData = $serializer->decode($playerData, 'json');
+            $playerServer = $playerData['Character']['Server'];
+            if($player->getServer() !== $playerServer){
+                $player->setServer($playerServer);
+                $em->persist($player);
+                $em->flush();
+            }
+        }
         return $this->json($roster, 200, [], ['groups'=> 'roster']);
     }
+    /**
+     * @Route("/currentWeekLoot", name="roster_currentWeekLoot", methods={"GET"})
+     */
+    public function profileCurrentWeek(EntityManagerInterface $em, InstanceRepository $instanceRepository, LootRepository $lootRepository){
 
-
+        $roster = $this->getUser()->getId();
+        $currentWeek = date('W');
+        $conn = $em->getConnection();
+        $dateCheck = date('D')==='Mon';
+        if ($dateCheck){
+            $currentWeek -=1;
+        }
+        $sql ='
+SELECT item.name AS item_name,
+instance.id AS instance_id, player.name AS player_name,
+loot.id AS loot_id, loot.chest, player_job.id AS playerjob_id,
+item.img_url AS item_url, loot.week,
+instance.img_url AS instance_url,
+player.img_url AS player_url FROM instance 
+INNER JOIN loot ON instance.id = loot.instance_id 
+AND week = :week 
+AND roster_id = :roster 
+INNER JOIN player_job ON playerjob_id = player_job.id
+INNER JOIN player ON player_id = player.id
+INNER JOIN item ON loot.item_id = item.id
+';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['week' => $currentWeek, 'roster' => $roster]);
+        $response =  $stmt->fetchAll();
+//        $loots = $lootRepository->findBy(['roster'=> $roster, 'week'=> $currentWeek]);
+        return $this->json($response, 200, []);
+    }
+    /**
+     * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
+     */
+    public function getWeekNumber(){
+        $currentWeek = date('W');
+        $dateCheck = date('D')==='Mon';
+        if ($dateCheck){
+            $currentWeek -=1;
+        }
+        return $this->json($currentWeek, 200, []);
+    }
     /**
      * @Route("/{id}", name="roster_delete", methods={"DELETE"})
      */

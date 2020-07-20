@@ -1,0 +1,18 @@
+<div *ngIf="lootSlot">
+  <img (click)="showPool= !showPool;
+      "
+      src="{{lootSlot.item_url}}">
+  <img src="{{lootSlot.player_url}}">
+</div>
+<div *ngIf="!lootSlot">
+  <img (click)="showPool= !showPool;"
+        src="https://xivapi.com/img-misc/chest{{chest}}.png">
+</div>
+
+<app-pool [players]="rosterServ._rosterSub.value.player"
+          [(poolList)]="showPool"
+          [idRaid]=raid.id
+          [nameRaid]=raid.name
+          [numberChest] ="chest"
+          [itemRaid] = raid.item>
+</app-pool>

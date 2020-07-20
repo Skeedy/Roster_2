@@ -1,12 +1,14 @@
+<h3 style="color: #FFF" class="d-flex justify-content-center">Week n°{{ week }}</h3>
 <div *ngFor="let raid of raids">
   <div>
     <img src="{{raid.imgUrl}}">
-    <h3 style="color: #FFF">{{raid.id}} {{raid.name}}</h3>
+    <h5 style="color: #FFF">{{raid.name}}</h5>
+    <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="sortByChest(1,raid.id)[0]"></app-loot-slot>
+    <app-loot-slot [raid]= raid [chest]= 2 [lootSlot]="sortByChest(2,raid.id)[0]"></app-loot-slot>
+    <app-loot-slot [raid]= raid [chest]= 3 [lootSlot]="sortByChest(3,raid.id)[0]"></app-loot-slot>
+    <div *ngIf="raid.value >= 2">
+      <img src="">
+    </div>
   </div>
-  <div *ngFor="let ite of raid.item">
-    <div>
-      <img src="{{ite.imgUrl}}">
-      <h6 style="color: #FFF">{{ite.name}}</h6>
-    </div>
-    </div>
 </div>
+

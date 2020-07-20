@@ -20,6 +20,7 @@ class Player
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -27,6 +28,7 @@ class Player
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $name;
 
@@ -34,6 +36,7 @@ class Player
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $IDLodestone;
 
@@ -41,6 +44,7 @@ class Player
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $server;
 
@@ -62,6 +66,7 @@ class Player
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $imgUrl;
 
