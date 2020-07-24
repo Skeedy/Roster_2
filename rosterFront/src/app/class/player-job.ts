@@ -9,4 +9,5 @@ export class PlayerJob {
   job: Job;
   ord: number;
   wishitem: Wishitem;
+  slot: number;
 }

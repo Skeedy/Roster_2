@@ -4,17 +4,41 @@ import {Globals} from "../globals";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Loot} from "../class/loot";
 import {map} from "rxjs/operators";
+import {Wishitem} from "../class/wishitem";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LootService {
+  public _lootsSub = new BehaviorSubject<Loot[]>(new Array<Loot>());
+  public _loots: Observable<Loot[]>;
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
   getWeekLoot():Observable<Loot[]>{
-    return this.http.get<Loot[]>(Globals.APP_API+ '/roster/currentWeekLoot')
+    return this.http.get<Loot[]>(Globals.APP_API+ '/roster/currentWeekLoot').pipe(map((data) => {
+      if (data ) {
+        this._loots = this._lootsSub.asObservable();
+        this._lootsSub.next(data);
+      }
+      return data;
+    }));
   }
-  getWeek(){
+  sortByChest(chest, instanceId){
+    return this._lootsSub.value.filter((loot:Loot)=>{
+      return loot.chest === chest.toString() && loot.instance_id === instanceId.toString();
+    })
+  }  getWeek(){
     return this.http.get(Globals.APP_API+ '/roster/currentWeek')
+  }
+  patchLoot(idLoot, idItem, idPlayerJob, instanceValue, chest){
+    const obj = {
+      id : idLoot? idLoot : null,
+      playerjob_id : idPlayerJob,
+      instance : instanceValue,
+      chest : chest,
+      item_id: idItem
+    }
+    console.log(obj);
+    return this.http.patch(Globals.APP_API+ '/loot/', obj);
   }
 }

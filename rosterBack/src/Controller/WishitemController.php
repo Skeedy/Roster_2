@@ -38,6 +38,7 @@ class WishitemController extends AbstractController
         $item = $itemRepository->findOneBy(['id' => $json['itemId']]);
         $slot = $item->getSlot();
         $slotId = $slot->getId();
+        $wishItem->setSlot($slotId);
         if ($slotId === 1){
             $wishItem->setMainHand($item);
         }

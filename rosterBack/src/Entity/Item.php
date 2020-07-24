@@ -96,6 +96,15 @@ class Item
      */
     private $jobs;
 
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     */
+    private $isUpgrade;
+
 
     public function __construct()
     {
@@ -221,5 +230,17 @@ class Item
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getIsUpgrade(): ?bool
+    {
+        return $this->isUpgrade;
+    }
+
+    public function setIsUpgrade(bool $isUpgrade): self
+    {
+        $this->isUpgrade = $isUpgrade;
+
+        return $this;
     }
 }

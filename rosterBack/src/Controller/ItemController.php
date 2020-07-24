@@ -56,6 +56,8 @@ class ItemController extends AbstractController
                     $book = "ook";
                     $upgrade = ['Twine', 'Ester', 'Glaze'];
                     $checkSavage = strpos($itemName, $book) || strpos($itemName, $savageName) || $this->strpos_arr($itemName, $upgrade);
+                    $checkUpgrade = $this->strpos_arr($itemName, $upgrade);
+                    $item->setIsUpgrade($checkUpgrade);
                     $coffer = "Coffer";
                     $item->setName($itemName);
                     $item->setImgUrl('https://xivapi.com' . $data['Icon']);

@@ -13,7 +13,7 @@ export class LootSlotComponent implements OnInit {
 @Input() lootSlot: any;
 @Input() chest: number;
 @Input() raid: Raid;
-
+idLoot: number|null;
   showPool = false;
   constructor(public rosterServ: RosterService) { }
 

@@ -17,3 +17,12 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
+.active{
+  padding: 5px;
+  background-color: #3be438;
+}
+.selected{
+  padding: 5px;
+  background-color: #3689a8;
+}

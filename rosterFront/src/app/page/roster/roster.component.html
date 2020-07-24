@@ -3,12 +3,10 @@
   <div>
     <img src="{{raid.imgUrl}}">
     <h5 style="color: #FFF">{{raid.name}}</h5>
-    <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="sortByChest(1,raid.id)[0]"></app-loot-slot>
-    <app-loot-slot [raid]= raid [chest]= 2 [lootSlot]="sortByChest(2,raid.id)[0]"></app-loot-slot>
-    <app-loot-slot [raid]= raid [chest]= 3 [lootSlot]="sortByChest(3,raid.id)[0]"></app-loot-slot>
-    <div *ngIf="raid.value >= 2">
-      <img src="">
-    </div>
+    <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="lootService.sortByChest(1,raid.id)[0]"></app-loot-slot>
+    <app-loot-slot [raid]= raid [chest]= 2 [lootSlot]="lootService.sortByChest(2,raid.id)[0]"></app-loot-slot>
+    <app-loot-slot [raid]= raid [chest]= 3 [lootSlot]="lootService.sortByChest(3,raid.id)[0]"></app-loot-slot>
+
   </div>
 </div>
 

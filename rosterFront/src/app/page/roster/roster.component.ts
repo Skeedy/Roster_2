@@ -19,12 +19,7 @@ export class RosterComponent implements OnInit {
   public raids: Raid[];
   public players: any;
   public week: any;
-  idRaid: number;
-  nameRaid: string;
-  itemRaid = Item;
-  numberChest: number;
   public loots: Loot[];
-  private filterLoot: any;
   constructor(
     private instanceServ: InstanceService,
     private router: Router,
@@ -48,11 +43,7 @@ export class RosterComponent implements OnInit {
     });
 
   }
-  sortByChest(chest, instanceId){
-    return this.loots.filter((loot:Loot)=>{
-      return loot.chest === chest.toString() && loot.instance_id === instanceId.toString();
-    })
-  }
+
   // getAugment(instanceId){
   //   return this.raids.filter((raid: Raid)=>{
   //     return raid.id === instanceId
