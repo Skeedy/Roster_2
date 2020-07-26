@@ -94,6 +94,13 @@ class ItemController extends AbstractController
                                 $item->addJob($job);
                             }
                             break;
+                        case 'Slaying':
+                            $jobType = 'Slaying';
+                            $jobs = $jobRepository->findBy(['id'=> [9,10,12]]);
+                            foreach ($jobs as $job){
+                                $item->addJob($job);
+                            }
+                            break;
                         case 'Healing':
                             $jobType = 'Healing';
                             $jobs = $jobRepository->findBy(['id'=> [6,7,8]]);

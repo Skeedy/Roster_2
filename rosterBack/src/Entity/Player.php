@@ -70,6 +70,14 @@ class Player
      */
     private $imgUrl;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups("player")
+     * @Groups("roster")
+     * @Groups("loots")
+     */
+    private $portrait;
+
 
     public function __construct()
     {
@@ -168,6 +176,18 @@ class Player
     public function setImgUrl(?string $imgUrl): self
     {
         $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    public function getPortrait(): ?string
+    {
+        return $this->portrait;
+    }
+
+    public function setPortrait(string $portrait): self
+    {
+        $this->portrait = $portrait;
 
         return $this;
     }

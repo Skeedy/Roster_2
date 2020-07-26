@@ -65,6 +65,7 @@ import {JwtInterceptor} from "./class/jwtinterceptor";
 import {ErrorInterceptor} from "./class/errorinterceptor";
 import { PoolComponent } from './component/pool/pool.component';
 import { LootSlotComponent } from './component/loot-slot/loot-slot.component';
+import { PlayerJobLootComponent } from './component/player-job-loot/player-job-loot.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { LootSlotComponent } from './component/loot-slot/loot-slot.component';
     SelectGearComponent,
     PoolComponent,
     LootSlotComponent,
+    PlayerJobLootComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

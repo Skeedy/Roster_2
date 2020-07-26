@@ -15,13 +15,8 @@
       <div *ngFor="let player of players" class="d-flex ">
         <img src="{{player.imgUrl}}" matTooltip="{{player.name}}">
         <div *ngFor="let playerJob of player.playerJobs">
-          <img (click)="setPlayerJob(playerJob.id)"
-               [ngClass]="{'active':(lootSlot?.playerjob_id && playerJob.id == lootSlot?.playerjob_id),
-                           'selected': lootSlot?.playerjob_id && playerJob.id == playerJobSelected}"
-               src="{{playerJob.job.image.imgpath | imgpath}}">
-      </div>
-
-
+          <app-player-job-loot (playerJobSelected)="getPlayerJob($event)" [playerJobSel]=playerJobSelected [playerJobSet] = playerJobSet [playerJob]="playerJob" [lootSlot]="lootSlot"></app-player-job-loot>
+        </div>
       </div>
     </div>
     <button mat-button (click)="patchLoot(raidValue, numberChest)"> Save</button>

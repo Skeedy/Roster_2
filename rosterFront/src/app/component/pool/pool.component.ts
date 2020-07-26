@@ -28,11 +28,10 @@ export class PoolComponent implements OnInit {
   @Input() itemRaid: Item;
   @Input() players: Player[];
   @Input() lootSlot: any;
-  isItemSet : boolean;
-  isPlayerJobSet: boolean;
   itemSelected: number;
+  @Input() playerJobSet: number;
   playerJobSelected: number;
-  lootSet = [];
+  itemSet: number;
   lootId : number;
   @Output() poolListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(public lootServ: LootService) { }
@@ -40,32 +39,33 @@ export class PoolComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.lootSlot)
     if (this.lootSlot) {
-      if(this.lootSlot.item_id && this.lootSlot.item_id === this.itemRaid.id) {
-        this.isItemSet = true;
-      }
       this.lootId = this.lootSlot.loot_id;
-      this.lootSet[0] = this.lootSlot.item_id ? this.lootSlot.item_id : '';
-      this.lootSet[1] = this.lootSlot.playerjob_id ? this.lootSlot.playerjob_id : '';
+      this.itemSet = this.lootSlot.item_id ? this.lootSlot.item_id : '';
+      this.playerJobSet = this.lootSlot.playerjob_id ? this.lootSlot.playerjob_id : '';
     }
   }
   close() {
     this.poolList = false;
     this.poolListChange.emit(this.poolList);
-    this.lootSet = [];
+    this.itemSet = null;
+    this.playerJobSet = null;
+    this.itemSelected = null;
+    this.playerJobSelected = null;
+
   }
   setItem(idItem){
-    this.lootSet[0] = idItem;
+    this.itemSet = idItem;
     this.itemSelected = idItem
   }
-  setPlayerJob(idPlayerJob){
-    this.lootSet[1] = idPlayerJob;
+  getPlayerJob(idPlayerJob : number){
     this.playerJobSelected = idPlayerJob;
   }
   patchLoot(instanceValue, chest){
-    this.lootServ.patchLoot(this.lootId? this.lootId : '', this.lootSet[0] ,this.lootSet[1], instanceValue, chest)
+    let playerJobId = this.playerJobSelected? this.playerJobSelected : this.playerJobSet;
+    this.lootServ.patchLoot(this.lootId? this.lootId : '', this.itemSet ,playerJobId, instanceValue, chest)
       .subscribe(_=> {
-    this.lootSet = []});
-    this.lootServ.getWeekLoot().subscribe();
+        this.lootServ.refreshWeekLoot().subscribe();
+    });
     this.close();
 
   }

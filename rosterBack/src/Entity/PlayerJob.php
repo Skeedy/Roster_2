@@ -67,6 +67,11 @@ class PlayerJob
      */
     private $loots;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CurrentStuff", cascade={"persist", "remove"})
+     */
+    private $currentstuff;
+
     public function __construct()
     {
         $this->loots = new ArrayCollection();
@@ -176,6 +181,18 @@ class PlayerJob
                 $loot->setPlayerJob(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentstuff(): ?CurrentStuff
+    {
+        return $this->currentstuff;
+    }
+
+    public function setCurrentstuff(?CurrentStuff $currentstuff): self
+    {
+        $this->currentstuff = $currentstuff;
 
         return $this;
     }

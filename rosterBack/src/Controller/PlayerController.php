@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CurrentStuff;
 use App\Entity\PlayerJob;
 use App\Entity\WishItem;
 use App\Repository\JobRepository;
@@ -81,7 +82,9 @@ class PlayerController extends AbstractController
                 $playername = $playerData['Character']['Name'];
                 $playerServer = $playerData['Character']['Server'];
                 $playerImg = $playerData['Character']['Avatar'];
+                $playerPortrait = $playerData['Character']['Portrait'];
                 $player->setImgUrl($playerImg);
+                $player->setPortrait($playerPortrait);
                 $player->setIDLodestone($playersId);
                 $player->setName($playername);
                 $player->setServer($playerServer);
@@ -120,6 +123,8 @@ class PlayerController extends AbstractController
                 $playerJob->setWishItem(NULL);
                 $em->remove($wishItem);
                 $newWishItem = new WishItem();
+                $newCurrentStuff = new CurrentStuff();
+                $playerJob->setCurrentstuff($newCurrentStuff);
                 $playerJob->setWishItem($newWishItem);
                 $playerJob->setJob($jobId);
                 $playerJob->setIsMain($json['isMain']);
@@ -143,8 +148,10 @@ class PlayerController extends AbstractController
             }
             $playerJob = new PlayerJob();
             $wishItem = new WishItem();
+            $currentStuff = new CurrentStuff();
             $ordcount = count($player->getPlayerJobs());
             $playerJob->setWishItem($wishItem);
+            $playerJob->setCurrentstuff($currentStuff);
             $playerJob->setPlayer($player);
             $playerJob->setJob($jobId);
             $playerJob->setOrd($ordcount === 0? 0 : $ordcount);

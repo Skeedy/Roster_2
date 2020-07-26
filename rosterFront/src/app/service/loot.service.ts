@@ -23,11 +23,20 @@ export class LootService {
       return data;
     }));
   }
+  refreshWeekLoot():Observable<Loot[]>{
+    return this.http.get<Loot[]>(Globals.APP_API+ '/roster/currentWeekLoot').pipe(map((data) => {
+      if (data ) {
+        this._lootsSub.next(data);
+      }
+      return data;
+    }));
+  }
   sortByChest(chest, instanceId){
     return this._lootsSub.value.filter((loot:Loot)=>{
       return loot.chest === chest.toString() && loot.instance_id === instanceId.toString();
     })
-  }  getWeek(){
+  }
+  getWeek(){
     return this.http.get(Globals.APP_API+ '/roster/currentWeek')
   }
   patchLoot(idLoot, idItem, idPlayerJob, instanceValue, chest){
