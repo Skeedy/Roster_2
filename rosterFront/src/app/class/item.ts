@@ -1,4 +1,5 @@
 import {Slot} from "./slot";
+import {Job} from "./job";
 
 export class Item {
   id: number;
@@ -9,4 +10,7 @@ export class Item {
   isSavage: boolean;
   slot: Slot;
   jobType: string;
+  jobs: Job[];
+  isCoffer: boolean;
+  isUpgrade: boolean;
 }

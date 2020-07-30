@@ -1,6 +1,6 @@
 <div class="d-flex ">
   <button mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
-  <img src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id);">
+  <img src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id, this.player.playerJobs[0].currentstuff.id);">
   <div style="color: #FFF">
     <div>{{player.name}} ({{player.server}})</div>
     <div class="d-flex">
@@ -25,5 +25,5 @@
   </div>
 </div>
 <app-jobs [player]="player" [jobOrder]="jobOrder" [ddbId]= "ddbId" [isSub]="isSub" [(jobList)]="showJob"></app-jobs>
-<app-player-show [items]="items" [wishItem]="wishItem" [player]="player" [idMain]="idJobMain" [(playerShow)]="showPlayer"></app-player-show>
+<app-player-show [items]="items" [currentStuff]="currentStuff" [wishItem]="wishItem" [player]="player" [idMain]="idJobMain" [(playerShow)]="showPlayer"></app-player-show>
 <app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>

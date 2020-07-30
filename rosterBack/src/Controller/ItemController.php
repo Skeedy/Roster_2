@@ -59,6 +59,7 @@ class ItemController extends AbstractController
                     $checkUpgrade = $this->strpos_arr($itemName, $upgrade);
                     $item->setIsUpgrade($checkUpgrade);
                     $coffer = "Coffer";
+                    $item->setIsCoffer(strpos($itemName,$coffer));
                     $item->setName($itemName);
                     $item->setImgUrl('https://xivapi.com' . $data['Icon']);
                     $item->setIlvl($ilvl);
@@ -143,7 +144,7 @@ class ItemController extends AbstractController
                     $raid2 = ['Head','Hand','Foot', 'Glaze'];
                     $raid3 = ['Head','Hand','Foot', 'Leg', 'Twine', 'Ester'];
                     $raid4 = ['Weapon','Chest'];
-                    if(strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade)){
+                    if(strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade) || $ilvl%2 === 1){
                         if($this->strpos_arr($itemName, $raid1)){
                             $instance = $instanceRepository->findOneBy(['value' => 1]);
                             $instance->addItem($item);
@@ -156,7 +157,8 @@ class ItemController extends AbstractController
                             $instance = $instanceRepository->findOneBy(['value' => 3]);
                             $instance->addItem($item);
                         }
-                        if($this->strpos_arr($itemName, $raid4)){
+                        if($this->strpos_arr($itemName, $raid4) || $ilvl%2 === 1){
+                            $item->setIsCoffer(true);
                             $instance = $instanceRepository->findOneBy(['value' => 4]);
                             $instance->addItem($item);
                         }

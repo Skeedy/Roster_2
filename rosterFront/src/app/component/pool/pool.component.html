@@ -2,23 +2,100 @@
   <h1 style="color: #fff"> {{nameRaid}}</h1>
   <h2 style="color: #FFF; text-align: center"> Chest n°{{numberChest}}</h2>
   <div>
-    <div class="d-flex justify-content-around">
-      <div *ngFor="let item of itemRaid" >
-        <img
-          [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
-                      'selected': lootSlot?.item_id && item.id == itemSelected}"
-          (click)="setItem(item.id)"
-          src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+    <div>
+      <div *ngIf="raidValue != 4">
+        <div class="d-flex justify-content-around">
+          <div *ngFor="let item of itemRaid | isCoffer" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around">
+          <div *ngFor="let item of itemRaid | isUpgrade" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="raidValue == 4 && numberChest != 1">
+        <div class="d-flex justify-content-around">
+          <div *ngFor="let item of itemRaid | isCoffer" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="raidValue == 4 && numberChest == 1">
+        <div class="d-flex justify-content-around">
+          <img src="https://xivapi.com/cj/misc/bordered_tank.png">
+          <div *ngFor="let item of itemRaid | isNotCoffer | tankWeapon" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around">
+          <img src="https://xivapi.com/cj/misc/bordered_healer.png">
+          <div *ngFor="let item of itemRaid | isNotCoffer | healWeapon" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around">
+          <img src="https://xivapi.com/cj/misc/bordered_dps.png">
+          <div *ngFor="let item of itemRaid | isNotCoffer | meleeWeapon" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around">
+          <img src="https://xivapi.com/cj/misc/bordered_dps_ranged.png">
+          <div *ngFor="let item of itemRaid | isNotCoffer | rangedWeapon" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around">
+          <img src="https://xivapi.com/cj/misc/bordered_dps_magic.png">
+          <div *ngFor="let item of itemRaid | isNotCoffer | magicWeapon" >
+            <img [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+                          'selected': item.id == itemSelected}"
+                 (click)="setItem(item.id); slotItemId = item.slot.id; itemObject = item;"
+                 src="{{item.imgUrl}}" width="95px" matTooltip="{{item.name}}">
+          </div>
+        </div>
       </div>
     </div>
     <div class="d-flex justify-content-around flex-column">
       <div *ngFor="let player of players" class="d-flex ">
         <img src="{{player.imgUrl}}" matTooltip="{{player.name}}">
         <div *ngFor="let playerJob of player.playerJobs">
-          <app-player-job-loot (playerJobSelected)="getPlayerJob($event)" [playerJobSel]=playerJobSelected [playerJobSet] = playerJobSet [playerJob]="playerJob" [lootSlot]="lootSlot"></app-player-job-loot>
+          <app-player-job-loot
+            (playerJobSelected)="getPlayerJob($event)"
+            [playerJobSel]=playerJobSelected
+            [playerJobSet] = playerJobSet
+            [playerJob]="playerJob"
+            [lootSlot]="lootSlot"
+            [item]="itemObject"
+            [slotItemid] = slotItemId>
+          </app-player-job-loot>
         </div>
       </div>
     </div>
+    <div *ngIf="error" style="color: red"> {{html}}</div>
     <button mat-button (click)="patchLoot(raidValue, numberChest)"> Save</button>
   </div>
 </div>

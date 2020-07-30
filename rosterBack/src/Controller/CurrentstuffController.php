@@ -83,8 +83,8 @@ class CurrentstuffController extends AbstractController
 
         }
 
-        $em->persist($wishItem);
+        $em->persist($currentStuff);
         $em->flush();
-        return $this->json($wishItem, 200, [], ['groups'=> 'wishItem']);
+        return $this->json($currentStuff, 200, [], ['groups'=> 'wishItem']);
     }
 }

@@ -32,7 +32,7 @@ class InstanceController extends AbstractController
         $instances = $instanceRepository->findAll();
         foreach ($instances as $instance){
             if($instance->getValue() == 1){
-                $items = $itemRepository->findBy(['slot' => [6,9,10,11,12], 'ilvl'=> 500, 'isSavage'=>true]);
+                $items = $itemRepository->findBy(['slot' => [6,9,10,11,12], 'ilvl'=> 500, 'isSavage'=>true, 'name' => 'coffer']);
                 foreach ($items as $item) {
                     $instance->addItem($item);
                 }
@@ -41,7 +41,7 @@ class InstanceController extends AbstractController
 
             }
             if($instance->getValue() == 2){
-                $items = $itemRepository->findBy(['slot' => [5,3,8], 'ilvl'=> 500, 'isSavage'=>true]);
+                $items = $itemRepository->findBy(['slot' => [5,3,8], 'ilvl'=> 500, 'isSavage'=>true, 'name' => 'coffer']);
                 foreach ($items as $item) {
                     $instance->addItem($item);
                 }
@@ -50,7 +50,7 @@ class InstanceController extends AbstractController
 
             }
             if($instance->getValue() == 3){
-                $items = $itemRepository->findBy(['slot' => [5,3,8,7], 'ilvl'=> 500, 'isSavage'=>true]);
+                $items = $itemRepository->findBy(['slot' => [5,3,8,7], 'ilvl'=> 500, 'isSavage'=>true, 'name' => 'coffer']);
                 foreach ($items as $item) {
                     $instance->addItem($item);
                 }
@@ -59,7 +59,7 @@ class InstanceController extends AbstractController
 
             }
             if($instance->getValue() == 4){
-                $items = $itemRepository->findBy(['slot' => [1,4], 'ilvl'=> [500,505], 'isSavage'=>true]);
+                $items = $itemRepository->findBy(['slot' => [1,4], 'ilvl'=> [500,505], 'isSavage'=>true, 'name' => 'coffer']);
                 foreach ($items as $item) {
                     $instance->addItem($item);
                 }

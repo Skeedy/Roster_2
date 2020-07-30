@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -29,6 +30,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      * @Groups("loots")
      */
     private $name;
@@ -40,6 +42,7 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      * @Groups("loots")
      */
     private $imgUrl;
@@ -50,6 +53,7 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("roster")
+     * @Groups("currentStuff")
      * @Groups("wishItem")
      */
     private $ilvl;
@@ -60,6 +64,7 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      * @Groups("loots")
      */
     private $isSavage;
@@ -70,6 +75,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $LodId;
 
@@ -79,6 +85,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $jobType;
 
@@ -88,11 +95,15 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $slot;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Job", inversedBy="items")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @OrderBy({"id" = "ASC"})
      */
     private $jobs;
 
@@ -102,8 +113,15 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $isUpgrade;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     */
+    private $isCoffer;
 
 
     public function __construct()
@@ -240,6 +258,18 @@ class Item
     public function setIsUpgrade(bool $isUpgrade): self
     {
         $this->isUpgrade = $isUpgrade;
+
+        return $this;
+    }
+
+    public function getIsCoffer(): ?bool
+    {
+        return $this->isCoffer;
+    }
+
+    public function setIsCoffer(bool $isCoffer): self
+    {
+        $this->isCoffer = $isCoffer;
 
         return $this;
     }

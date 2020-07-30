@@ -1,4 +1,7 @@
 <img (click)="setPlayerJob(playerJob.id)"
+     class="jobImg"
      [ngClass]="{'active':(lootSlot?.playerjob_id && playerJob.id == lootSlot?.playerjob_id),
-                           'selected': lootSlot?.playerjob_id && playerJob.id == playerJobSel}"
+                           'selected': playerJob.id == playerJobSel,
+                           'disabled': disabled == true,
+                           'noNeed': noNeed == true}"
      src="{{playerJob.job.image.imgpath | imgpath}}">

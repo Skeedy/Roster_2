@@ -66,6 +66,17 @@ import {ErrorInterceptor} from "./class/errorinterceptor";
 import { PoolComponent } from './component/pool/pool.component';
 import { LootSlotComponent } from './component/loot-slot/loot-slot.component';
 import { PlayerJobLootComponent } from './component/player-job-loot/player-job-loot.component';
+import { WishlistComponent } from './component/wishlist/wishlist.component';
+import { CurrentStuffComponent } from './component/current-stuff/current-stuff.component';
+import { SelectCurrentComponent } from './component/select-current/select-current.component';
+import { IsCofferPipe } from './pipe/is-coffer.pipe';
+import { IsNotCofferPipe } from './pipe/is-not-coffer.pipe';
+import { MeleeWeaponPipe } from './pipe/melee-weapon.pipe';
+import { TankWeaponPipe } from './pipe/tank-weapon.pipe';
+import { HealWeaponPipe } from './pipe/heal-weapon.pipe';
+import { MagicWeaponPipe } from './pipe/magic-weapon.pipe';
+import { RangedWeaponPipe } from './pipe/ranged-weapon.pipe';
+import { IsUpgradePipe } from './pipe/is-upgrade.pipe';
 
 @NgModule({
   declarations: [
@@ -91,6 +102,17 @@ import { PlayerJobLootComponent } from './component/player-job-loot/player-job-l
     PoolComponent,
     LootSlotComponent,
     PlayerJobLootComponent,
+    WishlistComponent,
+    CurrentStuffComponent,
+    SelectCurrentComponent,
+    IsCofferPipe,
+    IsNotCofferPipe,
+    MeleeWeaponPipe,
+    TankWeaponPipe,
+    HealWeaponPipe,
+    MagicWeaponPipe,
+    RangedWeaponPipe,
+    IsUpgradePipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

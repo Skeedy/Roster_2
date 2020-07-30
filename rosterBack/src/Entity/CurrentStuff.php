@@ -15,90 +15,105 @@ class CurrentStuff
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $head;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $body;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $hands;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $belt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $legs;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $feet;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $earring;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $neck;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $bracelet;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $ring1;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $ring2;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $weapon;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $mainHand;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
+     * @Groups("roster")
      */
     private $offHand;
 

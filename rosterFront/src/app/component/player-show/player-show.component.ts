@@ -7,6 +7,8 @@ import {Observable} from "rxjs";
 import {ItemService} from "../../service/item.service";
 import {Wishitem} from "../../class/wishitem";
 import {WhishitemService} from "../../service/whishitem.service";
+import {Currentstuff} from "../../class/currentstuff";
+import {CurrentstuffService} from "../../service/currentstuff.service";
 
 @Component({
   selector: 'app-player-show',
@@ -28,35 +30,33 @@ export class PlayerShowComponent implements OnInit {
   @Input() player:Player;
   @Input() items: Item[];
   @Input() wishItem : Wishitem;
+  @Input() currentStuff : Currentstuff;
   @Input() closable = true;
   @Input() wishId: number;
+  @Input() idMain : number;
   @Input() playerShow: boolean;
   @Output() playerShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() idMain : number;
   public jobItems: any;
-  gearShow = false;
   public index = 0;
-  constructor(public jobServ: JobService, public wishitemServ: WhishitemService,public itemServ: ItemService) { }
+  wishlistShow = true;
+  constructor(public jobServ: JobService,public currenServ: CurrentstuffService ,public wishitemServ: WhishitemService,public itemServ: ItemService) { }
 
   ngOnInit(): void {
   }
 
-  getGear(jobId, wishId){
+  getGear(jobId, wishId, StuffId){
     if(this.player.playerJobs.length > 0) {
       this.jobServ.getJobStuff(jobId).subscribe(data => {
         this.items = data;
-        console.log(this.items)
       })
       this.wishitemServ.getWishItem(wishId).subscribe( data => {
         this.wishItem = data;
-        console.log(this.wishItem)
+      })
+      this.currenServ.getCurrentItem(StuffId).subscribe( data => {
+        this.currentStuff = data;
+        console.log(this.currentStuff)
       })
     }
-  }
-  getSlotStuff(id) {
-    this.jobItems = this.items.filter((item:Item)=>{
-        return item.slot.id === id && item.ilvl >= 500;
-      })
   }
   close() {
     this.playerShow = false;
