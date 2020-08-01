@@ -36,7 +36,7 @@ class LootController extends AbstractController
         $itemChest = $itemRepository->findOneBy(['id' => $json['item_id']]);
         $instance = $instanceRepository->findOneBy(['value' => $json['instance']]);
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
-        $currentStuff = $playerJob->getCurrentstuff();
+        $newCurrentStuff = $playerJob->getCurrentstuff();
         $currentWeek = date('W');
         $dateCheck = date('D') === 'Mon';
         $job = $playerJob->getJob();
@@ -44,7 +44,7 @@ class LootController extends AbstractController
         $items = $job->getItems();
         $itemToAssignCurrent ='';
         foreach ($items as $item){
-            if($item->getSlot() === $slot && $item->getIlvl() == 500){
+            if($item->getSlot() === $slot && $item->getIlvl() == 500 && $item->getIsSavage()){
                 $itemToAssignCurrent = $item;
             }
         }
@@ -52,13 +52,14 @@ class LootController extends AbstractController
             $currentWeek -= 1;
         }
         if ($loot) {
+            $currentStuffToDelete = $loot->getPlayerJob()->getCurrentstuff();
             $loot->setChest($json['chest']);
             $loot->setRoster($this->getUser());
             $loot->setInstance($instance);
             $loot->setPlayerJob($playerJob);
-            $loot->setItem($item);
+            $loot->setItem($itemChest);
             $loot->setWeek($currentWeek);
-            $this->setItemIntoCurrentstuff($slot, $currentStuff, $itemToAssignCurrent, $em);
+            $this->setItemIntoCurrentstuff($slot->getId(), $currentStuffToDelete ,$newCurrentStuff, $itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
 
         } else {
             $loot = new Loot();
@@ -66,56 +67,111 @@ class LootController extends AbstractController
             $loot->setRoster($this->getUser());
             $loot->setInstance($instance);
             $loot->setPlayerJob($playerJob);
-            $loot->setItem($item);
+            $loot->setItem($itemChest);
             $loot->setWeek($currentWeek);
-            $this->setItemIntoCurrentstuff($slot, $currentStuff, $itemToAssignCurrent, $em);
+            $this->setItemIntoCurrentstuff($slot->getId(), null ,$newCurrentStuff, $itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
         }
         $em->persist($loot);
         $em->flush();
-        return $this->json($itemToAssignCurrent, 200, [], ['groups' => 'loots']);
+        return $this->json($loot, 200, [], ['groups' => 'loots']);
     }
 
-    public function setItemIntoCurrentstuff($slotId, $currentStuff, $itemToAssignCurrent, $em)
+    public function setItemIntoCurrentstuff($slotId, $currentStuffToDelete ,$newCurrentStuff, $itemToAssignCurrent, $em)
     {
         switch ($slotId) {
             case 1 :
-                $currentStuff->setMainHand($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setMainHand($currentStuffToDelete->getPrevMainHand()? $currentStuffToDelete->getPrevMainHand() : null);
+                }
+                $previousStuff = $newCurrentStuff->getMainHand();
+                $newCurrentStuff->setMainHand($itemToAssignCurrent);
+                $newCurrentStuff->setPrevMainHand($previousStuff);
                 break;
             case 2 :
-                $currentStuff->setOffHand($itemToAssignCurrent);
-
+                $newCurrentStuff->setOffHand($itemToAssignCurrent);
                 break;
             case 3 :
-                $currentStuff->setHead($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setHead($currentStuffToDelete->getPrevHead()? $currentStuffToDelete->getPrevHead() : null);
+                }
+                $previousStuff = $newCurrentStuff->getHead();
+                $newCurrentStuff->setHead($itemToAssignCurrent);
+                $newCurrentStuff->setPrevHead($previousStuff);
                 break;
             case 4 :
-                $currentStuff->setBody($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setBody($currentStuffToDelete->getPrevBody()? $currentStuffToDelete->getPrevBody() : null);
+                }
+                $previousStuff = $newCurrentStuff->getBody();
+                $newCurrentStuff->setBody($itemToAssignCurrent);
+                $newCurrentStuff->setPrevBody($previousStuff);
                 break;
             case 5 :
-                $currentStuff->setHands($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setHands($currentStuffToDelete->getPrevHands()? $currentStuffToDelete->getPrevHands() : null);
+                }
+                $previousStuff = $newCurrentStuff->getHands();
+                $newCurrentStuff->setHands($itemToAssignCurrent);
+                $newCurrentStuff->setPrevHands($previousStuff);
                 break;
             case 6 :
-                $currentStuff->setBelt($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setBelt($currentStuffToDelete->getPrevBelt()? $currentStuffToDelete->getPrevBelt() : null);
+                }
+                $previousStuff = $newCurrentStuff->getBelt();
+                $newCurrentStuff->setBelt($itemToAssignCurrent);
+                $newCurrentStuff->setPrevBelt($previousStuff);
                 break;
             case 7 :
-                $currentStuff->setLegs($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setLegs($currentStuffToDelete->getPrevLegs()? $currentStuffToDelete->getPrevLegs() : null);
+                }
+                $previousStuff = $newCurrentStuff->getLegs();
+                $newCurrentStuff->setLegs($itemToAssignCurrent);
+                $newCurrentStuff->setPrevLegs($previousStuff);
                 break;
             case 8 :
-                $currentStuff->setFeet($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setFeet($currentStuffToDelete->getPrevFeet()? $currentStuffToDelete->getPrevFeet() : null);
+                }
+                $previousStuff = $newCurrentStuff->getFeet();
+                $newCurrentStuff->setFeet($itemToAssignCurrent);
+                $newCurrentStuff->setPrevFeet($previousStuff);
                 break;
             case 9 :
-                $currentStuff->setEarring($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setEarring($currentStuffToDelete->getPrevEarring()? $currentStuffToDelete->getPrevEarring() : null);
+                }
+                $previousStuff = $newCurrentStuff->getEarring();
+                $newCurrentStuff->setEarring($itemToAssignCurrent);
+                $newCurrentStuff->setPrevEarring($previousStuff);
                 break;
             case 10 :
-                $currentStuff->setNeck($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setNeck($currentStuffToDelete->getPrevNeck()? $currentStuffToDelete->getPrevNeck() : null);
+                }
+                $previousStuff = $newCurrentStuff->getNeck();
+                $newCurrentStuff->setNeck($itemToAssignCurrent);
+                $newCurrentStuff->setPrevNeck($previousStuff);
                 break;
             case 11 :
-                $currentStuff->setBracelet($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setBracelet($currentStuffToDelete->getPrevBracelet()? $currentStuffToDelete->getPrevBracelet() : null);
+                }
+                $previousStuff = $newCurrentStuff->getBracelet();
+                $newCurrentStuff->setBracelet($itemToAssignCurrent);
+                $newCurrentStuff->setPrevBracelet($previousStuff);
                 break;
             case 12 :
-                $currentStuff->setRing1($itemToAssignCurrent);
+                if($currentStuffToDelete !== null) {
+                    $currentStuffToDelete->setRing1($currentStuffToDelete->getPrevRing1()? $currentStuffToDelete->getPrevRing1() : null);
+                }
+                $previousStuff = $newCurrentStuff->getRing1();
+                $newCurrentStuff->setRing1($itemToAssignCurrent);
+                $newCurrentStuff->setPrevRing1($previousStuff);
                 break;
         }
-        $em->persist($currentStuff);
+        $em->persist($newCurrentStuff);
+
     }
 }

@@ -3,6 +3,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {Item} from "../../class/item";
 import {Player} from "../../class/player";
 import {LootService} from "../../service/loot.service";
+import {RosterService} from "../../service/roster.service";
 
 @Component({
   selector: 'app-pool',
@@ -20,7 +21,7 @@ import {LootService} from "../../service/loot.service";
     ])
   ]
 })
-export class PoolComponent implements OnChanges {
+export class PoolComponent implements OnInit, OnChanges {
   @Input() raidValue: number;
   @Input() nameRaid: string;
   @Input() poolList: boolean;
@@ -39,8 +40,11 @@ export class PoolComponent implements OnChanges {
   error: boolean;
   @Input() lootId : number;
   @Output() poolListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(public lootServ: LootService) { }
+  constructor(public lootServ: LootService, public rosterServ: RosterService) { }
 
+  ngOnInit(){
+    this.lootServ.refreshWeekLoot().subscribe();
+  }
   ngOnChanges(): void {
     if (this.lootSlot) {
       this.itemSet = this.lootSlot.item_id ? this.lootSlot.item_id : '';
@@ -70,6 +74,7 @@ export class PoolComponent implements OnChanges {
       this.lootServ.patchLoot(this.lootId? this.lootId : '', this.itemSet,playerJobId, instanceValue, chest)
         .subscribe(_=> {
           this.lootServ.refreshWeekLoot().subscribe();
+          this.rosterServ.refreshRoster().subscribe();
           this.close();
         })
     }

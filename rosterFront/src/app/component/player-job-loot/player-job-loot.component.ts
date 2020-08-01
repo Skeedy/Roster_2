@@ -51,7 +51,7 @@ export class PlayerJobLootComponent implements OnInit, OnChanges {
             }
           }
           else {
-            if (this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName].slot.id === this.item.slot.id) {
+            if (this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName].slot.id === this.item.slot.id && this.playerJob.currentstuff[slotName].isSavage && this.playerJob.currentstuff[slotName].ilvl === this.item.ilvl) {
               return this.disabled = true;
             }
             if (!this.playerJob.wishitem[slotName] || !this.playerJob.wishitem[slotName].isSavage) {

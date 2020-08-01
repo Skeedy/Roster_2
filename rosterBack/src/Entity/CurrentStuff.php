@@ -113,13 +113,7 @@ class CurrentStuff
      * @Groups("currentStuff")
      * @Groups("roster")
      */
-    private $weapon;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
-     * @Groups("currentStuff")
-     * @Groups("roster")
-     */
     private $mainHand;
 
     /**
@@ -128,6 +122,66 @@ class CurrentStuff
      * @Groups("roster")
      */
     private $offHand;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevHead;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevBody;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevHands;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevBelt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevLegs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevFeet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevEarring;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevNeck;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevBracelet;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevRing1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevRing2;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $prevMainHand;
 
     public function getId(): ?int
     {
@@ -266,17 +320,6 @@ class CurrentStuff
         return $this;
     }
 
-    public function getWeapon(): ?Item
-    {
-        return $this->weapon;
-    }
-
-    public function setWeapon(?Item $weapon): self
-    {
-        $this->weapon = $weapon;
-
-        return $this;
-    }
 
     public function getMainHand(): ?Item
     {
@@ -298,6 +341,150 @@ class CurrentStuff
     public function setOffHand(?Item $offHand): self
     {
         $this->offHand = $offHand;
+
+        return $this;
+    }
+
+    public function getPrevHead(): ?Item
+    {
+        return $this->prevHead;
+    }
+
+    public function setPrevHead(?Item $prevHead): self
+    {
+        $this->prevHead = $prevHead;
+
+        return $this;
+    }
+
+    public function getPrevBody(): ?Item
+    {
+        return $this->prevBody;
+    }
+
+    public function setPrevBody(?Item $prevBody): self
+    {
+        $this->prevBody = $prevBody;
+
+        return $this;
+    }
+
+    public function getPrevHands(): ?Item
+    {
+        return $this->prevHands;
+    }
+
+    public function setPrevHands(?Item $prevHands): self
+    {
+        $this->prevHands = $prevHands;
+
+        return $this;
+    }
+
+    public function getPrevBelt(): ?Item
+    {
+        return $this->prevBelt;
+    }
+
+    public function setPrevBelt(?Item $prevBelt): self
+    {
+        $this->prevBelt = $prevBelt;
+
+        return $this;
+    }
+
+    public function getPrevLegs(): ?Item
+    {
+        return $this->prevLegs;
+    }
+
+    public function setPrevLegs(?Item $prevLegs): self
+    {
+        $this->prevLegs = $prevLegs;
+
+        return $this;
+    }
+
+    public function getPrevFeet(): ?Item
+    {
+        return $this->prevFeet;
+    }
+
+    public function setPrevFeet(?Item $prevFeet): self
+    {
+        $this->prevFeet = $prevFeet;
+
+        return $this;
+    }
+
+    public function getPrevEarring(): ?Item
+    {
+        return $this->prevEarring;
+    }
+
+    public function setPrevEarring(?Item $prevEarring): self
+    {
+        $this->prevEarring = $prevEarring;
+
+        return $this;
+    }
+
+    public function getPrevNeck(): ?Item
+    {
+        return $this->prevNeck;
+    }
+
+    public function setPrevNeck(?Item $prevNeck): self
+    {
+        $this->prevNeck = $prevNeck;
+
+        return $this;
+    }
+
+    public function getPrevBracelet(): ?Item
+    {
+        return $this->prevBracelet;
+    }
+
+    public function setPrevBracelet(?Item $prevBracelet): self
+    {
+        $this->prevBracelet = $prevBracelet;
+
+        return $this;
+    }
+
+    public function getPrevRing1(): ?Item
+    {
+        return $this->prevRing1;
+    }
+
+    public function setPrevRing1(?Item $prevRing1): self
+    {
+        $this->prevRing1 = $prevRing1;
+
+        return $this;
+    }
+
+    public function getPrevRing2(): ?Item
+    {
+        return $this->prevRing2;
+    }
+
+    public function setPrevRing2(?Item $prevRing2): self
+    {
+        $this->prevRing2 = $prevRing2;
+
+        return $this;
+    }
+
+    public function getPrevMainHand(): ?Item
+    {
+        return $this->prevMainHand;
+    }
+
+    public function setPrevMainHand(?Item $prevMainHand): self
+    {
+        $this->prevMainHand = $prevMainHand;
 
         return $this;
     }
