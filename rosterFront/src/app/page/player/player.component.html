@@ -1,3 +1,4 @@
+<div class="container">
 <div *ngFor="let player of (rosterServ._rosterSub | async).player">
   <app-player-info [player]="player"></app-player-info>
 </div>
@@ -7,5 +8,4 @@
           mat-fab (click)="submitPlayers()">Go</button>
 </div>
 <app-add-player *ngIf="rosterServ.nbPlayer < 8"></app-add-player>
-
-
+</div>

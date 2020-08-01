@@ -82,6 +82,7 @@ class LootController extends AbstractController
             case 1 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setMainHand($currentStuffToDelete->getPrevMainHand()? $currentStuffToDelete->getPrevMainHand() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getMainHand();
                 $newCurrentStuff->setMainHand($itemToAssignCurrent);
@@ -93,6 +94,7 @@ class LootController extends AbstractController
             case 3 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setHead($currentStuffToDelete->getPrevHead()? $currentStuffToDelete->getPrevHead() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getHead();
                 $newCurrentStuff->setHead($itemToAssignCurrent);
@@ -101,6 +103,7 @@ class LootController extends AbstractController
             case 4 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setBody($currentStuffToDelete->getPrevBody()? $currentStuffToDelete->getPrevBody() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getBody();
                 $newCurrentStuff->setBody($itemToAssignCurrent);
@@ -109,6 +112,7 @@ class LootController extends AbstractController
             case 5 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setHands($currentStuffToDelete->getPrevHands()? $currentStuffToDelete->getPrevHands() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getHands();
                 $newCurrentStuff->setHands($itemToAssignCurrent);
@@ -117,6 +121,7 @@ class LootController extends AbstractController
             case 6 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setBelt($currentStuffToDelete->getPrevBelt()? $currentStuffToDelete->getPrevBelt() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getBelt();
                 $newCurrentStuff->setBelt($itemToAssignCurrent);
@@ -125,6 +130,7 @@ class LootController extends AbstractController
             case 7 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setLegs($currentStuffToDelete->getPrevLegs()? $currentStuffToDelete->getPrevLegs() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getLegs();
                 $newCurrentStuff->setLegs($itemToAssignCurrent);
@@ -133,6 +139,7 @@ class LootController extends AbstractController
             case 8 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setFeet($currentStuffToDelete->getPrevFeet()? $currentStuffToDelete->getPrevFeet() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getFeet();
                 $newCurrentStuff->setFeet($itemToAssignCurrent);
@@ -141,6 +148,7 @@ class LootController extends AbstractController
             case 9 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setEarring($currentStuffToDelete->getPrevEarring()? $currentStuffToDelete->getPrevEarring() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getEarring();
                 $newCurrentStuff->setEarring($itemToAssignCurrent);
@@ -149,6 +157,7 @@ class LootController extends AbstractController
             case 10 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setNeck($currentStuffToDelete->getPrevNeck()? $currentStuffToDelete->getPrevNeck() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getNeck();
                 $newCurrentStuff->setNeck($itemToAssignCurrent);
@@ -157,6 +166,7 @@ class LootController extends AbstractController
             case 11 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setBracelet($currentStuffToDelete->getPrevBracelet()? $currentStuffToDelete->getPrevBracelet() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getBracelet();
                 $newCurrentStuff->setBracelet($itemToAssignCurrent);
@@ -165,6 +175,7 @@ class LootController extends AbstractController
             case 12 :
                 if($currentStuffToDelete !== null) {
                     $currentStuffToDelete->setRing1($currentStuffToDelete->getPrevRing1()? $currentStuffToDelete->getPrevRing1() : null);
+                    $em->persist($currentStuffToDelete);
                 }
                 $previousStuff = $newCurrentStuff->getRing1();
                 $newCurrentStuff->setRing1($itemToAssignCurrent);
