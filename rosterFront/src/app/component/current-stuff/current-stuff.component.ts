@@ -28,7 +28,7 @@ export class CurrentStuffComponent implements OnDestroy {
 
   getSlotStuff(id) {
     this.jobItems = this.items.filter((item:Item)=>{
-      return item.slot.id === id && item.ilvl >= 500;
+      return item.slot.id === id && item.ilvl >= 450;
     })
   }
 }

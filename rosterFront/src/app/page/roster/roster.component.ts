@@ -1,11 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RosterService} from '../../service/roster.service';
-import {Roster} from '../../class/roster';
-import {trigger,state,style,animate,transition} from '@angular/animations';
 import {InstanceService} from "../../service/instance.service";
 import {Raid} from "../../class/raid";
-import {ItemService} from "../../service/item.service";
-import {Item} from "../../class/item";
 import {Router} from "@angular/router";
 import {LootService} from "../../service/loot.service";
 import {Loot} from "../../class/loot";
@@ -28,11 +24,19 @@ export class RosterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.lootService.getWeekLoot().subscribe((data)=> {
-      this.loots = data;
-    });
+    this.rosterServ.refreshRoster().subscribe();
+    if(!this.loots) {
+      this.lootService.getWeekLoot().subscribe((data) => {
+        this.loots = data;
+      });
+    }
+    if (this.loots){
+      this.lootService.refreshWeekLoot().subscribe((data) => {
+        this.loots = data;
+      });
+    }
     this.lootService.getWeek().subscribe(data=>
-    this.week = data);
+      this.week = data);
     this.instanceServ.getInstances().subscribe((data) => {
       if (data) {
         this.raids = data;

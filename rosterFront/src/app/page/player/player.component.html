@@ -1,4 +1,4 @@
-<div *ngFor="let player of rosterServ._rosterSub.value.player">
+<div *ngFor="let player of (rosterServ._rosterSub | async).player">
   <app-player-info [player]="player"></app-player-info>
 </div>
 <div>

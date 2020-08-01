@@ -55,11 +55,12 @@ export class PoolComponent implements OnChanges {
     this.itemSelected = null;
     this.playerJobSelected = null;
     this.error = false;
+    this.itemObject = null;
   }
   setItem(idItem){
     this.itemSet = idItem;
     this.itemSelected = idItem;
-
+    this.playerJobSelected = null;
   }
   getPlayerJob(idPlayerJob : number){
     this.playerJobSelected = idPlayerJob;

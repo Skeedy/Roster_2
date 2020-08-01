@@ -7,7 +7,7 @@ import {Item} from "../../class/item";
   templateUrl: './player-job-loot.component.html',
   styleUrls: ['./player-job-loot.component.scss']
 })
-export class PlayerJobLootComponent implements OnChanges {
+export class PlayerJobLootComponent implements OnInit, OnChanges {
 
   constructor() { }
   @Input() playerJob: PlayerJob;
@@ -18,8 +18,11 @@ export class PlayerJobLootComponent implements OnChanges {
   @Input() slotItemid: number;
   @Input() item: Item;
   disabled :boolean;
-  noNeed: boolean;
+  noNeed = true;
   @Output() playerJobSelected: EventEmitter<number>= new EventEmitter<number>();
+  ngOnInit(){
+    this.noNeed = true;
+  }
   ngOnChanges(): void {
     this.disabled = false;
     this.noNeed = false;
@@ -33,11 +36,42 @@ export class PlayerJobLootComponent implements OnChanges {
     if(this.item) {
       let slotName = this.item.slot.name;
       if (this.item.isSavage) {
-        if (this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName].slot.id === this.item.slot.id) {
-          return this.disabled = true;
+        if(this.item.isCoffer) {
+          if(this.item.slot.id === 1){
+            if(this.playerJob.currentstuff.mainHand) {
+              if (this.item.slot.id === this.playerJob.currentstuff.mainHand.slot.id && this.playerJob.currentstuff.mainHand.isSavage) {
+                return this.disabled = true;
+              }
+            }
+            if (!this.playerJob.wishitem[slotName]) {
+              return this.noNeed = true;
+            }
+            if(this.item.slot.id !== this.playerJob.wishitem.mainHand.slot.id){
+              return this.noNeed = true;
+            }
+          }
+          else {
+            if (this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName].slot.id === this.item.slot.id) {
+              return this.disabled = true;
+            }
+            if (!this.playerJob.wishitem[slotName] || !this.playerJob.wishitem[slotName].isSavage) {
+              return this.noNeed = true;
+            }
+            if (this.playerJob.wishitem[slotName].slot.id !== this.item.slot.id) {
+              return this.noNeed = true;
+            }
+          }
         }
-        if (this.playerJob.wishitem[slotName] && !this.playerJob.wishitem[slotName].isSavage){
-          return this.noNeed = true;
+        else{
+          if (this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName] && this.playerJob.currentstuff[slotName].id === this.item.id) {
+            return this.disabled = true;
+          }
+          if (!this.playerJob.wishitem[slotName]){
+            return this.noNeed = true;
+          }
+          if (this.playerJob.wishitem[slotName].id !== this.item.id) {
+            return this.noNeed = true;
+          }
         }
       }
     }

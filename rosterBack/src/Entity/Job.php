@@ -20,6 +20,7 @@ class Job
      * @Groups("roster")
      * @Groups("instance")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $id;
 
@@ -64,7 +65,7 @@ class Job
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="jobs")
      * @Groups("jobStuff")
-     * @OrderBy({"name" = "DESC"})
+     * @OrderBy({"ilvl" = "ASC"})
      */
     private $items;
 

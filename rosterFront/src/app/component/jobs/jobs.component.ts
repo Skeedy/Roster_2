@@ -49,8 +49,8 @@ export class JobsComponent implements OnInit {
     this.html = undefined;
   }
   patchJob(bool, job, player){
-    this.rosterServ.patchJob(bool, job, player, this.ddbId, this.jobOrder).subscribe(data =>{
-      this.rosterServ.getRoster().subscribe();
+    this.rosterServ.patchJob(bool, job, player, this.ddbId, this.jobOrder).subscribe(_=>{
+      this.rosterServ.refreshRoster().subscribe();
       this.html = 'Changed succeeds !';
       console.log(this.html)
     },(err) => {
@@ -61,6 +61,6 @@ export class JobsComponent implements OnInit {
 
   delete(){
     this.rosterServ.deleteJob(this.ddbId).subscribe(_ =>
-      this.rosterServ.getRoster().subscribe())
+      this.rosterServ.refreshRoster().subscribe())
   }
 }

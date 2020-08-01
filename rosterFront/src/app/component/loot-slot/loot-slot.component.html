@@ -1,13 +1,12 @@
 <div *ngIf="lootSlot">
   <img (click)="showPool= !showPool; lootId = lootSlot.loot_id"
-       src="{{lootSlot.item_url}}">
+      src="{{lootSlot.item_url}}">
   <img src="{{lootSlot.player_url}}">
-  <img src="{{lootSlot.job_img | imgpath}}">
-
+<img src="{{lootSlot.job_img | imgpath}}">
 </div>
 <div *ngIf="!lootSlot">
   <img (click)="showPool= !showPool; lootId = null"
-       src="https://xivapi.com/img-misc/chest{{chest}}.png">
+        src="https://xivapi.com/img-misc/chest{{chest}}.png">
 </div>
 
 <app-pool [players]="rosterServ._rosterSub.value.player"

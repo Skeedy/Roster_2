@@ -90,17 +90,17 @@ class RosterController extends AbstractController
      */
     public function profile(PlayerRepository $playerRepository, EntityManagerInterface $em, SerializerInterface $serializer){
         $roster = $this->getUser();
-        $players = $roster->getPlayer();
-        foreach($players as $player){
-            $playerData = file_get_contents('https://xivapi.com/character/' . $player->getIdLodestone() . '?&private_key= 73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
-            $playerData = $serializer->decode($playerData, 'json');
-            $playerServer = $playerData['Character']['Server'];
-            if($player->getServer() !== $playerServer){
-                $player->setServer($playerServer);
-                $em->persist($player);
-                $em->flush();
-            }
-        }
+//        $players = $roster->getPlayer();
+//        foreach($players as $player){
+//            $playerData = file_get_contents('https://xivapi.com/character/' . $player->getIdLodestone() . '?&private_key= 73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+//            $playerData = $serializer->decode($playerData, 'json');
+//            $playerServer = $playerData['Character']['Server'];
+//            if($player->getServer() !== $playerServer){
+//                $player->setServer($playerServer);
+//                $em->persist($player);
+//                $em->flush();
+//            }
+//        }
         return $this->json($roster, 200, [], ['groups'=> 'roster']);
     }
     /**
@@ -116,10 +116,15 @@ class RosterController extends AbstractController
             $currentWeek -=1;
         }
         $sql ='
-SELECT item.name AS item_name, item.id AS item_id,
-instance.id AS instance_id, player.name AS player_name,
-loot.id AS loot_id, loot.chest, player_job.id AS playerjob_id,
-item.img_url AS item_url, loot.week,
+SELECT item.name AS item_name,
+item.id AS item_id,
+instance.id AS instance_id, 
+player.name AS player_name,
+loot.id AS loot_id,
+loot.chest,
+player_job.id AS playerjob_id,
+item.img_url AS item_url, 
+loot.week,
 instance.img_url AS instance_url,
 player.img_url AS player_url,
 slot.id AS slot_id,

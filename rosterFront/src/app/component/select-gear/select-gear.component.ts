@@ -37,7 +37,7 @@ export class SelectGearComponent implements OnDestroy {
   public player : Player;
   @Input() slotName: string
   @Output() gearShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(private wishitemServ: WhishitemService) { }
+  constructor(private wishitemServ: WhishitemService, public rosterServ: RosterService) { }
 
   ngOnDestroy(): void {
   }

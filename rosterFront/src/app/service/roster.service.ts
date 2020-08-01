@@ -22,10 +22,6 @@ export class RosterService {
     const token = JSON.parse(localStorage.getItem(Globals.APP_USER_TOKEN));
     this.loginSubject = new BehaviorSubject<Login>(token);
     this.loginObs = this.loginSubject.asObservable();
-
-    const roster = JSON.parse(localStorage.getItem(Globals.APP_USER));
-    this._rosterSub = new BehaviorSubject<Roster>(roster);
-    this._roster = this._rosterSub.asObservable();
   }
 
   public login(rostername: string, password: string) {
@@ -50,6 +46,14 @@ export class RosterService {
           this.searchServ.formUp = true;
           this.searchServ.nbForm = 1;
         }
+      }
+      return roster;
+    }));
+  }
+  public refreshRoster() {
+    return this.http.get<Roster>(Globals.APP_API + '/roster/profile').pipe(map((roster) => {
+      if (roster) {
+        this._rosterSub.next(roster);
       }
       return roster;
     }));

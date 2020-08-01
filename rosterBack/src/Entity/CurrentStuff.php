@@ -16,6 +16,7 @@ class CurrentStuff
      * @ORM\Column(type="integer")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -23,6 +24,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $head;
 
@@ -30,6 +32,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $body;
 
@@ -37,6 +40,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $hands;
 
@@ -44,6 +48,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $belt;
 
@@ -51,6 +56,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $legs;
 
@@ -58,6 +64,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $feet;
 
@@ -65,6 +72,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $earring;
 
@@ -72,6 +80,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $neck;
 
@@ -79,6 +88,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $bracelet;
 
@@ -86,6 +96,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $ring1;
 
@@ -93,6 +104,7 @@ class CurrentStuff
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("currentStuff")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $ring2;
 

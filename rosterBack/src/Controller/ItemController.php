@@ -52,7 +52,7 @@ class ItemController extends AbstractController
                 if(!$check) {
                     $item = new Item();
                     $itemName = $data['Name'];
-                    $savageName = 'dench';
+                    $savageName = 'denchoir';
                     $book = "ook";
                     $upgrade = ['Twine', 'Ester', 'Glaze'];
                     $checkSavage = strpos($itemName, $book) || strpos($itemName, $savageName) || $this->strpos_arr($itemName, $upgrade);
@@ -118,7 +118,8 @@ class ItemController extends AbstractController
                             break;
                         case 'Aiming':
                             $jobType = 'Aiming';
-                            $jobs = $jobRepository->findBy(['id'=> [13,14,15]]);
+                            $checkNinja = $data['EquipSlotCategoryTargetID'] >= 9;
+                            $jobs = $jobRepository->findBy(['id' => [$checkNinja? 11: '', 13, 14, 15]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
@@ -144,7 +145,7 @@ class ItemController extends AbstractController
                     $raid2 = ['Head','Hand','Foot', 'Glaze'];
                     $raid3 = ['Head','Hand','Foot', 'Leg', 'Twine', 'Ester'];
                     $raid4 = ['Weapon','Chest'];
-                    if(strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade) || $ilvl%2 === 1){
+                    if($checkSavage && strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade) || $checkSavage && $ilvl%2 === 1){
                         if($this->strpos_arr($itemName, $raid1)){
                             $instance = $instanceRepository->findOneBy(['value' => 1]);
                             $instance->addItem($item);
@@ -158,7 +159,6 @@ class ItemController extends AbstractController
                             $instance->addItem($item);
                         }
                         if($this->strpos_arr($itemName, $raid4) || $ilvl%2 === 1){
-                            $item->setIsCoffer(true);
                             $instance = $instanceRepository->findOneBy(['value' => 4]);
                             $instance->addItem($item);
                         }

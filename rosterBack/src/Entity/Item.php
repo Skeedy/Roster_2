@@ -20,6 +20,10 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("loots")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     * @Groups("item")
+     * @Groups("roster")
      */
     private $id;
 
