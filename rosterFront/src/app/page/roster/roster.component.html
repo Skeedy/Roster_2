@@ -8,10 +8,8 @@
         <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="lootService.sortByChest(1,raid.id)[0]"></app-loot-slot>
         <app-loot-slot [raid]= raid [chest]= 2 [lootSlot]="lootService.sortByChest(2,raid.id)[0]"></app-loot-slot>
         <app-loot-slot [raid]= raid [chest]= 3 [lootSlot]="lootService.sortByChest(3,raid.id)[0]"></app-loot-slot>
-        <div *ngFor="let item of raid.item">
-          <div *ngIf="item.isUpgrade">
-            <img src="{{item.imgUrl}}">
-          </div>
+        <div *ngFor="let item of raid.item | isUpgrade">
+          <app-upgrade [raid]= raid [item]="item" [lootSlot]="lootService.sortByUpgrade(item.id, raid.id)[0]"></app-upgrade>
         </div>
       </div>
     </div>

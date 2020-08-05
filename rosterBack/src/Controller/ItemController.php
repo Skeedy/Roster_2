@@ -60,6 +60,8 @@ class ItemController extends AbstractController
                     $item->setIsUpgrade($checkUpgrade);
                     $coffer = "Coffer";
                     $item->setIsCoffer(strpos($itemName,$coffer));
+                    $item->setCanBeUpgraded(strpos($itemName, 'rystarium') && !strpos($itemName, 'ugmented'));
+                    $check->setIsUpgraded(strpos($itemName, 'ugmented'));
                     $item->setName($itemName);
                     $item->setImgUrl('https://xivapi.com' . $data['Icon']);
                     $item->setIlvl($ilvl);

@@ -124,8 +124,27 @@ class Item
     /**
      * @ORM\Column(type="boolean")
      * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $isCoffer;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canBeUpgraded;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     */
+    private $isUpgraded;
 
 
     public function __construct()
@@ -274,6 +293,30 @@ class Item
     public function setIsCoffer(bool $isCoffer): self
     {
         $this->isCoffer = $isCoffer;
+
+        return $this;
+    }
+
+    public function getCanBeUpgraded(): ?bool
+    {
+        return $this->canBeUpgraded;
+    }
+
+    public function setCanBeUpgraded(bool $canBeUpgraded): self
+    {
+        $this->canBeUpgraded = $canBeUpgraded;
+
+        return $this;
+    }
+
+    public function getIsUpgraded(): ?bool
+    {
+        return $this->isUpgraded;
+    }
+
+    public function setIsUpgraded(bool $isUpgraded): self
+    {
+        $this->isUpgraded = $isUpgraded;
 
         return $this;
     }

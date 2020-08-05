@@ -92,7 +92,7 @@
           </div>
           <div class="ml-2 d-flex">
             <div *ngFor="let item of itemRaid | isNotCoffer | magicWeapon" >
-              <img class="my-3 mx-1" [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
+              <img class="mx-1" [ngClass]="{'active' :(lootSlot?.item_id && item.id == lootSlot?.item_id),
                           'selected': item.id == itemSelected}"
                    (click)="setItem(item.id);
                  slotItemId = item.slot.id;

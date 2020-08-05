@@ -3,6 +3,7 @@ export class Loot {
   chest: string;
   item_url: string;
   instance_url: string;
+  item_id: string;
   player_url: string;
   instance_id: number;
   item_name: string;
@@ -12,4 +13,5 @@ export class Loot {
   playerjob_id: number;
   value: number;
   week: number;
+  item_isUpgrade: string;
 }

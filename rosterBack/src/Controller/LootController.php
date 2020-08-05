@@ -185,4 +185,15 @@ class LootController extends AbstractController
         $em->persist($newCurrentStuff);
 
     }
+    /**
+     * @Route("/setupgrade", name="loot_get", methods={"PATCH"})
+     */
+    public function getUpgrade(Request $request, SerializerInterface $serializer,InstanceRepository $instanceRepository, PlayerJobRepository $playerJobRepository, ItemRepository $itemRepository, EntityManagerInterface $em, LootRepository $lootRepository)
+    {
+        $json = $request->getContent();
+        $json = $serializer->decode($json, 'json');
+        $instance = $instanceRepository->findOneBy(['id' => $json['instance']]);
+        $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
+
+    }
 }

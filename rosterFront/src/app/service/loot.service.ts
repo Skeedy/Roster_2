@@ -36,6 +36,11 @@ export class LootService {
       return loot.chest === chest.toString() && loot.instance_id === instanceId.toString();
     })
   }
+  sortByUpgrade(itemid, instanceId){
+    return this._lootsSub.value.filter((loot:Loot)=>{
+      return loot.item_id === itemid.toString() && loot.instance_id === instanceId.toString();
+    })
+  }
   getWeek(){
     return this.http.get(Globals.APP_API+ '/roster/currentWeek')
   }
@@ -49,5 +54,14 @@ export class LootService {
     }
     console.log(obj);
     return this.http.patch(Globals.APP_API+ '/loot/', obj);
+  }
+  getItemToUpgrade(idItem, idPlayerJob, idInstance){
+    const obj = {
+      playerjob_id : idPlayerJob,
+      instance : idInstance,
+      item_id: idItem
+    }
+    console.log(obj);
+    return this.http.post(Globals.APP_API+ '/loot/getitemtoupgrade', obj);
   }
 }

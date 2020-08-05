@@ -43,7 +43,7 @@ export class PoolComponent implements OnInit, OnChanges {
   constructor(public lootServ: LootService, public rosterServ: RosterService) { }
 
   ngOnInit(){
-    this.lootServ.refreshWeekLoot().subscribe();
+
   }
   ngOnChanges(): void {
     if (this.lootSlot) {

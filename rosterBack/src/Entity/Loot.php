@@ -41,7 +41,7 @@ class Loot
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups("loots")
      */
     private $chest;

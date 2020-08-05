@@ -117,6 +117,7 @@ class RosterController extends AbstractController
         }
         $sql ='
 SELECT item.name AS item_name,
+item.is_upgrade as item_isUpgrade,
 item.id AS item_id,
 instance.id AS instance_id, 
 player.name AS player_name,
@@ -127,7 +128,6 @@ item.img_url AS item_url,
 loot.week,
 instance.img_url AS instance_url,
 player.img_url AS player_url,
-slot.id AS slot_id,
 image.imgpath AS job_img FROM instance 
 INNER JOIN loot ON instance.id = loot.instance_id 
 AND week = :week 
@@ -137,7 +137,6 @@ INNER JOIN player ON player_id = player.id
 INNER JOIN item ON loot.item_id = item.id
 INNER JOIN job ON player_job.job_id = job.id
 INNER JOIN image ON job.image_id = image.id
-INNER JOIN slot ON item.slot_id = slot.id
 ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['week' => $currentWeek, 'roster' => $roster]);

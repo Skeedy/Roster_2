@@ -101,13 +101,7 @@ class WishItem
      * @Groups("wishItem")
      * @Groups("roster")
      */
-    private $weapon;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
-     * @Groups("wishItem")
-     * @Groups("roster")
-     */
     private $mainHand;
 
     /**
@@ -250,18 +244,6 @@ class WishItem
     public function setRing2(?Item $ring2): self
     {
         $this->ring2 = $ring2;
-
-        return $this;
-    }
-
-    public function getWeapon(): ?Item
-    {
-        return $this->weapon;
-    }
-
-    public function setWeapon(?Item $weapon): self
-    {
-        $this->weapon = $weapon;
 
         return $this;
     }

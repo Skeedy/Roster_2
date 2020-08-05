@@ -1,0 +1,5 @@
+  <img (click)="setItem(stuffToUpgrade.id)"
+       [ngClass]="{'selected': itemId == stuffToUpgrade.id,
+        'noNeed': disabled == true}"
+       height="75px" class="jobImg"
+    src="{{stuffToUpgrade.imgUrl}}" matTooltip="{{stuffToUpgrade.name}}">

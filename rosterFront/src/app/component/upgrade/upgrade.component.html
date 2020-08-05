@@ -1,0 +1,18 @@
+<div class="justify-content-center d-flex">
+  <img class="mr-3" height="65px"
+       (click)="showSetUpgrade= !showSetUpgrade;"
+       src="{{item.imgUrl}}"
+       matTooltip="{{item.name}}">
+  <div *ngIf="!lootSlot">
+    <img height="65px" src="https://xivapi.com/cj/companion/none.png">
+  </div>
+  <div *ngIf="lootSlot">
+    <img src="{{lootSlot.player_url}}">
+  </div>
+</div>
+<app-set-upgrade [valueRaid]= raid.value
+                 [item]="item"
+                 [(setUpgrade)]="showSetUpgrade">
+
+</app-set-upgrade>
+

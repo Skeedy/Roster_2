@@ -13,4 +13,5 @@ export class Item {
   jobs: Job[];
   isCoffer: boolean;
   isUpgrade: boolean;
+  isUpgraded: boolean;
 }

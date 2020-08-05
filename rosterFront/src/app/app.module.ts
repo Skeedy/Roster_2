@@ -77,6 +77,10 @@ import { HealWeaponPipe } from './pipe/heal-weapon.pipe';
 import { MagicWeaponPipe } from './pipe/magic-weapon.pipe';
 import { RangedWeaponPipe } from './pipe/ranged-weapon.pipe';
 import { IsUpgradePipe } from './pipe/is-upgrade.pipe';
+import { UpgradeComponent } from './component/upgrade/upgrade.component';
+import { SetUpgradeComponent } from './component/set-upgrade/set-upgrade.component';
+import { UpgradePlayerJobComponent } from './component/upgrade-player-job/upgrade-player-job.component';
+import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrade-select-job.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +117,10 @@ import { IsUpgradePipe } from './pipe/is-upgrade.pipe';
     MagicWeaponPipe,
     RangedWeaponPipe,
     IsUpgradePipe,
+    UpgradeComponent,
+    SetUpgradeComponent,
+    UpgradePlayerJobComponent,
+    UpgradeSelectJobComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
