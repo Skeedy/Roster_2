@@ -57,6 +57,11 @@ class Loot
      */
     private $item;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     */
+    private $itemUpgraded;
+
 
     public function getId(): ?int
     {
@@ -105,7 +110,7 @@ class Loot
         return $this->chest;
     }
 
-    public function setChest(int $chest): self
+    public function setChest(?int $chest): self
     {
         $this->chest = $chest;
 
@@ -132,6 +137,18 @@ class Loot
     public function setItem(?Item $item): self
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function getItemUpgraded(): ?Item
+    {
+        return $this->itemUpgraded;
+    }
+
+    public function setItemUpgraded(?Item $itemUpgraded): self
+    {
+        $this->itemUpgraded = $itemUpgraded;
 
         return $this;
     }

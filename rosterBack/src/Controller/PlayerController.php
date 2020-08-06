@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CurrentStuff;
+use App\Entity\OldStuff;
 use App\Entity\PlayerJob;
 use App\Entity\WishItem;
 use App\Repository\JobRepository;
@@ -124,6 +125,8 @@ class PlayerController extends AbstractController
                 $em->remove($wishItem);
                 $newWishItem = new WishItem();
                 $newCurrentStuff = new CurrentStuff();
+                $newOldStuff = new OldStuff();
+                $playerJob->setOldStuff($newOldStuff);
                 $playerJob->setCurrentstuff($newCurrentStuff);
                 $playerJob->setWishItem($newWishItem);
                 $playerJob->setJob($jobId);
@@ -149,6 +152,8 @@ class PlayerController extends AbstractController
             $playerJob = new PlayerJob();
             $wishItem = new WishItem();
             $currentStuff = new CurrentStuff();
+            $newOldStuff = new OldStuff();
+            $playerJob->setOldStuff($newOldStuff);
             $ordcount = count($player->getPlayerJobs());
             $playerJob->setWishItem($wishItem);
             $playerJob->setCurrentstuff($currentStuff);

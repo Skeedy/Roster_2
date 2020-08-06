@@ -16,6 +16,7 @@ export class UpgradePlayerJobComponent implements OnInit {
   itemSelected: number;
   disabled :boolean;
   noNeed: boolean;
+  @Input() playerJobSet: number;
   @Input() item: Item;
   @Output() valueChange = new EventEmitter();
   constructor() { }

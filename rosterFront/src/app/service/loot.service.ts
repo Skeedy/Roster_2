@@ -55,13 +55,15 @@ export class LootService {
     console.log(obj);
     return this.http.patch(Globals.APP_API+ '/loot/', obj);
   }
-  getItemToUpgrade(idItem, idPlayerJob, idInstance){
+  setItemToUpgrade(idLoot, idItem, idPlayerJob, idInstance, itemToUpgradeId){
     const obj = {
+      id : idLoot? idLoot : null,
       playerjob_id : idPlayerJob,
       instance : idInstance,
-      item_id: idItem
+      item_id: idItem,
+      itemUpgrade: itemToUpgradeId
     }
     console.log(obj);
-    return this.http.post(Globals.APP_API+ '/loot/getitemtoupgrade', obj);
+    return this.http.patch(Globals.APP_API+ '/loot/setupgrade', obj);
   }
 }

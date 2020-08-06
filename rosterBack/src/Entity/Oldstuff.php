@@ -6,17 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CurrentStuffRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OldstuffRepository")
  */
-class CurrentStuff
+class Oldstuff
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("currentStuff")
-     * @Groups("roster")
-     * @Groups("loots")
      */
     private $id;
 

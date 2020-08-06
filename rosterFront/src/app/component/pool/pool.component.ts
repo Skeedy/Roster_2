@@ -38,6 +38,7 @@ export class PoolComponent implements OnInit, OnChanges {
   disabled: boolean;
   html: string;
   error: boolean;
+  buttonDisabled = true;
   @Input() lootId : number;
   @Output() poolListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(public lootServ: LootService, public rosterServ: RosterService) { }
@@ -50,6 +51,7 @@ export class PoolComponent implements OnInit, OnChanges {
       this.itemSet = this.lootSlot.item_id ? this.lootSlot.item_id : '';
       this.playerJobSet = this.lootSlot.playerjob_id ? this.lootSlot.playerjob_id : '';
     }
+
   }
   close() {
     this.poolList = false;
@@ -60,14 +62,19 @@ export class PoolComponent implements OnInit, OnChanges {
     this.playerJobSelected = null;
     this.error = false;
     this.itemObject = null;
+    this.buttonDisabled = true;
   }
   setItem(idItem){
     this.itemSet = idItem;
     this.itemSelected = idItem;
     this.playerJobSelected = null;
+    this.buttonDisabled = true;
   }
   getPlayerJob(idPlayerJob : number){
     this.playerJobSelected = idPlayerJob;
+    if (this.playerJobSelected || this.playerJobSet && this.itemSelected) {
+      this.buttonDisabled = false;
+    }
   }
   patchLoot(instanceValue, chest){
     let playerJobId = this.playerJobSelected? this.playerJobSelected : this.playerJobSet;

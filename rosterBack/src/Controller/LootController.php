@@ -37,14 +37,15 @@ class LootController extends AbstractController
         $instance = $instanceRepository->findOneBy(['value' => $json['instance']]);
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
         $newCurrentStuff = $playerJob->getCurrentstuff();
+        $newOldStuff = $playerJob->getOldStuff();
         $currentWeek = date('W');
         $dateCheck = date('D') === 'Mon';
         $job = $playerJob->getJob();
-        $slot = $itemChest->getSlot();
+        $slotChest = $itemChest->getSlot();
         $items = $job->getItems();
         $itemToAssignCurrent ='';
         foreach ($items as $item){
-            if($item->getSlot() === $slot && $item->getIlvl() == 500 && $item->getIsSavage()){
+            if($item->getSlot() === $slotChest && $item->getIlvl() == 500 && $item->getIsSavage()){
                 $itemToAssignCurrent = $item;
             }
         }
@@ -52,14 +53,18 @@ class LootController extends AbstractController
             $currentWeek -= 1;
         }
         if ($loot) {
-            $currentStuffToDelete = $loot->getPlayerJob()->getCurrentstuff();
+            $oldStuff = $loot->getPlayerJob()->getOldStuff();
+            $currentStuff = $loot->getPlayerJob()->getCurrentstuff();
+            $oldSlotId = $loot->getItem()->getSlot()->getId();
             $loot->setChest($json['chest']);
             $loot->setRoster($this->getUser());
             $loot->setInstance($instance);
             $loot->setPlayerJob($playerJob);
+            $loot->setItemUpgraded(NULL);
             $loot->setItem($itemChest);
             $loot->setWeek($currentWeek);
-            $this->setItemIntoCurrentstuff($slot->getId(), $currentStuffToDelete ,$newCurrentStuff, $itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
+            $this->deleteOldItem($oldSlotId, $oldStuff, $currentStuff, $em);
+            $this->setItemIntoCurrentstuff($slotChest->getId(),$newCurrentStuff, $newOldStuff,$itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
 
         } else {
             $loot = new Loot();
@@ -68,132 +73,160 @@ class LootController extends AbstractController
             $loot->setInstance($instance);
             $loot->setPlayerJob($playerJob);
             $loot->setItem($itemChest);
+            $loot->setItemUpgraded(NULL);
             $loot->setWeek($currentWeek);
-            $this->setItemIntoCurrentstuff($slot->getId(), null ,$newCurrentStuff, $itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
+            $this->setItemIntoCurrentstuff($slotChest->getId(), $newCurrentStuff, $newOldStuff,$itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
+        }
+        $em->persist($loot);
+        $em->flush();
+        return $this->json($loot, 200, [], ['groups' => 'loots']);
+    }
+    public function deleteOldItem($slotId, $oldStuff, $currentStuff, $em){
+        switch ($slotId) {
+            case 1 :
+                $currentStuff->setMainHand($oldStuff->getMainHand()? $oldStuff->getMainHand() : null);
+                break;
+            case 2 :
+
+                break;
+            case 3 :
+                $currentStuff->setHead($oldStuff->getHead()? $oldStuff->getHead() : null);
+                break;
+            case 4 :
+                $currentStuff->setBody($oldStuff->getBody()? $oldStuff->getBody() : null);
+                break;
+            case 5 :
+                $currentStuff->setHands($oldStuff->getHands()? $oldStuff->getHands() : null);
+                break;
+            case 6 :
+                $currentStuff->setBelt($oldStuff->getBelt()? $oldStuff->getBelt() : null);
+                break;
+            case 7 :
+                $currentStuff->setLegs($oldStuff->getLegs()? $oldStuff->getLegs() : null);
+                break;
+            case 8 :
+                $currentStuff->setFeet($oldStuff->getFeet()? $oldStuff->getFeet() : null);
+                break;
+            case 9 :
+                $currentStuff->setEarring($oldStuff->getEarring()? $oldStuff->getEarring() : null);
+                break;
+            case 10 :
+                $currentStuff->setNeck($oldStuff->getNeck()? $oldStuff->getNeck() : null);
+                break;
+            case 11 :
+                $currentStuff->setBracelet($oldStuff->getBracelet()? $oldStuff->getBracelet() : null);
+                break;
+            case 12 :
+                $currentStuff->setRing1($oldStuff->getRing1()? $oldStuff->getRing1() : null);
+                break;
+        }
+        $em->persist($currentStuff);
+        $em->flush();
+    }
+    public function setItemIntoCurrentstuff($slotId ,$newCurrentStuff, $newOldStuff ,$itemToAssignCurrent, $em)
+    {
+        switch ($slotId) {
+            case 1 :
+                $newOldStuff->setMainHand($newCurrentStuff->getMainHand()? $newCurrentStuff->getMainHand() : null);
+                $newCurrentStuff->setMainHand($itemToAssignCurrent);
+                break;
+            case 2 :
+                $newOldStuff->setOffHand($newCurrentStuff->getOffHand()? $newCurrentStuff->getOffHand() : null);
+                $newCurrentStuff->setOffHand($itemToAssignCurrent);
+                break;
+            case 3 :
+                $newOldStuff->setHead($newCurrentStuff->getHead()? $newCurrentStuff->getHead() : null);
+                $newCurrentStuff->setHead($itemToAssignCurrent);
+                break;
+            case 4 :
+                $newOldStuff->setBody($newCurrentStuff->getBody()? $newCurrentStuff->getBody() : null);
+                $newCurrentStuff->setBody($itemToAssignCurrent);
+                break;
+            case 5 :
+                $newOldStuff->setHands($newCurrentStuff->getHands()? $newCurrentStuff->getHands() : null);
+                $newCurrentStuff->setHands($itemToAssignCurrent);
+                break;
+            case 6 :
+                $newOldStuff->setBelt($newCurrentStuff->getBelt()? $newCurrentStuff->getBelt() : null);
+                $newCurrentStuff->setBelt($itemToAssignCurrent);
+                break;
+            case 7 :
+                $newOldStuff->setLegs($newCurrentStuff->getLegs()? $newCurrentStuff->getLegs() : null);
+                $newCurrentStuff->setLegs($itemToAssignCurrent);
+                break;
+            case 8 :
+                $newOldStuff->setFeet($newCurrentStuff->getFeet()? $newCurrentStuff->getFeet() : null);
+                $newCurrentStuff->setFeet($itemToAssignCurrent);
+                break;
+            case 9 :
+                $newOldStuff->setEarring($newCurrentStuff->getEarring()? $newCurrentStuff->getEarring() : null);
+                $newCurrentStuff->setEarring($itemToAssignCurrent);
+                break;
+            case 10 :
+                $newOldStuff->setNeck($newCurrentStuff->getNeck()? $newCurrentStuff->getNeck() : null);
+                $newCurrentStuff->setNeck($itemToAssignCurrent);
+                break;
+            case 11 :
+                $newOldStuff->setBracelet($newCurrentStuff->getBracelet()? $newCurrentStuff->getBracelet() : null);
+                $newCurrentStuff->setBracelet($itemToAssignCurrent);
+                break;
+            case 12 :
+                $newOldStuff->setRing1($newCurrentStuff->getRing1()? $newCurrentStuff->getRing1() : null);
+                $newCurrentStuff->setRing1($itemToAssignCurrent);
+                break;
+        }
+        $em->persist($newCurrentStuff, $newOldStuff);
+
+    }
+    /**
+     * @Route("/setupgrade", name="loot_setpatch", methods={"PATCH"})
+     */
+    public function getUpgrade(Request $request, SerializerInterface $serializer,InstanceRepository $instanceRepository, PlayerJobRepository $playerJobRepository, ItemRepository $itemRepository, EntityManagerInterface $em, LootRepository $lootRepository)
+    {
+        $json = $request->getContent();
+        $json = $serializer->decode($json, 'json');
+        $instance = $instanceRepository->findOneBy(['value' => $json['instance']]);
+        $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
+        $loot = $json['id'] == NULL ? NULL : $lootRepository->findOneBy(['id' => $json['id']]);
+        $item = $itemRepository->findOneBy(['id' => $json['item_id']]);
+        $itemToUpgrade = $itemRepository->findOneBy(['id' => $json['itemUpgrade']]);
+        $newCurrentStuff = $playerJob->getCurrentstuff();
+        $newOldStuff = $playerJob->getOldStuff();
+        $currentWeek = date('W');
+        $dateCheck = date('D') === 'Mon';
+        $slot = $itemToUpgrade->getSlot();
+        if ($dateCheck) {
+            $currentWeek -= 1;
+        }
+        if ($loot){
+            $oldStuff = $loot->getPlayerJob()->getOldStuff();
+            $currentStuff = $loot->getPlayerJob()->getCurrentstuff();
+            $oldSlotId = $loot->getItemUpgraded()->getSlot()->getId();
+            $loot->setInstance($instance);
+            $loot->setChest(NULL);
+            $loot->setItem($item);
+            $loot->setItemUpgraded($itemToUpgrade);
+            $loot->setRoster($this->getUser());
+            $loot->setPlayerJob($playerJob);
+            $loot->setWeek($currentWeek);
+            $this->deleteOldItem($oldSlotId, $oldStuff, $currentStuff, $em);
+            $this->setItemIntoCurrentstuff($slot->getId(),$newCurrentStuff, $newOldStuff,$itemToUpgrade, $em);
+
+        }
+        if (!$loot){
+            $loot = new Loot();
+            $loot->setInstance($instance);
+            $loot->setChest(NULL);
+            $loot->setItem($item);
+            $loot->setItemUpgraded($itemToUpgrade);
+            $loot->setRoster($this->getUser());
+            $loot->setPlayerJob($playerJob);
+            $loot->setWeek($currentWeek);
+            $this->setItemIntoCurrentstuff($slot->getId(), $newCurrentStuff, $newOldStuff,  $itemToUpgrade, $em);
         }
         $em->persist($loot);
         $em->flush();
         return $this->json($loot, 200, [], ['groups' => 'loots']);
     }
 
-    public function setItemIntoCurrentstuff($slotId, $currentStuffToDelete ,$newCurrentStuff, $itemToAssignCurrent, $em)
-    {
-        switch ($slotId) {
-            case 1 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setMainHand($currentStuffToDelete->getPrevMainHand()? $currentStuffToDelete->getPrevMainHand() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getMainHand();
-                $newCurrentStuff->setMainHand($itemToAssignCurrent);
-                $newCurrentStuff->setPrevMainHand($previousStuff);
-                break;
-            case 2 :
-                $newCurrentStuff->setOffHand($itemToAssignCurrent);
-                break;
-            case 3 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setHead($currentStuffToDelete->getPrevHead()? $currentStuffToDelete->getPrevHead() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getHead();
-                $newCurrentStuff->setHead($itemToAssignCurrent);
-                $newCurrentStuff->setPrevHead($previousStuff);
-                break;
-            case 4 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setBody($currentStuffToDelete->getPrevBody()? $currentStuffToDelete->getPrevBody() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getBody();
-                $newCurrentStuff->setBody($itemToAssignCurrent);
-                $newCurrentStuff->setPrevBody($previousStuff);
-                break;
-            case 5 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setHands($currentStuffToDelete->getPrevHands()? $currentStuffToDelete->getPrevHands() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getHands();
-                $newCurrentStuff->setHands($itemToAssignCurrent);
-                $newCurrentStuff->setPrevHands($previousStuff);
-                break;
-            case 6 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setBelt($currentStuffToDelete->getPrevBelt()? $currentStuffToDelete->getPrevBelt() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getBelt();
-                $newCurrentStuff->setBelt($itemToAssignCurrent);
-                $newCurrentStuff->setPrevBelt($previousStuff);
-                break;
-            case 7 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setLegs($currentStuffToDelete->getPrevLegs()? $currentStuffToDelete->getPrevLegs() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getLegs();
-                $newCurrentStuff->setLegs($itemToAssignCurrent);
-                $newCurrentStuff->setPrevLegs($previousStuff);
-                break;
-            case 8 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setFeet($currentStuffToDelete->getPrevFeet()? $currentStuffToDelete->getPrevFeet() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getFeet();
-                $newCurrentStuff->setFeet($itemToAssignCurrent);
-                $newCurrentStuff->setPrevFeet($previousStuff);
-                break;
-            case 9 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setEarring($currentStuffToDelete->getPrevEarring()? $currentStuffToDelete->getPrevEarring() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getEarring();
-                $newCurrentStuff->setEarring($itemToAssignCurrent);
-                $newCurrentStuff->setPrevEarring($previousStuff);
-                break;
-            case 10 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setNeck($currentStuffToDelete->getPrevNeck()? $currentStuffToDelete->getPrevNeck() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getNeck();
-                $newCurrentStuff->setNeck($itemToAssignCurrent);
-                $newCurrentStuff->setPrevNeck($previousStuff);
-                break;
-            case 11 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setBracelet($currentStuffToDelete->getPrevBracelet()? $currentStuffToDelete->getPrevBracelet() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getBracelet();
-                $newCurrentStuff->setBracelet($itemToAssignCurrent);
-                $newCurrentStuff->setPrevBracelet($previousStuff);
-                break;
-            case 12 :
-                if($currentStuffToDelete !== null) {
-                    $currentStuffToDelete->setRing1($currentStuffToDelete->getPrevRing1()? $currentStuffToDelete->getPrevRing1() : null);
-                    $em->persist($currentStuffToDelete);
-                }
-                $previousStuff = $newCurrentStuff->getRing1();
-                $newCurrentStuff->setRing1($itemToAssignCurrent);
-                $newCurrentStuff->setPrevRing1($previousStuff);
-                break;
-        }
-        $em->persist($newCurrentStuff);
-
-    }
-    /**
-     * @Route("/setupgrade", name="loot_get", methods={"PATCH"})
-     */
-    public function getUpgrade(Request $request, SerializerInterface $serializer,InstanceRepository $instanceRepository, PlayerJobRepository $playerJobRepository, ItemRepository $itemRepository, EntityManagerInterface $em, LootRepository $lootRepository)
-    {
-        $json = $request->getContent();
-        $json = $serializer->decode($json, 'json');
-        $instance = $instanceRepository->findOneBy(['id' => $json['instance']]);
-        $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
-
-    }
 }

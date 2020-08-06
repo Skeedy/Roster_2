@@ -17,20 +17,29 @@ export class PlayerJobLootComponent implements OnInit, OnChanges {
   @Input() playerJobSel :number;
   @Input() slotItemid: number;
   @Input() item: Item;
+  @Input() itemSet: number;
+  itemId: number;
   disabled :boolean;
   noNeed = true;
   @Output() playerJobSelected: EventEmitter<number>= new EventEmitter<number>();
   ngOnInit(){
     this.noNeed = true;
+    if (this.item){
+      this.itemId = this.item.id;
+    }
   }
   ngOnChanges(): void {
     this.disabled = false;
     this.noNeed = false;
     this.check();
+    if (this.item) {
+      this.itemId = this.item.id;
+    }
   }
   setPlayerJob(idPlayerJob){
     this.playerJobSelectedId = idPlayerJob;
     this.playerJobSelected.emit(idPlayerJob);
+    console.log(' itemSet: ' +this.itemSet + 'itemId :' + this.itemId + 'playerJobId :' + this.playerJob.id + 'playerJobSet : ' + this.playerJobSel)
   }
   check(){
     if(this.item) {

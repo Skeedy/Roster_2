@@ -1,18 +1,18 @@
 <div class="justify-content-center d-flex">
-  <img class="mr-3" height="65px"
+  <img class="mr-3" height="75px"
        (click)="showSetUpgrade= !showSetUpgrade;"
        src="{{item.imgUrl}}"
        matTooltip="{{item.name}}">
   <div *ngIf="!lootSlot">
-    <img height="65px" src="https://xivapi.com/cj/companion/none.png">
+    <img height="75px" src="https://xivapi.com/cj/companion/none.png">
   </div>
   <div *ngIf="lootSlot">
-    <img src="{{lootSlot.player_url}}">
+    <img height="75px" src="{{lootSlot.player_url}}">
   </div>
 </div>
 <app-set-upgrade [valueRaid]= raid.value
                  [item]="item"
-                 [(setUpgrade)]="showSetUpgrade">
-
+                 [(setUpgrade)]="showSetUpgrade"
+                 [lootSlot] = lootSlot>
 </app-set-upgrade>
 

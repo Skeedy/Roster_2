@@ -114,6 +114,7 @@
             [playerJob]="playerJob"
             [lootSlot]="lootSlot"
             [item]="itemObject"
+            [itemSet] = itemSet
             [slotItemid] = slotItemId>
           </app-player-job-loot>
         </div>
@@ -122,7 +123,7 @@
     <div *ngIf="error" style="color: red"> {{html}}</div>
   </div>
   <div class="d-flex justify-content-center">
-    <button mat-button style="background: #23bf5d" (click)="patchLoot(raidValue, numberChest)"> Save</button>
+    <button [disabled]="buttonDisabled" mat-button style="background: #23bf5d" (click)="patchLoot(raidValue, numberChest)"> Save</button>
   </div>
 </div>
 <div *ngIf="poolList" class="overlay" (click)="close()"></div>

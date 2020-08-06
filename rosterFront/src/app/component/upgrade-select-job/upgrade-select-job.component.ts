@@ -11,6 +11,9 @@ export class UpgradeSelectJobComponent implements OnInit {
 @Input() stuffToUpgrade: Item;
 @Input() itemId: number;
 @Input() playerJob: PlayerJob;
+@Input() itemSet: number;
+@Input() playerJobSet : number;
+@Input() lootSlot: any;
 @Output() itemSelectedId: EventEmitter<number>= new EventEmitter<number>();
 
 disabled: boolean;

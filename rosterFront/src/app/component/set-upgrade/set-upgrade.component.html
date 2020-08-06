@@ -14,7 +14,8 @@
                                   [valueRaid]=valueRaid
                                   [playerJobSelectedId]="playerJobSelectedId"
                                   [playerJob] = playerJob
-                                  [item]="item">
+                                  [item]="item"
+                                  [playerJobSet]="playerJobSet">
           </app-upgrade-player-job>
         </div>
       </div>
@@ -24,10 +25,16 @@
         <app-upgrade-select-job [playerJob]=playerJob
                                 [stuffToUpgrade]="item"
                                 (itemSelectedId)=getItem($event)
-                                [itemId]="itemId">
+                                [itemId]="itemId"
+                                [itemSet]="itemSet"
+                                [playerJobSet]="playerJobSet"
+                                [lootSlot] = lootSlot>
         </app-upgrade-select-job>
       </div>
     </div>
+  </div>
+  <div class="text-center">
+    <button [disabled]="buttonDisabled" mat-button (click)="setItem()" style="background-color: #3adb76">Save</button>
   </div>
 </div>
 <div *ngIf="setUpgrade" class="overlay" (click)="close()"></div>

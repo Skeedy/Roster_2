@@ -75,6 +75,12 @@ class PlayerJob
      */
     private $currentstuff;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Oldstuff", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $oldStuff;
+
     public function __construct()
     {
         $this->loots = new ArrayCollection();
@@ -196,6 +202,18 @@ class PlayerJob
     public function setCurrentstuff(?CurrentStuff $currentstuff): self
     {
         $this->currentstuff = $currentstuff;
+
+        return $this;
+    }
+
+    public function getOldStuff(): ?Oldstuff
+    {
+        return $this->oldStuff;
+    }
+
+    public function setOldStuff(Oldstuff $oldStuff): self
+    {
+        $this->oldStuff = $oldStuff;
 
         return $this;
     }

@@ -1,3 +1,5 @@
+import {Item} from "./item";
+
 export class Loot {
   loot_id: number;
   chest: string;
@@ -14,4 +16,5 @@ export class Loot {
   value: number;
   week: number;
   item_isUpgrade: string;
+  item_upgraded: Item;
 }
