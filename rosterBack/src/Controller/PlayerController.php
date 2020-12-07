@@ -7,6 +7,7 @@ use App\Entity\OldStuff;
 use App\Entity\PlayerJob;
 use App\Entity\WishItem;
 use App\Repository\JobRepository;
+use App\Repository\LootRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\RosterRepository;
 use App\Repository\WishItemRepository;
@@ -171,8 +172,17 @@ class PlayerController extends AbstractController
     /**
      * @Route("/{id}", name="player_delete", methods={"DELETE"})
      */
-    public function delete(Player $player, EntityManagerInterface $em){
+    public function delete(Player $player, EntityManagerInterface $em, LootRepository $lootRepository){
         if ($player){
+            $playerjobs = $player->getPlayerJobs();
+            foreach ($playerjobs as $playerjob) {
+                $playerjobID = $playerjob->getId();
+                $loots = $lootRepository->findBy(['playerjob'=> $playerjobID]);
+                foreach ($loots as $loot) {
+                    $em->remove($loot);
+                    $em->flush();
+                }
+            }
             $em->remove($player);
             $em->flush();
         }

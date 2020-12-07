@@ -64,7 +64,7 @@ class PlayerJob
     private $wishitem;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="playerJob")
+     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="playerjob", cascade={"persist", "remove"})
      */
     private $loots;
 
