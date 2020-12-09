@@ -19,6 +19,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @Route("/item")
  */
+
+define('weaponUpgrade', 'Ester');
+define('gearUpgrade', 'Twine');
+define('accessorieUpgrade', 'Dusting');
 class ItemController extends AbstractController
 {
     public function strpos_arr($haystack, $needle) {
@@ -52,16 +56,16 @@ class ItemController extends AbstractController
                 if(!$check) {
                     $item = new Item();
                     $itemName = $data['Name'];
-                    $savageName = 'denchoir';
+                    $savageName = 'denmorn';
                     $book = "ook";
-                    $upgrade = ['Twine', 'Ester', 'Glaze'];
+                    $upgrade = [weaponUpgrade, gearUpgrade, accessorieUpgrade];
                     $checkSavage = strpos($itemName, $book) || strpos($itemName, $savageName) || $this->strpos_arr($itemName, $upgrade);
                     $checkUpgrade = $this->strpos_arr($itemName, $upgrade);
                     $item->setIsUpgrade($checkUpgrade);
                     $coffer = "Coffer";
                     $item->setIsCoffer(strpos($itemName,$coffer));
-                    $item->setCanBeUpgraded(strpos($itemName, 'rystarium') && !strpos($itemName, 'ugmented'));
-                    $check->setIsUpgraded(strpos($itemName, 'ugmented'));
+                    $item->setCanBeUpgraded(strpos($itemName, 'ryptlurker') && !strpos($itemName, 'ugmented'));
+                    $item->setIsUpgraded(strpos($itemName, 'ugmented'));
                     $item->setName($itemName);
                     $item->setImgUrl('https://xivapi.com' . $data['Icon']);
                     $item->setIlvl($ilvl);
@@ -144,10 +148,10 @@ class ItemController extends AbstractController
                     $em->persist($item);
                     $em->flush();
                     $raid1 = ['Waist','Earring','Necklace','Bracelet','Ring'];
-                    $raid2 = ['Head','Hand','Foot', 'Glaze'];
-                    $raid3 = ['Head','Hand','Foot', 'Leg', 'Twine', 'Ester'];
+                    $raid2 = ['Head','Hand','Foot', accessorieUpgrade];
+                    $raid3 = ['Head','Hand','Foot', 'Leg', weaponUpgrade, gearUpgrade];
                     $raid4 = ['Weapon','Chest'];
-                    if($checkSavage && strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade) || $checkSavage && $ilvl%2 === 1){
+                    if($checkSavage && (strpos($itemName,$coffer) || $this->strpos_arr($itemName,$upgrade) || $checkSavage && $ilvl%2 === 1)){
                         if($this->strpos_arr($itemName, $raid1)){
                             $instance = $instanceRepository->findOneBy(['value' => 1]);
                             $instance->addItem($item);
@@ -177,6 +181,63 @@ class ItemController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/updateCoffer", name="coffer_update", methods={"POST", "PATCH"})
+     */
+    public function updateCoffer(ItemRepository $itemRepository, EntityManagerInterface $em, SerializerInterface $serializer, InstanceRepository $instanceRepository){
+        $string = isset($_GET['string'])? $_GET['string'] : '';
+        if($string) {
+            $rawDatas = file_get_contents('https://xivapi.com/search?string=' . $string . '&private_key=73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+            $datas = $serializer->decode($rawDatas, 'json');
+            $nbItems = 0;
+            foreach ($datas['Results'] as $data) {
+                $check = $itemRepository->findOneBy(['LodId' => $data['ID']]);
+                if (!$check) {
+                    $item = new Item();
+                    $itemName = $data['Name'];
+                    $coffer = "Coffer";
+                    $isCoffer = strpos($itemName, $coffer);
+                    $raid1 = ['Waist', 'Earring', 'Necklace', 'Bracelet', 'Ring'];
+                    $raid2 = ['Head', 'Hand', 'Foot'];
+                    $raid3 = ['Head', 'Hand', 'Foot', 'Leg'];
+                    $raid4 = ['Weapon', 'Chest'];
+
+                    if ($isCoffer) {
+                        if ($this->strpos_arr($itemName, $raid1)) {
+                            $instance = $instanceRepository->findOneBy(['value' => 1]);
+                            $instance->addItem($item);
+                        }
+                        if ($this->strpos_arr($itemName, $raid2)) {
+                            $instance = $instanceRepository->findOneBy(['value' => 2]);
+                            $instance->addItem($item);
+                        }
+                        if ($this->strpos_arr($itemName, $raid3)) {
+                            $instance = $instanceRepository->findOneBy(['value' => 3]);
+                            $instance->addItem($item);
+                        }
+                        if ($this->strpos_arr($itemName, $raid4)) {
+                            $instance = $instanceRepository->findOneBy(['value' => 4]);
+                            $instance->addItem($item);
+                        }
+                        $item->setIsUpgrade(false);
+                        $item->setIsCoffer(true);
+                        $item->setCanBeUpgraded(false);
+                        $item->setIsUpgraded(false);
+                        $item->setName($itemName);
+                        $item->setImgUrl('https://xivapi.com' . $data['Icon']);
+                        $item->setIlvl(NULL);
+                        $item->setIsSavage(true);
+                        $item->setLodId($data['ID']);
+                        $item->setSlot(NULL);
+                        $item->setJobType(NULL);
+                        $em->persist($item);
+                        $em->persist($instance);
+                        $em->flush();
+                    }
+                }
+            }
+        }
+    }
 //    public function patchLoop($itemRepository, $ilvl, $em, $page, $s, $slotRepository){
 //        $rawDatas = file_get_contents('https://xivapi.com/search?filters=LevelItem=' . $ilvl . $page. '&columns=Name,ID,EquipSlotCategoryTargetID,Icon,LevelItem&private_key=73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
 //        $datas = $s->decode($rawDatas, 'json');

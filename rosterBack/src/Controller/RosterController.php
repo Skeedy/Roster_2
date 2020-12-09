@@ -28,7 +28,7 @@ class RosterController extends AbstractController
 {
 
     /**
-     * @Route("/new", name="roster_new", methods={"POST"})
+     * @Route("/register", name="roster_register", methods={"POST"})
      */
     public function register(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {

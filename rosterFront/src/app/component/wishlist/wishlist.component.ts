@@ -27,7 +27,7 @@ export class WishlistComponent implements OnInit {
 
   getSlotStuff(id) {
     this.jobItems = this.items.filter((item:Item)=>{
-      return item.slot.id === id && item.ilvl >= 500;
+      return item.slot.id === id && item.ilvl >= 530;
     })
   }
 }

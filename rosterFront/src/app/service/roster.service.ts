@@ -102,6 +102,6 @@ export class RosterService {
       email: data.email,
       password: data.password
     };
-    return this.http.post(Globals.APP_API + '/roster/new', obj);
+    return this.http.post(Globals.APP_API + '/roster/register', obj);
   }
 }
