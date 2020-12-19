@@ -45,7 +45,7 @@ class LootController extends AbstractController
         $items = $job->getItems();
         $itemToAssignCurrent ='';
         foreach ($items as $item){
-            if($item->getSlot() === $slotChest && $item->getIlvl() == 500 && $item->getIsSavage()){
+            if($item->getSlot() === $slotChest && $item->getIlvl() == 530 && $item->getIsSavage()){
                 $itemToAssignCurrent = $item;
             }
         }
