@@ -81,6 +81,7 @@ import { UpgradeComponent } from './component/upgrade/upgrade.component';
 import { SetUpgradeComponent } from './component/set-upgrade/set-upgrade.component';
 import { UpgradePlayerJobComponent } from './component/upgrade-player-job/upgrade-player-job.component';
 import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrade-select-job.component';
+import { ErrorBlockComponent } from './component/error-block/error-block.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrad
     SetUpgradeComponent,
     UpgradePlayerJobComponent,
     UpgradeSelectJobComponent,
+    ErrorBlockComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

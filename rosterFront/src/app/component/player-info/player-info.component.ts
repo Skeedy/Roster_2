@@ -9,6 +9,7 @@ import {Wishitem} from "../../class/wishitem";
 import {WhishitemService} from "../../service/whishitem.service";
 import {CurrentstuffService} from "../../service/currentstuff.service";
 import {Currentstuff} from "../../class/currentstuff";
+import {ErrorService} from "../../service/error.service";
 
 @Component({
   selector: 'app-player-info',
@@ -27,12 +28,18 @@ export class PlayerInfoComponent implements OnInit {
   currentStuff: Currentstuff;
   jobOrder: number;
   ddbId: number;
-  constructor(public jobServ: JobService, public wishitemServ: WhishitemService, public currentServ: CurrentstuffService) { }
+  constructor(public jobServ: JobService,
+              public wishitemServ: WhishitemService,
+              public currentServ: CurrentstuffService,
+              public errorServ: ErrorService) { }
 
   ngOnInit(): void {
     if(this.player.playerJobs[0]) {
       this.idJobMain = this.player.playerJobs[0].job.id;
     }
+  }
+  noJobSet(){
+    this.errorServ.getError(this.player.name + ' has no job defined.', 'Please select at least one job to proceed')
   }
   getJobStuff(wishId, StuffId) {
     if (this.player.playerJobs.length > 0) {

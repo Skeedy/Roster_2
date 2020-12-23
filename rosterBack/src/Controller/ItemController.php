@@ -48,7 +48,7 @@ class ItemController extends AbstractController
     public function updateItems(ItemRepository $itemRepository,JobRepository $jobRepository, EntityManagerInterface $em, SerializerInterface $serializer, SlotRepository $slotRepository, InstanceRepository $instanceRepository){
         $ilvl = isset($_GET['ilvl'])? $_GET['ilvl'] : '';
         if($ilvl) {
-            $rawDatas = file_get_contents('https://xivapi.com/search?filters=LevelItem=' . $ilvl . '&columns=Name,ID,EquipSlotCategoryTargetID,ClassJobUseTargetID,Icon,LevelItem&limit=3000&private_key=73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+            $rawDatas = file_get_contents('https://xivapi.com/search?filters=LevelItem=' . $ilvl . '&columns=Name,ID,EquipSlotCategoryTargetID,ClassJobUseTargetID,Icon,LevelItem&limit=3000&private_key=619d5d66075843a49bfb76c7d87cc412333c8d75389e47b8a17eac66c5109a7c');
             $datas = $serializer->decode($rawDatas, 'json');
             $nbItems = 0;
             foreach ($datas['Results'] as $data){

@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\Player;
 use App\Repository\PlayerRepository;
 
-define('APIKey', '73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+define('APIKey', '619d5d66075843a49bfb76c7d87cc412333c8d75389e47b8a17eac66c5109a7c');
 
 /**
  * @Route("/player")
