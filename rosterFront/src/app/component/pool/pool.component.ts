@@ -4,6 +4,7 @@ import {Item} from "../../class/item";
 import {Player} from "../../class/player";
 import {LootService} from "../../service/loot.service";
 import {RosterService} from "../../service/roster.service";
+import {SuccessService} from "../../service/success.service";
 
 @Component({
   selector: 'app-pool',
@@ -41,7 +42,7 @@ export class PoolComponent implements OnInit, OnChanges {
   buttonDisabled = true;
   @Input() lootId : number;
   @Output() poolListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(public lootServ: LootService, public rosterServ: RosterService) { }
+  constructor(public lootServ: LootService, public rosterServ: RosterService, public successServ: SuccessService) { }
 
   ngOnInit(){
 
@@ -79,9 +80,11 @@ export class PoolComponent implements OnInit, OnChanges {
   patchLoot(instanceValue, chest){
     let playerJobId = this.playerJobSelected? this.playerJobSelected : this.playerJobSet;
       this.lootServ.patchLoot(this.lootId? this.lootId : '', this.itemSet,playerJobId, instanceValue, chest)
-        .subscribe(_=> {
+        .subscribe(data=> {
           this.lootServ.refreshWeekLoot().subscribe();
           this.rosterServ.refreshRoster().subscribe();
+          // @ts-ignore
+          this.successServ.getSuccess(data.item.name + ' has been set to ' + data.playerjob.player.name + '\'s ' + data.playerjob.job.name)
           this.close();
         })
     }

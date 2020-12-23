@@ -30,6 +30,7 @@ class Job
      * @Groups("jobStuff")
      * @Groups("jobShow")
      * @Groups("instance")
+     * @Groups("loots")
      */
     private $name;
 

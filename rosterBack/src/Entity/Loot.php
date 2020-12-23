@@ -54,6 +54,7 @@ class Loot
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
+     * @Groups("loots")
      */
     private $item;
 
