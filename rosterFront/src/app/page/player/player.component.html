@@ -1,7 +1,9 @@
 <div class="container">
-<div *ngFor="let player of (rosterServ._rosterSub | async).player">
-  <app-player-info [player]="player"></app-player-info>
-</div>
+  <div class="row flex-wrap">
+    <div *ngFor="let player of (rosterServ._rosterSub | async).player;" class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+     <app-player-info [player]="player"></app-player-info>
+    </div>
+  </div>
 <div>
   <button *ngIf="rosterServ.nbPlayer+searchServ.nbForm < 8" mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
   <button *ngIf="searchServ.formUp && searchServ.nbForm >= 1 && searchServ.playerList.playersIds.length === searchServ.nbForm"

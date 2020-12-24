@@ -10,6 +10,7 @@ import {WhishitemService} from "../../service/whishitem.service";
 import {CurrentstuffService} from "../../service/currentstuff.service";
 import {Currentstuff} from "../../class/currentstuff";
 import {ErrorService} from "../../service/error.service";
+import {Job} from "../../class/job";
 
 @Component({
   selector: 'app-player-info',
@@ -28,6 +29,7 @@ export class PlayerInfoComponent implements OnInit {
   currentStuff: Currentstuff;
   jobOrder: number;
   ddbId: number;
+  jobName: string;
   constructor(public jobServ: JobService,
               public wishitemServ: WhishitemService,
               public currentServ: CurrentstuffService,

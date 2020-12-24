@@ -1,56 +1,54 @@
 <div [@jobs] *ngIf="jobList" class="dialog">
-  <h3 style="color: #fff"> {{player.name}}'s
+  <h3 class="text-center text-white"> {{player.name}}'s
     <span *ngIf="!isSub">main job</span>
     <span *ngIf="isSub">sub job</span>
   </h3>
   <div class="d-flex">
-    <div>
-      <h5>Tanks</h5>
+    <div class="mr-2">
+      <h5 class="text-center text-white">Tanks</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | tankJobs">
           <div>
             <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
-                 (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
+                 (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
           </div>
         </div>
       </div>
-      <h5>Healer</h5>
+      <h5 class="text-center text-white">Healer</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | healerJobs">
           <img  [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
-                (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
+                (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
     </div>
-    <div>
-      <h5>Melee DPS</h5>
+    <div class="ml-2">
+      <h5 class="text-center text-white">Melee DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | meleedps">
           <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
-               (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
+               (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
-      <h5>Ranged DPS</h5>
+      <h5 class="text-center text-white">Ranged DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | rangeddps">
           <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
-      <h5>Magic DPS</h5>
+      <h5 class="text-center text-white">Magic DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | magicdps">
           <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
-               (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
+               (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="html" style="color: #FFF">
-    {{html}}
-  </div>
+
   <div *ngIf="isSub! && ddbId">
-    <button (click)="delete()">Delete</button>
+    <button mat-raised-button class="btn-danger" (click)="delete()">Delete</button>
   </div>
 </div>
 <div *ngIf="jobList" class="overlay" (click)="close()"></div>
