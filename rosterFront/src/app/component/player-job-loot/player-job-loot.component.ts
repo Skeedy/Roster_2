@@ -43,7 +43,7 @@ export class PlayerJobLootComponent implements OnInit, OnChanges {
   }
   check(){
     if(this.item) {
-      let slotName = this.item.slot.name;
+      let slotName = this.item.slot.name === 'fingers' ? this.item.slot.name : 'ring1';
       if (this.item.isSavage) {
         if(this.item.isCoffer) {
           if(this.item.slot.id === 1){

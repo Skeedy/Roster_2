@@ -5,6 +5,7 @@ import {ItemService} from "../../service/item.service";
 import {Item} from "../../class/item";
 import {Player} from "../../class/player";
 import {Wishitem} from "../../class/wishitem";
+import {SuccessService} from "../../service/success.service";
 
 @Component({
   selector: 'app-wishlist',

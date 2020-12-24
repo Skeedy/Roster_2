@@ -34,7 +34,7 @@
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | rangeddps">
           <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
-               (click)="patchJob(isSub, job.id, player.id)" src="{{job.image.imgpath |imgpath}}">
+               (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
       <h5 class="text-center text-white">Magic DPS</h5>

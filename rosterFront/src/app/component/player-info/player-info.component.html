@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="player.playerJobs.length == 0">
+      <div *ngIf="player.playerJobs.length == 0" class="d-flex align-items-center">
         <button mat-mini-fab color="warn" (click)="showJob= !showJob; isSub = false; ddbId = null;"> + </button>
       </div>
       <div *ngIf="player.playerJobs.length>0">

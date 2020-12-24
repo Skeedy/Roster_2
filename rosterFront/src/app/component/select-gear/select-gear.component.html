@@ -2,7 +2,7 @@
   <h4 style="color: #FFF"> Select your {{slotName}}</h4>
   <div class="d-flex justify-content-around">
     <div *ngFor="let item of jobItems">
-      <img class="item" matTooltip="{{item.name}}" (click)="changeGear(item.id)" src="{{item.imgUrl}}">
+      <img class="item" matTooltip="{{item.name}}" (click)="changeGear(item)" src="{{item.imgUrl}}">
     </div>
   </div>
 </div>

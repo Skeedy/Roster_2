@@ -107,6 +107,7 @@ class Item
      * @ORM\ManyToMany(targetEntity="App\Entity\Job", inversedBy="items")
      * @Groups("instance")
      * @Groups("roster")
+     * @Groups("item")
      * @OrderBy({"id" = "ASC"})
      */
     private $jobs;

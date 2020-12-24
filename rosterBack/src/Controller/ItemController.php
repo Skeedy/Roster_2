@@ -23,6 +23,19 @@ use Symfony\Component\Serializer\SerializerInterface;
 define('weaponUpgrade', 'Ester');
 define('gearUpgrade', 'Twine');
 define('accessorieUpgrade', 'Dusting');
+
+
+// Value db jobs
+CONST tanks = [1,2,3,4];
+CONST healers = [5,6,7];
+CONST meleeDPS = [8,9,10,11];
+CONST rangedDPS = [12,13,14];
+CONST magicDPS = [15,16,17];
+
+CONST monk = 8;
+CONST dragoon = 9;
+CONST ninja = 10;
+CONST samourai = 11;
 class ItemController extends AbstractController
 {
     public function strpos_arr($haystack, $needle) {
@@ -75,49 +88,49 @@ class ItemController extends AbstractController
                     switch ($last_word) {
                         case 'Casting':
                             $jobType = 'Casting';
-                            $jobs = $jobRepository->findBy(['id'=> [16,17,18]]);
+                            $jobs = $jobRepository->findBy(['value'=> magicDPS]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Fending':
                             $jobType = 'Fending';
-                            $jobs = $jobRepository->findBy(['id'=> [2,3,4,5]]);
+                            $jobs = $jobRepository->findBy(['value'=> tanks]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Maiming':
                             $jobType = 'Maiming';
-                            $jobs = $jobRepository->findBy(['id'=> 10]);
+                            $jobs = $jobRepository->findBy(['value'=> dragoon]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Striking':
                             $jobType = 'Striking';
-                            $jobs = $jobRepository->findBy(['id'=> [9,12]]);
+                            $jobs = $jobRepository->findBy(['value'=> [monk, samourai]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Slaying':
                             $jobType = 'Slaying';
-                            $jobs = $jobRepository->findBy(['id'=> [9,10,12]]);
+                            $jobs = $jobRepository->findBy(['value'=> [monk, dragoon, samourai]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Healing':
                             $jobType = 'Healing';
-                            $jobs = $jobRepository->findBy(['id'=> [6,7,8]]);
+                            $jobs = $jobRepository->findBy(['id'=> healers]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
                             break;
                         case 'Scouting':
                             $jobType = 'Scouting';
-                            $jobs = $jobRepository->findBy(['id'=> [11]]);
+                            $jobs = $jobRepository->findBy(['value'=> ninja]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }
@@ -125,7 +138,7 @@ class ItemController extends AbstractController
                         case 'Aiming':
                             $jobType = 'Aiming';
                             $checkNinja = $data['EquipSlotCategoryTargetID'] >= 9;
-                            $jobs = $jobRepository->findBy(['id' => [$checkNinja? 11: '', 13, 14, 15]]);
+                            $jobs = $jobRepository->findBy(['value' => [$checkNinja? ninja: '', rangedDPS]]);
                             foreach ($jobs as $job){
                                 $item->addJob($job);
                             }

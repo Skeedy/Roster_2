@@ -70,6 +70,11 @@ class Job
      */
     private $items;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $value;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -165,6 +170,18 @@ class Job
             $this->items->removeElement($item);
             $item->removeJob($this);
         }
+
+        return $this;
+    }
+
+    public function getValue(): ?int
+    {
+        return $this->value;
+    }
+
+    public function setValue(int $value): self
+    {
+        $this->value = $value;
 
         return $this;
     }

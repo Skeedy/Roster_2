@@ -171,8 +171,14 @@ class LootController extends AbstractController
                 $newCurrentStuff->setBracelet($itemToAssignCurrent);
                 break;
             case 12 :
-                $newOldStuff->setRing1($newCurrentStuff->getRing1()? $newCurrentStuff->getRing1() : null);
-                $newCurrentStuff->setRing1($itemToAssignCurrent);
+                if($itemToAssignCurrent->getIsSavage()) {
+                    $newOldStuff->setRing1($newCurrentStuff->getRing1() ? $newCurrentStuff->getRing1() : null);
+                    $newCurrentStuff->setRing1($itemToAssignCurrent);
+                }
+                if(!$itemToAssignCurrent->getIsSavage()) {
+                    $newOldStuff->setRing2($newCurrentStuff->getRing2() ? $newCurrentStuff->getRing2() : null);
+                    $newCurrentStuff->setRing2($itemToAssignCurrent);
+                }
                 break;
         }
         $em->persist($newCurrentStuff, $newOldStuff);

@@ -144,11 +144,11 @@
     <div>
       <div class="slotName">Left ring</div>
       <div *ngIf="!(wishitemServ._wishItemSub|async).ring1">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='left ring'"
+        <img class="item"
              src="https://xivapi.com/img-misc/gear/ring1.png">
       </div>
       <div *ngIf="(wishitemServ._wishItemSub|async).ring1">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='left ring'"
+        <img class="item"
              matTooltip="{{(wishitemServ._wishItemSub|async).ring1.name}}"
              src="{{(wishitemServ._wishItemSub|async).ring1.imgUrl}}"/>
       </div>
@@ -156,11 +156,11 @@
     <div>
       <div class="slotName">Right ring</div>
       <div *ngIf="!(wishitemServ._wishItemSub|async).ring2">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+        <img class="item"
              src="https://xivapi.com/img-misc/gear/ring2.png">
       </div>
       <div *ngIf="(wishitemServ._wishItemSub|async).ring2">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+        <img class="item"
              matTooltip="{{(wishitemServ._wishItemSub|async).ring2.name}}"
              src="{{(wishitemServ._wishItemSub|async).ring2.imgUrl}}"/>
       </div>
@@ -168,6 +168,7 @@
   </div>
 </div>
 <app-select-gear [wishId]="player.playerJobs[index].wishitem.id"
+                 [player]="player"
                  [jobItems]="jobItems"
                  [slotName]="slotName"
                  [(gearShow)]="gearShow">
