@@ -84,6 +84,13 @@ import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrad
 import { ErrorBlockComponent } from './component/error-block/error-block.component';
 import { SuccessBlockComponent } from './component/success-block/success-block.component';
 import { LoadingBoxComponent } from './component/loading-box/loading-box.component';
+import { PreviousLootComponent } from './component/previous-loot/previous-loot.component';
+import { PreviousWeekLootComponent } from './component/previous-week-loot/previous-week-loot.component';
+import { InstanceOnePipe } from './pipe/instance-one.pipe';
+import { InstanceTwoPipe } from './pipe/instance-two.pipe';
+import { InstanceThreePipe } from './pipe/instance-three.pipe';
+import { InstanceFourPipe } from './pipe/instance-four.pipe';
+
 
 @NgModule({
   declarations: [
@@ -127,6 +134,12 @@ import { LoadingBoxComponent } from './component/loading-box/loading-box.compone
     ErrorBlockComponent,
     SuccessBlockComponent,
     LoadingBoxComponent,
+    PreviousLootComponent,
+    PreviousWeekLootComponent,
+    InstanceOnePipe,
+    InstanceTwoPipe,
+    InstanceThreePipe,
+    InstanceFourPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

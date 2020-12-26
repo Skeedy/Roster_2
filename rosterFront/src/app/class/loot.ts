@@ -17,4 +17,5 @@ export class Loot {
   week: number;
   item_isUpgrade: string;
   item_upgraded: Item;
+  instance_value: number;
 }

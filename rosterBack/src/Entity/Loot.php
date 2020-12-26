@@ -26,12 +26,6 @@ class Loot
      */
     private $roster;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups("loots")
-     */
-    private $week;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlayerJob", inversedBy="loots")
@@ -63,6 +57,12 @@ class Loot
      */
     private $itemUpgraded;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="loots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $week;
+
 
     public function getId(): ?int
     {
@@ -80,19 +80,6 @@ class Loot
 
         return $this;
     }
-
-    public function getWeek(): ?int
-    {
-        return $this->week;
-    }
-
-    public function setWeek(int $Week): self
-    {
-        $this->week = $Week;
-
-        return $this;
-    }
-
 
     public function getPlayerJob(): ?PlayerJob
     {
@@ -150,6 +137,18 @@ class Loot
     public function setItemUpgraded(?Item $itemUpgraded): self
     {
         $this->itemUpgraded = $itemUpgraded;
+
+        return $this;
+    }
+
+    public function getWeek(): ?Week
+    {
+        return $this->week;
+    }
+
+    public function setWeek(?Week $week): self
+    {
+        $this->week = $week;
 
         return $this;
     }

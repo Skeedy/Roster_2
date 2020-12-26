@@ -8,6 +8,7 @@ use App\Repository\InstanceRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
+use App\Repository\WeekRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,8 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/roster")
@@ -126,43 +129,67 @@ loot.id AS loot_id,
 loot.chest,
 player_job.id AS playerjob_id,
 item.img_url AS item_url, 
-loot.week,
+week.value AS week,
 instance.img_url AS instance_url,
 player.img_url AS player_url,
 image.imgpath AS job_img 
 FROM instance 
 INNER JOIN loot ON instance.id = loot.instance_id 
-AND week = :week 
-AND roster_id = :roster 
 INNER JOIN player_job ON playerjob_id = player_job.id
 INNER JOIN player ON player_id = player.id
 INNER JOIN job ON player_job.job_id = job.id
 INNER JOIN image ON job.image_id = image.id
 INNER JOIN item ON loot.item_id = item.id 
+INNER JOIN week ON loot.week_id = week.id
+AND loot.roster_id = :roster AND week.value = :week
 ';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['week' => $currentWeek, 'roster' => $roster]);
-        $response =  $stmt->fetchAll();
-//        $loots = $lootRepository->findBy(['roster'=> $roster, 'week'=> $currentWeek]);
-        return $this->json($response, 200, []);
+        $result =  $stmt->fetchAll();
+        return $this->json($result, 200, []);
     }
     /**
      * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
      */
-    public function getWeekNumber(EntityManagerInterface $em){
+    public function getWeekNumber(EntityManagerInterface $em, LootRepository $lootRepository, WeekRepository $weekRepository){
+        $roster = $this->getUser();
+        $conn = $em->getConnection();
         $currentWeek = date('W');
         $dateCheck = date('D')==='Mon';
         if ($dateCheck){
             $currentWeek -=1;
         }
-        $roster = $this->getUser();
-        $conn = $em->getConnection();
-        $sql ='SELECT COUNT(DISTINCT `week`) AS `weekCount` FROM loot WHERE `roster_id` = :rosterid ';
+        $currentWeekId = $weekRepository->findOneBy(['value'=>$currentWeek])->getId();
+        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value
+FROM week INNER JOIN loot ON loot.week_id = week.id
+WHERE week.id < :week AND loot.roster_id = :roster
+GROUP BY week.value';
+        /*$sql2 ='SELECT item.name AS item_name,
+item.is_upgrade as item_isUpgrade,
+loot.item_upgraded_id AS item_upgraded,
+item.id AS item_id,
+instance.id AS instance_id, 
+player.name AS player_name,
+loot.id AS loot_id,
+loot.chest,
+player_job.id AS playerjob_id,
+item.img_url AS item_url, 
+week.value AS week,
+instance.img_url AS instance_url,
+player.img_url AS player_url,
+image.imgpath AS job_img  FROM week 
+INNER JOIN `loot` ON week.id = loot.week_id
+INNER JOIN player_job ON player_job.id = loot.playerjob_id
+INNER JOIN item ON item.id = loot.item_id
+INNER JOIN player ON player.id = player_job.player_id
+INNER JOIN instance ON instance.id = loot.instance_id
+INNER JOIN job ON player_job.job_id = job.id
+INNER JOIN image ON job.image_id = image.id
+WHERE week.id < :week AND loot.roster_id = :roster';*/
         $stmt = $conn->prepare($sql);
-        $stmt->execute(['rosterid' => $roster->getId()]);
-        $count = $stmt->fetch()['weekCount'];
-        $showPrevious = $count>= 1? true: false;
-        $response = new JsonResponse(['week'=>$currentWeek, 'weekCount'=>$showPrevious? $count-1: $count, 'showPrevious' => $showPrevious]);
+        $stmt->execute(['week' => $currentWeekId, 'roster' => $roster->getId()]);
+        $result  =  $stmt->fetchAll();
+        $response = new JsonResponse(['weekCount' => $result, 'week'=>$currentWeek, 'showPrevious' => $result? true: false], 200);
         return $response;
     }
     /**

@@ -6,10 +6,12 @@ use App\Entity\Job;
 use App\Entity\Loot;
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Entity\Week;
 use App\Repository\InstanceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerJobRepository;
+use App\Repository\WeekRepository;
 use App\Repository\WishItemRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobRepository;
@@ -35,6 +37,7 @@ class LootController extends AbstractController
                                   PlayerJobRepository $playerJobRepository,
                                   ItemRepository $itemRepository,
                                   EntityManagerInterface $em,
+                                  WeekRepository $weekRepository,
                                   LootRepository $lootRepository)
     {
         $json = $request->getContent();
@@ -59,6 +62,13 @@ class LootController extends AbstractController
         if ($dateCheck) {
             $currentWeek -= 1;
         }
+        if (!$weekRepository->findOneBy(['value'=> $currentWeek])){
+            $newWeek = new Week();
+            $newWeek->setValue($currentWeek === 53 ? 1 : $currentWeek);
+            $newWeek->setYear(date("Y"));
+            $em->persist($newWeek);
+            $em->flush();
+        }
         if ($loot) {
             $oldStuff = $loot->getPlayerJob()->getOldStuff();
             $currentStuff = $loot->getPlayerJob()->getCurrentstuff();
@@ -69,7 +79,7 @@ class LootController extends AbstractController
             $loot->setPlayerJob($playerJob);
             $loot->setItemUpgraded(NULL);
             $loot->setItem($itemChest);
-            $loot->setWeek($currentWeek);
+            $loot->setWeek($weekRepository->findOneBy(['value'=> $currentWeek]));
             $this->deleteOldItem($oldSlotId, $oldStuff, $currentStuff, $em);
             $this->setItemIntoCurrentstuff($slotChest->getId(),$newCurrentStuff, $newOldStuff,$itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
 
@@ -81,7 +91,7 @@ class LootController extends AbstractController
             $loot->setPlayerJob($playerJob);
             $loot->setItem($itemChest);
             $loot->setItemUpgraded(NULL);
-            $loot->setWeek($currentWeek);
+            $loot->setWeek($weekRepository->findOneBy(['value'=> $currentWeek]));
             $this->setItemIntoCurrentstuff($slotChest->getId(), $newCurrentStuff, $newOldStuff,$itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
         }
         $em->persist($loot);
@@ -92,11 +102,38 @@ class LootController extends AbstractController
     /**
      * @Route("/week", name="loot_get", methods={"GET"})
      */
-    public function getLootbyWeek(LootRepository $lootRepository){
+    public function getLootbyWeek(LootRepository $lootRepository, EntityManagerInterface $em){
         $week = isset($_GET['week'])? $_GET['week'] : '';
         $roster = $this->getUser();
-        $loots = $lootRepository->findBy(['roster'=> $roster, 'week'=> $week], ['id' => 'DESC']);
-        return $this->json($loots, 200, [], ['groups' => 'loots'] );
+        $conn = $em->getConnection();
+        $sql = '
+SELECT item.name AS item_name,
+item.is_upgrade as item_isUpgrade,
+loot.item_upgraded_id AS item_upgraded,
+item.id AS item_id,
+instance.id AS instance_id, 
+player.name AS player_name,
+loot.id AS loot_id,
+loot.chest,
+player_job.id AS playerjob_id,
+item.img_url AS item_url, 
+week.value AS week,
+instance.img_url AS instance_url,
+instance.value as instance_value,
+player.img_url AS player_url,
+image.imgpath AS job_img  FROM week 
+INNER JOIN `loot` ON week.id = loot.week_id
+INNER JOIN player_job ON player_job.id = loot.playerjob_id
+INNER JOIN item ON item.id = loot.item_id
+INNER JOIN player ON player.id = player_job.player_id
+INNER JOIN instance ON instance.id = loot.instance_id
+INNER JOIN job ON player_job.job_id = job.id
+INNER JOIN image ON job.image_id = image.id
+WHERE week.value = :week AND loot.roster_id = :roster';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['week' => $week, 'roster' => $roster->getId()]);
+        $result  =  $stmt->fetchAll();
+        return $this->json($result, 200, []);
     }
 
     public function deleteOldItem($slotId, $oldStuff, $currentStuff, $em){

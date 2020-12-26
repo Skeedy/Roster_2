@@ -43,7 +43,7 @@ export class RosterComponent implements OnInit {
       // @ts-ignore
       this.showPrevious = data.showPrevious;
       // @ts-ignore
-      this.weekCount = Array(parseInt(data.weekCount, 10)).fill(1).map((x,i)=>i);
+        this.weekCount = this.showPrevious? data.weekCount : [];
       this.instanceServ.getInstances().subscribe((data) => {
         if (data) {
           this.raids = data;

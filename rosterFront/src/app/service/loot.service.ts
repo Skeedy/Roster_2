@@ -44,6 +44,9 @@ export class LootService {
   getWeek(){
     return this.http.get(Globals.APP_API+ '/roster/currentWeek')
   }
+  getLootByWeek(value):Observable<Loot[]>{
+    return this.http.get<Loot[]>(Globals.APP_API+ '/loot/week?week=' + value);
+  }
   patchLoot(idLoot, idItem, idPlayerJob, instanceValue, chest){
     const obj = {
       id : idLoot? idLoot : null,
