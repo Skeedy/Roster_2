@@ -16,6 +16,8 @@ export class RosterComponent implements OnInit {
   public players: any;
   public week: any;
   public loots: Loot[];
+  public weekCount: any;
+  public showPrevious: boolean;
   constructor(
     private instanceServ: InstanceService,
     private router: Router,
@@ -35,17 +37,22 @@ export class RosterComponent implements OnInit {
         this.loots = data;
       });
     }
-    this.lootService.getWeek().subscribe(data=>
-      this.week = data);
-    this.instanceServ.getInstances().subscribe((data) => {
-      if (data) {
-        this.raids = data;
-      }
-    },(_)=>{
-      this.router.navigate(['/']);
-      this.rosterServ.logout();
-    });
-
+    this.lootService.getWeek().subscribe(data=> {
+      // @ts-ignore
+      this.week = data.week;
+      // @ts-ignore
+      this.showPrevious = data.showPrevious;
+      // @ts-ignore
+      this.weekCount = Array(parseInt(data.weekCount, 10)).fill(1).map((x,i)=>i);
+      this.instanceServ.getInstances().subscribe((data) => {
+        if (data) {
+          this.raids = data;
+        }
+      }, (_) => {
+        this.router.navigate(['/']);
+        this.rosterServ.logout();
+      });
+    })
   }
 
   // getAugment(instanceId){

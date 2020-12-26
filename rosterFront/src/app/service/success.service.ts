@@ -11,7 +11,6 @@ public success = new Success();
     this.success.html = html;
     this.success.isActive = true;
     this.success.subhtml = subhtml ? subhtml : '';
-    console.log(this.success.html);
     setTimeout( ()=> {
         this.success.isActive = false
         this.success.html = ''

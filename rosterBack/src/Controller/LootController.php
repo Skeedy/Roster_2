@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Entity\Loot;
 use App\Entity\Player;
+use App\Entity\Roster;
 use App\Repository\InstanceRepository;
 use App\Repository\ItemRepository;
 use App\Repository\LootRepository;
@@ -28,7 +29,13 @@ class LootController extends AbstractController
     /**
      * @Route("/", name="loot_patch", methods={"PATCH"})
      */
-    public function patchLootItem(Request $request, SerializerInterface $serializer, InstanceRepository $instanceRepository, PlayerJobRepository $playerJobRepository, ItemRepository $itemRepository, EntityManagerInterface $em, LootRepository $lootRepository)
+    public function patchLootItem(Request $request,
+                                  SerializerInterface $serializer,
+                                  InstanceRepository $instanceRepository,
+                                  PlayerJobRepository $playerJobRepository,
+                                  ItemRepository $itemRepository,
+                                  EntityManagerInterface $em,
+                                  LootRepository $lootRepository)
     {
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
@@ -81,6 +88,17 @@ class LootController extends AbstractController
         $em->flush();
         return $this->json($loot, 200, [], ['groups' => 'loots']);
     }
+
+    /**
+     * @Route("/week", name="loot_get", methods={"GET"})
+     */
+    public function getLootbyWeek(LootRepository $lootRepository){
+        $week = isset($_GET['week'])? $_GET['week'] : '';
+        $roster = $this->getUser();
+        $loots = $lootRepository->findBy(['roster'=> $roster, 'week'=> $week], ['id' => 'DESC']);
+        return $this->json($loots, 200, [], ['groups' => 'loots'] );
+    }
+
     public function deleteOldItem($slotId, $oldStuff, $currentStuff, $em){
         switch ($slotId) {
             case 1 :

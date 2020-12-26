@@ -160,7 +160,7 @@ class ItemController extends AbstractController
                     $item->setJobType($jobType);
                     $em->persist($item);
                     $em->flush();
-                    $raid1 = ['Waist','Earring','Necklace','Bracelet','Ring'];
+                    /*$raid1 = ['Waist','Earring','Necklace','Bracelet','Ring'];
                     $raid2 = ['Head','Hand','Foot', accessorieUpgrade];
                     $raid3 = ['Head','Hand','Foot', 'Leg', weaponUpgrade, gearUpgrade];
                     $raid4 = ['Weapon','Chest'];
@@ -183,7 +183,7 @@ class ItemController extends AbstractController
                         }
                         $em->persist($instance);
                         $em->flush();
-                    }
+                    }*/
                     $nbItems ++;
                 }
             }

@@ -5,6 +5,7 @@ import {Player} from "../../class/player";
 import {LootService} from "../../service/loot.service";
 import {RosterService} from "../../service/roster.service";
 import {SuccessService} from "../../service/success.service";
+import {LoadingService} from "../../service/loading.service";
 
 @Component({
   selector: 'app-pool',
@@ -42,7 +43,10 @@ export class PoolComponent implements OnInit, OnChanges {
   buttonDisabled = true;
   @Input() lootId : number;
   @Output() poolListChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(public lootServ: LootService, public rosterServ: RosterService, public successServ: SuccessService) { }
+  constructor(public lootServ: LootService,
+              public rosterServ: RosterService,
+              public successServ: SuccessService,
+              public loadingServ: LoadingService) { }
 
   ngOnInit(){
 
@@ -78,14 +82,18 @@ export class PoolComponent implements OnInit, OnChanges {
     }
   }
   patchLoot(instanceValue, chest){
+    this.loadingServ.activeLoading();
     let playerJobId = this.playerJobSelected? this.playerJobSelected : this.playerJobSet;
       this.lootServ.patchLoot(this.lootId? this.lootId : '', this.itemSet,playerJobId, instanceValue, chest)
         .subscribe(data=> {
-          this.lootServ.refreshWeekLoot().subscribe();
-          this.rosterServ.refreshRoster().subscribe();
-          // @ts-ignore
-          this.successServ.getSuccess(data.item.name + ' has been set to ' + data.playerjob.player.name + '\'s ' + data.playerjob.job.name)
-          this.close();
+          this.lootServ.refreshWeekLoot().subscribe(_=>{
+            this.rosterServ.refreshRoster().subscribe(_=>{
+              this.loadingServ.removeLoading();
+              // @ts-ignore
+              this.successServ.getSuccess(data.item.name + ' has been set to ' + data.playerjob.player.name + '\'s ' + data.playerjob.job.name)
+              this.close();
+            });
+          });
         })
     }
 }

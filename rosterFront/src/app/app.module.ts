@@ -83,6 +83,7 @@ import { UpgradePlayerJobComponent } from './component/upgrade-player-job/upgrad
 import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrade-select-job.component';
 import { ErrorBlockComponent } from './component/error-block/error-block.component';
 import { SuccessBlockComponent } from './component/success-block/success-block.component';
+import { LoadingBoxComponent } from './component/loading-box/loading-box.component';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { SuccessBlockComponent } from './component/success-block/success-block.c
     UpgradeSelectJobComponent,
     ErrorBlockComponent,
     SuccessBlockComponent,
+    LoadingBoxComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -71,7 +71,6 @@ class PlayerJob
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\CurrentStuff", cascade={"persist", "remove"})
      * @Groups("roster")
-     * @Groups("loots")
      */
     private $currentstuff;
 

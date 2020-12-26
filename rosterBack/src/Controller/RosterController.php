@@ -149,13 +149,21 @@ INNER JOIN item ON loot.item_id = item.id
     /**
      * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
      */
-    public function getWeekNumber(){
+    public function getWeekNumber(EntityManagerInterface $em){
         $currentWeek = date('W');
         $dateCheck = date('D')==='Mon';
         if ($dateCheck){
             $currentWeek -=1;
         }
-        return $this->json($currentWeek, 200, []);
+        $roster = $this->getUser();
+        $conn = $em->getConnection();
+        $sql ='SELECT COUNT(DISTINCT `week`) AS `weekCount` FROM loot WHERE `roster_id` = :rosterid ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['rosterid' => $roster->getId()]);
+        $count = $stmt->fetch()['weekCount'];
+        $showPrevious = $count>= 1? true: false;
+        $response = new JsonResponse(['week'=>$currentWeek, 'weekCount'=>$showPrevious? $count-1: $count, 'showPrevious' => $showPrevious]);
+        return $response;
     }
     /**
      * @Route("/{id}", name="roster_delete", methods={"DELETE"})
