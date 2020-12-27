@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-3">
-    <h5 class="text-center" style="color:#FFF"> Eden's Promise: Umbra (Savage)</h5>
+    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Umbra (Savage)</h6>
     <div *ngFor="let loot of loots | instanceOne" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
       <img height="50px" src="{{loot.job_img | imgpath}}">
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <h5 class="text-center" style="color:#FFF"> Eden's Promise: Litany (Savage)</h5>
+    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Litany (Savage)</h6>
     <div *ngFor="let loot of loots | instanceTwo" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
       <img height="50px" src="{{loot.job_img | imgpath}}">
@@ -16,16 +16,16 @@
     </div>
   </div>
   <div class="col-md-3">
-    <h5 class="text-center" style="color:#FFF"> Eden's Promise: Anamorphosis (Savage)</h5>
-    <div *ngFor="let loot of loots | instanceThree">
+    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Anamorphosis (Savage)</h6>
+    <div *ngFor="let loot of loots | instanceThree" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
       <img height="50px" src="{{loot.job_img | imgpath}}">
       <img height="50px" src="{{loot.item_url}}">
     </div>
   </div>
   <div class="col-md-3">
-    <h5  class="text-center" style="color:#FFF"> Eden's Promise: Eternity (Savage)</h5>
-    <div *ngFor="let loot of loots | instanceFour">
+    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Eternity (Savage)</h6>
+    <div *ngFor="let loot of loots | instanceFour" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
       <img height="50px" src="{{loot.job_img | imgpath}}">
       <img height="50px" src="{{loot.item_url}}">

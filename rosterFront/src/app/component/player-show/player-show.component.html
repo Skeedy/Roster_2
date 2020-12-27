@@ -1,46 +1,46 @@
 <div [@playerShow] *ngIf="playerShow" class="dialog">
-  <div class="position-absolute" style="left: 10px">
-    <img src="{{player.imgUrl}}">
-  </div>
-  <div class="position-absolute" style="right: 10px">
-    <div *ngIf="player.playerJobs" class="d-flex">
-      <div *ngFor="let job of player.playerJobs">
-        <div *ngIf="job.isMain">
-          <img height="60px" style="cursor: pointer"
-               (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = 0"
-               src="{{job.job.image.imgpath |imgpath }}">
+    <div class="row justify-content-md-center">
+      <div class="col-sm-12 col-lg-10 d-flex justify-content-between">
+        <img style="height: fit-content; border-radius: 20px;" src="{{player.imgUrl}}">
+        <div>
+          <h1 class="title">{{player.name}}</h1>
+          <div class="d-flex justify-content-center align-items-center">
+            <img height="45px" src="{{player.playerJobs[index].job.image.imgpath|imgpath}}">
+            <div class="jobName">{{player.playerJobs[index].job.name}}'s {{wishlistShow? 'wish list': 'current gear'}}</div>
+          </div>
         </div>
-        <div *ngIf="job.isSub">
-          <img height="40px" style="cursor: pointer"
-               (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = job.ord"
-               src="{{job.job.image.imgpath |imgpath }}">
+        <div *ngIf="player.playerJobs" class="d-flex">
+          <div *ngFor="let job of player.playerJobs">
+            <div *ngIf="job.isMain">
+              <img height="60px" style="cursor: pointer"
+                   (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = 0"
+                   src="{{job.job.image.imgpath |imgpath }}">
+            </div>
+            <div *ngIf="job.isSub">
+              <img height="40px" style="cursor: pointer"
+                   (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = job.ord"
+                   src="{{job.job.image.imgpath |imgpath }}">
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="title">{{player.name}}</div>
-  <div *ngIf="player.playerJobs.length > 0">
-    <div>
+    <div *ngIf="player.playerJobs.length > 0">
       <div>
-
-        <div class="position-absolute" style="right: 10px">
-          <button mat-button style="background: wheat" [class.active]="wishlistShow" (click)="wishlistShow = true">Wish list</button>
-          <button mat-button style="background: wheat" [class.active]="!wishlistShow" (click)="wishlistShow = false">Current Stuff</button>
+        <div>
         </div>
-        <div class="d-flex justify-content-center align-items-center">
-          <img height="45px" src="{{player.playerJobs[index].job.image.imgpath|imgpath}}">
-          <div class="jobName">{{player.playerJobs[index].job.name}}</div>
+        <app-wishlist *ngIf="wishlistShow" [index]=index [player]="player" [items]="items"></app-wishlist>
+        <app-current-stuff *ngIf="!wishlistShow" [index]=index [player]="player" [items]="items"></app-current-stuff>
+        <div class="row">
+           <div class="col-sm-12 col-lg-12 d-flex justify-content-center">
+            <div class="col-auto">
+            <button mat-button style="background: wheat" [class.active]="wishlistShow" (click)="wishlistShow = true">Wish list</button>
+            <button mat-button style="background: wheat" [class.active]="!wishlistShow" (click)="wishlistShow = false">Current gear</button>
+            </div>
+          </div>
         </div>
       </div>
-      <app-wishlist *ngIf="wishlistShow" [index]=index [player]="player" [items]="items"></app-wishlist>
-      <app-current-stuff *ngIf="!wishlistShow" [index]=index [player]="player" [items]="items"></app-current-stuff>
-    </div>
-    <div *ngIf="player.playerJobs.length == 0">
-      <h5 style="color: #FFF">
-        Please, choose a job to proceed
-      </h5>
     </div>
   </div>
-</div>
 <div *ngIf="playerShow" class="overlay" (click)="close()"></div>
 

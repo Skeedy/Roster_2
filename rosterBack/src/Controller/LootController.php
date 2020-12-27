@@ -242,7 +242,13 @@ WHERE week.value = :week AND loot.roster_id = :roster';
     /**
      * @Route("/setupgrade", name="loot_setpatch", methods={"PATCH"})
      */
-    public function getUpgrade(Request $request, SerializerInterface $serializer,InstanceRepository $instanceRepository, PlayerJobRepository $playerJobRepository, ItemRepository $itemRepository, EntityManagerInterface $em, LootRepository $lootRepository)
+    public function getUpgrade(Request $request,
+                               SerializerInterface $serializer,
+                               InstanceRepository $instanceRepository,
+                               PlayerJobRepository $playerJobRepository,
+                               ItemRepository $itemRepository,
+                               EntityManagerInterface $em,
+                               LootRepository $lootRepository,WeekRepository  $weekRepository)
     {
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
@@ -259,6 +265,13 @@ WHERE week.value = :week AND loot.roster_id = :roster';
         if ($dateCheck) {
             $currentWeek -= 1;
         }
+        if (!$weekRepository->findOneBy(['value'=> $currentWeek])){
+            $newWeek = new Week();
+            $newWeek->setValue($currentWeek === 53 ? 1 : $currentWeek);
+            $newWeek->setYear(date("Y"));
+            $em->persist($newWeek);
+            $em->flush();
+        }
         if ($loot){
             $oldStuff = $loot->getPlayerJob()->getOldStuff();
             $currentStuff = $loot->getPlayerJob()->getCurrentstuff();
@@ -269,7 +282,7 @@ WHERE week.value = :week AND loot.roster_id = :roster';
             $loot->setItemUpgraded($itemToUpgrade);
             $loot->setRoster($this->getUser());
             $loot->setPlayerJob($playerJob);
-            $loot->setWeek($currentWeek);
+            $loot->setWeek($weekRepository->findOneBy(['value'=> $currentWeek]));
             $this->deleteOldItem($oldSlotId, $oldStuff, $currentStuff, $em);
             $this->setItemIntoCurrentstuff($slot->getId(),$newCurrentStuff, $newOldStuff,$itemToUpgrade, $em);
 
@@ -282,7 +295,7 @@ WHERE week.value = :week AND loot.roster_id = :roster';
             $loot->setItemUpgraded($itemToUpgrade);
             $loot->setRoster($this->getUser());
             $loot->setPlayerJob($playerJob);
-            $loot->setWeek($currentWeek);
+            $loot->setWeek($weekRepository->findOneBy(['value'=> $currentWeek]));
             $this->setItemIntoCurrentstuff($slot->getId(), $newCurrentStuff, $newOldStuff,  $itemToUpgrade, $em);
         }
         $em->persist($loot);

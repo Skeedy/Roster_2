@@ -1,13 +1,12 @@
-<h1>{{wishitemServ._wishItemSub.value.id}}</h1>
-<div class="d-flex">
-  <div class="mr-3">
+<div class="row justify-content-md-center">
+  <div class="col-sm-2 col-lg-2">
     <div>
-      <div class="slotName">Main hand</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).mainHand">
+      <p class="slotName">M. hand</p>
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).mainHand">
         <img class="item" (click)="gearShow= !gearShow; getSlotStuff(1); slotName='weapon'"
              src="https://xivapi.com/img-misc/gear/mainhand.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).mainHand">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).mainHand">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(1); slotName='weapon'"
              matTooltip="{{(wishitemServ._wishItemSub|async).mainHand.name}}"
              src="{{(wishitemServ._wishItemSub|async).mainHand.imgUrl}}"/>
@@ -15,11 +14,11 @@
     </div>
     <div>
       <div class="slotName">Head</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).head">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).head">
         <img class="item" (click)="gearShow= !gearShow; getSlotStuff(3); slotName='head'"
              src="https://xivapi.com/img-misc/gear/head.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).head">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).head">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(3); slotName='head'"
              matTooltip="{{(wishitemServ._wishItemSub|async).head.name}}"
              src="{{(wishitemServ._wishItemSub|async).head.imgUrl}}"/>
@@ -27,11 +26,11 @@
     </div>
     <div>
       <div class="slotName">Body</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).body">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).body">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(4); slotName='body'"
              src="https://xivapi.com/img-misc/gear/body.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).body">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).body">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(4); slotName='body'"
              matTooltip="{{(wishitemServ._wishItemSub|async).body.name}}"
              src="{{(wishitemServ._wishItemSub|async).body.imgUrl}}"/>
@@ -39,11 +38,11 @@
     </div>
     <div>
       <div class="slotName">Hand</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).hands">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).hands">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(5); slotName='hands'"
              src="https://xivapi.com/img-misc/gear/hands.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).hands">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).hands">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(5); slotName='hands'"
              matTooltip="{{(wishitemServ._wishItemSub|async).hands.name}}"
              src="{{(wishitemServ._wishItemSub|async).hands.imgUrl}}"/>
@@ -51,11 +50,11 @@
     </div>
     <div>
       <div class="slotName">Waist</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).belt">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).belt">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6); slotName='waist'"
              src="https://xivapi.com/img-misc/gear/waist.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).belt">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).belt">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6); slotName='waist'"
              matTooltip="{{(wishitemServ._wishItemSub|async).belt.name}}"
              src="{{(wishitemServ._wishItemSub|async).belt.imgUrl}}"/>
@@ -63,11 +62,11 @@
     </div>
     <div>
       <div class="slotName">Legs</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).legs">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).legs">
         <img class="item" (click)="getSlotStuff(7); gearShow= !gearShow; slotName='legs'"
              src="https://xivapi.com/img-misc/gear/legs.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).legs">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).legs">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(7); slotName='legs'"
              matTooltip="{{(wishitemServ._wishItemSub|async).legs.name}}"
              src="{{(wishitemServ._wishItemSub|async).legs.imgUrl}}"/>
@@ -75,43 +74,47 @@
     </div>
     <div>
       <div class="slotName">Feet</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).feet">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).feet">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
              src="https://xivapi.com/img-misc/gear/feet.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).feet">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).feet">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
              matTooltip="{{(wishitemServ._wishItemSub|async).feet.name}}"
              src="{{(wishitemServ._wishItemSub|async).feet.imgUrl}}"/>
       </div>
     </div>
   </div>
-  <img src="{{player.portrait}}" height="675px" style="margin-top: 10px">
-  <div class="ml-3">
+  <div class="col-sm-8 col-lg-6 d-flex align-items-center">
+    <img src="{{player.portrait}}" class="img-fluid">
+  </div>
+  <div class="col-sm-2 col-lg-2">
     <div>
-      <div class="slotName">Off hand</div>
-        <div *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
-        <div *ngIf="!(wishitemServ._wishItemSub|async).offHand">
+      <div class="slotName">O. hand</div>
+        <div  class="text-center" *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
+        <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).offHand">
           <img class="item" (click)="gearShow= !gearShow;getSlotStuff(2); slotName='shield'"
                src="https://xivapi.com/img-misc/gear/offhand.png">
         </div>
-        <div *ngIf="(wishitemServ._wishItemSub|async).offHand">
+        <div  class="text-center" *ngIf="(wishitemServ._wishItemSub|async).offHand">
           <img class="item" (click)="gearShow= !gearShow;getSlotStuff(2); slotName='shield'"
                matTooltip="{{(wishitemServ._wishItemSub|async).offHand.name}}"
                src="{{(wishitemServ._wishItemSub|async).offHand.imgUrl}}"/>
         </div>
       </div>
-      <ng-template #png>
+      <ng-template #png class="text-center">
+           <div class="text-center">
         <img class="item" src="https://xivapi.com/img-misc/gear/offhand.png">
+          </div>
       </ng-template>
     </div>
     <div>
       <div class="slotName">Earring</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).earring">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).earring">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(9); slotName='earring'"
              src="https://xivapi.com/img-misc/gear/ear.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).earring">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).earring">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(9); slotName='earring'"
              matTooltip="{{(wishitemServ._wishItemSub|async).earring.name}}"
              src="{{(wishitemServ._wishItemSub|async).earring.imgUrl}}"/>
@@ -119,11 +122,11 @@
     </div>
     <div>
       <div class="slotName">Necklace</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).neck">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).neck">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(10); slotName='necklace'"
              src="https://xivapi.com/img-misc/gear/neck.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).neck">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).neck">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(10); slotName='necklace'"
              matTooltip="{{(wishitemServ._wishItemSub|async).neck.name}}"
              src="{{(wishitemServ._wishItemSub|async).neck.imgUrl}}"/>
@@ -131,11 +134,11 @@
     </div>
     <div>
       <div class="slotName">Bracelet</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).bracelet">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).bracelet">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(11); slotName='bracelet'"
              src="https://xivapi.com/img-misc/gear/wrist.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).bracelet">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).bracelet">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(11); slotName='bracelet'"
              matTooltip="{{(wishitemServ._wishItemSub|async).bracelet.name}}"
              src="{{(wishitemServ._wishItemSub|async).bracelet.imgUrl}}"/>
@@ -143,11 +146,11 @@
     </div>
     <div>
       <div class="slotName">Left ring</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).ring1">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).ring1">
         <img class="item"
              src="https://xivapi.com/img-misc/gear/ring1.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).ring1">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).ring1">
         <img class="item"
              matTooltip="{{(wishitemServ._wishItemSub|async).ring1.name}}"
              src="{{(wishitemServ._wishItemSub|async).ring1.imgUrl}}"/>
@@ -155,11 +158,11 @@
     </div>
     <div>
       <div class="slotName">Right ring</div>
-      <div *ngIf="!(wishitemServ._wishItemSub|async).ring2">
+      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).ring2">
         <img class="item"
              src="https://xivapi.com/img-misc/gear/ring2.png">
       </div>
-      <div *ngIf="(wishitemServ._wishItemSub|async).ring2">
+      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).ring2">
         <img class="item"
              matTooltip="{{(wishitemServ._wishItemSub|async).ring2.name}}"
              src="{{(wishitemServ._wishItemSub|async).ring2.imgUrl}}"/>
