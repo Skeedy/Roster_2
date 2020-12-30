@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Entity\Week;
 use App\Repository\InstanceRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
@@ -109,7 +110,7 @@ class RosterController extends AbstractController
     /**
      * @Route("/currentWeekLoot", name="roster_currentWeekLoot", methods={"GET"})
      */
-    public function profileCurrentWeek(EntityManagerInterface $em, InstanceRepository $instanceRepository, LootRepository $lootRepository){
+    public function profileCurrentWeek(EntityManagerInterface $em, WeekRepository $weekRepository){
 
         $roster = $this->getUser()->getId();
         $currentWeek = date('W');
@@ -117,6 +118,13 @@ class RosterController extends AbstractController
         $dateCheck = date('D')==='Mon';
         if ($dateCheck){
             $currentWeek -=1;
+        }
+        if (!$weekRepository->findOneBy(['value'=> $currentWeek])){
+            $newWeek = new Week();
+            $newWeek->setValue($currentWeek === 53 ? 1 : $currentWeek);
+            $newWeek->setYear(date("Y"));
+            $em->persist($newWeek);
+            $em->flush();
         }
         $sql ='
 SELECT item.name AS item_name,
@@ -164,28 +172,6 @@ AND loot.roster_id = :roster AND week.value = :week
 FROM week INNER JOIN loot ON loot.week_id = week.id
 WHERE week.id < :week AND loot.roster_id = :roster
 GROUP BY week.value';
-        /*$sql2 ='SELECT item.name AS item_name,
-item.is_upgrade as item_isUpgrade,
-loot.item_upgraded_id AS item_upgraded,
-item.id AS item_id,
-instance.id AS instance_id, 
-player.name AS player_name,
-loot.id AS loot_id,
-loot.chest,
-player_job.id AS playerjob_id,
-item.img_url AS item_url, 
-week.value AS week,
-instance.img_url AS instance_url,
-player.img_url AS player_url,
-image.imgpath AS job_img  FROM week 
-INNER JOIN `loot` ON week.id = loot.week_id
-INNER JOIN player_job ON player_job.id = loot.playerjob_id
-INNER JOIN item ON item.id = loot.item_id
-INNER JOIN player ON player.id = player_job.player_id
-INNER JOIN instance ON instance.id = loot.instance_id
-INNER JOIN job ON player_job.job_id = job.id
-INNER JOIN image ON job.image_id = image.id
-WHERE week.id < :week AND loot.roster_id = :roster';*/
         $stmt = $conn->prepare($sql);
         $stmt->execute(['week' => $currentWeekId, 'roster' => $roster->getId()]);
         $result  =  $stmt->fetchAll();
