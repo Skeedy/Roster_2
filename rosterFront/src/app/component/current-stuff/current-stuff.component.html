@@ -1,0 +1,175 @@
+<div class="row justify-content-md-center">
+  <div class="col-sm-2 col-lg-2">
+    <div>
+      <div class="slotName">Main hand</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).mainHand">
+        <img class="item" (click)="gearShow= !gearShow; getSlotStuff(1); slotName='weapon'"
+             src="https://xivapi.com/img-misc/gear/mainhand.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).mainHand">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(1); slotName='weapon'"
+             matTooltip="{{(currentServ._currentSub|async).mainHand.name}}"
+             src="{{(currentServ._currentSub|async).mainHand.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Head</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).head">
+        <img class="item" (click)="gearShow= !gearShow; getSlotStuff(3); slotName='head'"
+             src="https://xivapi.com/img-misc/gear/head.png">
+      </div>
+      <div *ngIf="(currentServ._currentSub|async).head">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(3); slotName='head'"
+             matTooltip="{{(currentServ._currentSub|async).head.name}}"
+             src="{{(currentServ._currentSub|async).head.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Body</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).body">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(4); slotName='body'"
+             src="https://xivapi.com/img-misc/gear/body.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).body">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(4); slotName='body'"
+             matTooltip="{{(currentServ._currentSub|async).body.name}}"
+             src="{{(currentServ._currentSub|async).body.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Hand</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).hands">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(5); slotName='hands'"
+             src="https://xivapi.com/img-misc/gear/hands.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).hands">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(5); slotName='hands'"
+             matTooltip="{{(currentServ._currentSub|async).hands.name}}"
+             src="{{(currentServ._currentSub|async).hands.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Waist</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).belt">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6);slotName='waist'"
+             src="https://xivapi.com/img-misc/gear/waist.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).belt">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6); slotName='waist'"
+             matTooltip="{{(currentServ._currentSub|async).belt.name}}"
+             src="{{(currentServ._currentSub|async).belt.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Feet</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).feet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
+             src="https://xivapi.com/img-misc/gear/feet.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).feet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
+             matTooltip="{{(currentServ._currentSub|async).feet.name}}"
+             src="{{(currentServ._currentSub|async).feet.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Feet</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).feet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
+             src="https://xivapi.com/img-misc/gear/feet.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).feet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
+             matTooltip="{{(currentServ._currentSub|async).feet.name}}"
+             src="{{(currentServ._currentSub|async).feet.imgUrl}}"/>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 col-lg-6 d-flex align-items-center">
+    <img src="{{player.portrait}}" class="img-fluid">
+  </div>
+  <div class="col-sm-2 col-lg-2">
+    <div>
+      <div class="slotName">Off hand</div>
+      <div class="text-center" *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
+        <div class="text-center" *ngIf="!(currentServ._currentSub|async).offHand">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(2); slotName='shield'"
+               src="https://xivapi.com/img-misc/gear/offhand.png">
+        </div>
+        <div class="text-center" *ngIf="(currentServ._currentSub|async).offHand">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(2); slotName='shield'"
+               matTooltip="{{(currentServ._currentSub|async).offHand.name}}"
+               src="{{(currentServ._currentSub|async).offHand.imgUrl}}"/>
+        </div>
+      </div>
+      <ng-template #png>
+        <div class="text-center">
+          <img class="item" src="https://xivapi.com/img-misc/gear/offhand.png">
+        </div>
+      </ng-template>
+    </div>
+    <div>
+      <div class="slotName">Earring</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).earring">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(9); slotName='earring'"
+             src="https://xivapi.com/img-misc/gear/ear.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).earring">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(9); slotName='earring'"
+             matTooltip="{{(currentServ._currentSub|async).earring.name}}"
+             src="{{(currentServ._currentSub|async).earring.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Necklace</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).neck">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(10); slotName='necklace'"
+             src="https://xivapi.com/img-misc/gear/neck.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).neck">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(10); slotName='necklace'"
+             matTooltip="{{(currentServ._currentSub|async).neck.name}}"
+             src="{{(currentServ._currentSub|async).neck.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div class="slotName">Bracelet</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).bracelet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(11); slotName='bracelet'" src="https://xivapi.com/img-misc/gear/wrist.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).bracelet">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(11); slotName='bracelet'" matTooltip="{{(currentServ._currentSub|async).bracelet.name}}"
+             src="{{(currentServ._currentSub|async).bracelet.imgUrl}}"/>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div class="slotName">Left ring</div>
+        <div class="text-center" *ngIf="!(currentServ._currentSub|async).ring1">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='left ring'" src="https://xivapi.com/img-misc/gear/ring1.png">
+        </div>
+        <div class="text-center" *ngIf="(currentServ._currentSub|async).ring1">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='left ring'" matTooltip="{{(currentServ._currentSub|async).ring1.name}}"
+               src="{{(currentServ._currentSub|async).ring1.imgUrl}}"/>
+        </div>
+    </div>
+    <div>
+      <div class="slotName">Right ring</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).ring2">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+             src="https://xivapi.com/img-misc/gear/ring2.png">
+      </div>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).ring2">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+             matTooltip="{{(currentServ._currentSub|async).ring2.name}}"
+             src="{{(currentServ._currentSub|async).ring2.imgUrl}}"/>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<app-select-current [currentId]="player.playerJobs[index].currentstuff.id"
+                    [slotName]="slotName"
+                    [jobItems]="jobItems"
+                    [(gearShow)]="gearShow">
+</app-select-current>

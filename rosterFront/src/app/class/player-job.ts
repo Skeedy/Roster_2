@@ -1,6 +1,7 @@
 import {Job} from "./job";
 import {Item} from "./item";
 import {Wishitem} from "./wishitem";
+import {Currentstuff} from "./currentstuff";
 
 export class PlayerJob {
   id: number;
@@ -9,4 +10,6 @@ export class PlayerJob {
   job: Job;
   ord: number;
   wishitem: Wishitem;
+  slot: number;
+  currentstuff: Currentstuff;
 }

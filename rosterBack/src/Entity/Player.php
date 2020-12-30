@@ -20,6 +20,7 @@ class Player
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -27,6 +28,7 @@ class Player
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $name;
 
@@ -34,6 +36,7 @@ class Player
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $IDLodestone;
 
@@ -41,6 +44,7 @@ class Player
      * @ORM\Column(type="string", length=255)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $server;
 
@@ -62,8 +66,17 @@ class Player
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $imgUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups("player")
+     * @Groups("roster")
+     * @Groups("loots")
+     */
+    private $portrait;
 
 
     public function __construct()
@@ -163,6 +176,18 @@ class Player
     public function setImgUrl(?string $imgUrl): self
     {
         $this->imgUrl = $imgUrl;
+
+        return $this;
+    }
+
+    public function getPortrait(): ?string
+    {
+        return $this->portrait;
+    }
+
+    public function setPortrait(string $portrait): self
+    {
+        $this->portrait = $portrait;
 
         return $this;
     }

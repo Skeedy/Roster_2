@@ -1,0 +1,9 @@
+<img (click)="passArray(); "
+     class="jobImg"
+     height="55px"
+     [ngClass]="{
+     'active': playerJobSet && playerJobSet == playerJob.id,
+     'selected': playerJobSelectedId == playerJob.id,
+     'disabled': disabled == true,
+     'noNeed': noNeed == true}"
+     src="{{playerJob.job.image.imgpath | imgpath}}">

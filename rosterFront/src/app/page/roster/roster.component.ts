@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {RosterService} from '../../service/roster.service';
-import {Roster} from '../../class/roster';
-import {trigger,state,style,animate,transition} from '@angular/animations';
 import {InstanceService} from "../../service/instance.service";
 import {Raid} from "../../class/raid";
-import {ItemService} from "../../service/item.service";
-import {Item} from "../../class/item";
 import {Router} from "@angular/router";
+import {LootService} from "../../service/loot.service";
+import {Loot} from "../../class/loot";
 
 @Component({
   selector: 'app-roster',
@@ -14,25 +12,54 @@ import {Router} from "@angular/router";
   styleUrls: ['./roster.component.scss'],
 })
 export class RosterComponent implements OnInit {
-public raids: Raid[];
-public players: any;
+  public raids: Raid[];
+  public players: any;
+  public week: any;
+  public loots: Loot[];
+  public weekCount: any;
+  public showPrevious: boolean;
   constructor(
     private instanceServ: InstanceService,
     private router: Router,
-    public rosterServ: RosterService
+    public rosterServ: RosterService,
+    public lootService: LootService,
   ) { }
 
   ngOnInit(): void {
-    this.instanceServ.getInstances().subscribe((data) => {
-      if (data) {
-        this.raids = data;
-        console.log(this.raids);
-      }
-    },(_)=>{
-      this.router.navigate(['/']);
-      this.rosterServ.logout();
-    });
-    this.players = this.rosterServ._rosterSub.value.player;
+    this.rosterServ.refreshRoster().subscribe();
+    if(!this.loots) {
+      this.lootService.getWeekLoot().subscribe((data) => {
+        this.loots = data;
+      });
+    }
+    if (this.loots){
+      this.lootService.refreshWeekLoot().subscribe((data) => {
+        this.loots = data;
+      });
+    }
+    this.lootService.getWeek().subscribe(data=> {
+      // @ts-ignore
+      this.week = data.week;
+      // @ts-ignore
+      this.showPrevious = data.showPrevious;
+      // @ts-ignore
+        this.weekCount = this.showPrevious? data.weekCount : [];
+      this.instanceServ.getInstances().subscribe((data) => {
+        if (data) {
+          this.raids = data;
+        }
+      }, (_) => {
+        this.router.navigate(['/']);
+        this.rosterServ.logout();
+      });
+    })
   }
 
+  // getAugment(instanceId){
+  //   return this.raids.filter((raid: Raid)=>{
+  //     return raid.id === instanceId
+  //   }).find((item: Item)=>{
+  //     return item.name === "Crystalline Twine"
+  //   })
+  // }
 }

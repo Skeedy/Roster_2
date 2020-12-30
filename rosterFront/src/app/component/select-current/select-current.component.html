@@ -1,0 +1,9 @@
+<div [@gearShow] *ngIf="gearShow" class="dialog">
+  <h4 style="color: #FFF"> Select your {{slotName}}</h4>
+  <div class="d-flex justify-content-around">
+    <div *ngFor="let item of jobItems">
+      <img class="item" matTooltip="{{item.name}}" (click)="changeGear(item.id)" src="{{item.imgUrl}}">
+    </div>
+  </div>
+</div>
+<div *ngIf="gearShow" class="overlay" (click)="close()"></div>

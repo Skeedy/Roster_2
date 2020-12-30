@@ -5,4 +5,5 @@ export class Raid {
   imgUrl: string;
   item : Item[];
   id: number;
+  value: number;
 }

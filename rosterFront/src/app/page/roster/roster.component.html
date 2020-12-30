@@ -1,12 +1,22 @@
-<div *ngFor="let raid of raids">
-  <div>
-    <img src="{{raid.imgUrl}}">
-    <h3 style="color: #FFF">{{raid.id}} {{raid.name}}</h3>
+<h2 style="color: #FFF; font-weight: bold" class="mb-4 d-flex justify-content-center">Week n°{{ week }}</h2>
+<div class="container-fluid">
+  <div class="row justify-content-md-between">
+    <div *ngFor="let raid of raids" class="col-md-3">
+      <div >
+        <img class="d-flex" style="margin: auto" src="{{raid.imgUrl}}">
+        <h5 class="my-3" style="color: #FFF; text-align: center">{{raid.name}}</h5>
+        <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="lootService.sortByChest(1,raid.id)[0]"></app-loot-slot>
+        <app-loot-slot [raid]= raid [chest]= 2 [lootSlot]="lootService.sortByChest(2,raid.id)[0]"></app-loot-slot>
+        <app-loot-slot [raid]= raid [chest]= 3 [lootSlot]="lootService.sortByChest(3,raid.id)[0]"></app-loot-slot>
+        <div *ngFor="let item of raid.item | isUpgrade">
+          <app-upgrade [raid]= raid [item]="item" [lootSlot]="lootService.sortByUpgrade(item.id, raid.id)[0]"></app-upgrade>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngFor="let ite of raid.item">
-    <div>
-      <img src="{{ite.imgUrl}}">
-      <h6 style="color: #FFF">{{ite.name}}</h6>
-    </div>
-    </div>
+</div>
+<div *ngIf="showPrevious" class="mt-4">
+  <div *ngFor="let week of weekCount.slice().reverse()">
+    <app-previous-loot [week]="week"></app-previous-loot>
+  </div>
 </div>

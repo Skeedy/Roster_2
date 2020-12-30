@@ -4,8 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Player;
 use App\Entity\Roster;
+use App\Entity\Week;
+use App\Repository\InstanceRepository;
+use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
+use App\Repository\WeekRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -15,26 +20,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/roster")
  */
 class RosterController extends AbstractController
 {
-    /**
-     * @Route("/", name="roster_index", methods={"GET"})
-     */
-    public function index(RosterRepository $rosterRepository ): Response
-    {
-        $rosters = $rosterRepository->findAll();
-        $respond = $this->json($rosters, 200, [], ['groups'=> 'roster']);
-        return $respond;
-    }
 
     /**
-     * @Route("/new", name="roster_new", methods={"POST"})
+     * @Route("/register", name="roster_register", methods={"POST"})
      */
     public function register(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
@@ -94,12 +92,92 @@ class RosterController extends AbstractController
     /**
      * @Route("/profile", name="roster_auth", methods={"GET"})
      */
-    public function profile(){
+    public function profile(PlayerRepository $playerRepository, EntityManagerInterface $em, SerializerInterface $serializer){
         $roster = $this->getUser();
+//        $players = $roster->getPlayer();
+//        foreach($players as $player){
+//            $playerData = file_get_contents('https://xivapi.com/character/' . $player->getIdLodestone() . '?&private_key= 73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+//            $playerData = $serializer->decode($playerData, 'json');
+//            $playerServer = $playerData['Character']['Server'];
+//            if($player->getServer() !== $playerServer){
+//                $player->setServer($playerServer);
+//                $em->persist($player);
+//                $em->flush();
+//            }
+//        }
         return $this->json($roster, 200, [], ['groups'=> 'roster']);
     }
+    /**
+     * @Route("/currentWeekLoot", name="roster_currentWeekLoot", methods={"GET"})
+     */
+    public function profileCurrentWeek(EntityManagerInterface $em, WeekRepository $weekRepository){
 
-
+        $roster = $this->getUser()->getId();
+        $currentWeek = date('W');
+        $conn = $em->getConnection();
+        $dateCheck = date('D')==='Mon';
+        if ($dateCheck){
+            $currentWeek -=1;
+        }
+        if (!$weekRepository->findOneBy(['value'=> $currentWeek])){
+            $newWeek = new Week();
+            $newWeek->setValue($currentWeek === 53 ? 1 : $currentWeek);
+            $newWeek->setYear(date("Y"));
+            $em->persist($newWeek);
+            $em->flush();
+        }
+        $sql ='
+SELECT item.name AS item_name,
+item.is_upgrade as item_isUpgrade,
+loot.item_upgraded_id AS item_upgraded,
+item.id AS item_id,
+instance.id AS instance_id, 
+player.name AS player_name,
+loot.id AS loot_id,
+loot.chest,
+player_job.id AS playerjob_id,
+item.img_url AS item_url, 
+week.value AS week,
+instance.img_url AS instance_url,
+player.img_url AS player_url,
+image.imgpath AS job_img 
+FROM instance 
+INNER JOIN loot ON instance.id = loot.instance_id 
+INNER JOIN player_job ON playerjob_id = player_job.id
+INNER JOIN player ON player_id = player.id
+INNER JOIN job ON player_job.job_id = job.id
+INNER JOIN image ON job.image_id = image.id
+INNER JOIN item ON loot.item_id = item.id 
+INNER JOIN week ON loot.week_id = week.id
+AND loot.roster_id = :roster AND week.value = :week
+';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['week' => $currentWeek, 'roster' => $roster]);
+        $result =  $stmt->fetchAll();
+        return $this->json($result, 200, []);
+    }
+    /**
+     * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
+     */
+    public function getWeekNumber(EntityManagerInterface $em, LootRepository $lootRepository, WeekRepository $weekRepository){
+        $roster = $this->getUser();
+        $conn = $em->getConnection();
+        $currentWeek = date('W');
+        $dateCheck = date('D')==='Mon';
+        if ($dateCheck){
+            $currentWeek -=1;
+        }
+        $currentWeekId = $weekRepository->findOneBy(['value'=>$currentWeek])->getId();
+        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value
+FROM week INNER JOIN loot ON loot.week_id = week.id
+WHERE week.id < :week AND loot.roster_id = :roster
+GROUP BY week.value';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['week' => $currentWeekId, 'roster' => $roster->getId()]);
+        $result  =  $stmt->fetchAll();
+        $response = new JsonResponse(['weekCount' => $result, 'week'=>$currentWeek, 'showPrevious' => $result? true: false], 200);
+        return $response;
+    }
     /**
      * @Route("/{id}", name="roster_delete", methods={"DELETE"})
      */

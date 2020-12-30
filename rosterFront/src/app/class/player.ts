@@ -7,4 +7,5 @@ export class Player {
   LodId : number;
   playerJobs : PlayerJob[];
   imgUrl : string
+  portrait: string;
 }

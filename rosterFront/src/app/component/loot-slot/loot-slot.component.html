@@ -1,0 +1,26 @@
+<div *ngIf="lootSlot" class="my-3">
+  <div style="text-align: center">
+    <img (click)="showPool= !showPool; lootId = lootSlot.loot_id"
+         src="https://xivapi.com/img-misc/chest{{chest}}.png">
+    <img src="{{lootSlot.item_url}}" height="75px">
+    <img class="mx-3" src="{{lootSlot.player_url}}" height="75px">
+    <img src="{{lootSlot.job_img | imgpath}}">
+  </div>
+</div>
+<div *ngIf="!lootSlot" class="my-3">
+  <div class="d-flex align-items-center justify-content-center">
+    <img (click)="showPool= !showPool; lootId = null"
+         src="https://xivapi.com/img-misc/chest{{chest}}.png">
+    <h5 style="color:#FFF"> Chest n°{{chest}}</h5>
+  </div>
+</div>
+
+<app-pool [players]="rosterServ._rosterSub.value.player"
+          [(poolList)]="showPool"
+          [raidValue]=raid.value
+          [nameRaid]=raid.name
+          [numberChest] ="chest"
+          [lootSlot] = "lootSlot"
+          [lootId]= "lootId"
+          [itemRaid] = raid.item>
+</app-pool>

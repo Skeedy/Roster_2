@@ -18,7 +18,9 @@ class Job
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("roster")
+     * @Groups("instance")
      * @Groups("jobShow")
+     * @Groups("loots")
      */
     private $id;
 
@@ -27,6 +29,8 @@ class Job
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("jobShow")
+     * @Groups("instance")
+     * @Groups("loots")
      */
     private $name;
 
@@ -42,12 +46,14 @@ class Job
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("jobShow")
+     * @Groups("instance")
      */
     private $role;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("jobShow")
+     * @Groups("instance")
      */
     private $subrole;
 
@@ -60,9 +66,14 @@ class Job
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Item", mappedBy="jobs")
      * @Groups("jobStuff")
-     * @OrderBy({"name" = "DESC"})
+     * @OrderBy({"ilvl" = "ASC"})
      */
     private $items;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $value;
 
     public function __construct()
     {
@@ -159,6 +170,18 @@ class Job
             $this->items->removeElement($item);
             $item->removeJob($this);
         }
+
+        return $this;
+    }
+
+    public function getValue(): ?int
+    {
+        return $this->value;
+    }
+
+    public function setValue(int $value): self
+    {
+        $this->value = $value;
 
         return $this;
     }

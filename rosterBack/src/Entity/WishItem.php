@@ -22,84 +22,92 @@ class WishItem
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $head;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $body;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $hands;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $belt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $legs;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $feet;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $earring;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $neck;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $bracelet;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $ring1;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $ring2;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
-    private $weapon;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Item")
-     * @Groups("wishItem")
-     */
     private $mainHand;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("wishItem")
+     * @Groups("roster")
      */
     private $offHand;
 
@@ -236,18 +244,6 @@ class WishItem
     public function setRing2(?Item $ring2): self
     {
         $this->ring2 = $ring2;
-
-        return $this;
-    }
-
-    public function getWeapon(): ?Item
-    {
-        return $this->weapon;
-    }
-
-    public function setWeapon(?Item $weapon): self
-    {
-        $this->weapon = $weapon;
 
         return $this;
     }

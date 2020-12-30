@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -16,6 +18,7 @@ class PlayerJob
      * @ORM\Column(type="integer")
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $id;
 
@@ -36,6 +39,7 @@ class PlayerJob
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Player", inversedBy="playerJobs")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("loots")
      */
     private $player;
 
@@ -43,6 +47,7 @@ class PlayerJob
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups("roster")
+     * @Groups("loots")
      */
     private $job;
 
@@ -57,6 +62,28 @@ class PlayerJob
      * @Groups("roster")
      */
     private $wishitem;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="playerjob", cascade={"persist", "remove"})
+     */
+    private $loots;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CurrentStuff", cascade={"persist", "remove"})
+     * @Groups("roster")
+     */
+    private $currentstuff;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Oldstuff", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $oldStuff;
+
+    public function __construct()
+    {
+        $this->loots = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -131,6 +158,61 @@ class PlayerJob
     public function setWishItem(?WishItem $wishitem): self
     {
         $this->wishitem = $wishitem;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Loot[]
+     */
+    public function getLoots(): Collection
+    {
+        return $this->loots;
+    }
+
+    public function addLoot(Loot $loot): self
+    {
+        if (!$this->loots->contains($loot)) {
+            $this->loots[] = $loot;
+            $loot->setPlayerJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoot(Loot $loot): self
+    {
+        if ($this->loots->contains($loot)) {
+            $this->loots->removeElement($loot);
+            // set the owning side to null (unless already changed)
+            if ($loot->getPlayerJob() === $this) {
+                $loot->setPlayerJob(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCurrentstuff(): ?CurrentStuff
+    {
+        return $this->currentstuff;
+    }
+
+    public function setCurrentstuff(?CurrentStuff $currentstuff): self
+    {
+        $this->currentstuff = $currentstuff;
+
+        return $this;
+    }
+
+    public function getOldStuff(): ?Oldstuff
+    {
+        return $this->oldStuff;
+    }
+
+    public function setOldStuff(Oldstuff $oldStuff): self
+    {
+        $this->oldStuff = $oldStuff;
 
         return $this;
     }

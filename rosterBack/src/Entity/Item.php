@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -18,6 +19,11 @@ class Item
      * @ORM\Column(type="integer")
      * @Groups("instance")
      * @Groups("jobStuff")
+     * @Groups("loots")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     * @Groups("item")
+     * @Groups("roster")
      */
     private $id;
 
@@ -28,6 +34,8 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
+     * @Groups("loots")
      */
     private $name;
 
@@ -38,6 +46,8 @@ class Item
      * @Groups("jobStuff")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
+     * @Groups("loots")
      */
     private $imgUrl;
 
@@ -47,6 +57,7 @@ class Item
      * @Groups("instance")
      * @Groups("jobStuff")
      * @Groups("roster")
+     * @Groups("currentStuff")
      * @Groups("wishItem")
      */
     private $ilvl;
@@ -57,6 +68,8 @@ class Item
      * @Groups("instance")
      * @Groups("roster")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
+     * @Groups("loots")
      */
     private $isSavage;
 
@@ -66,6 +79,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $LodId;
 
@@ -75,6 +89,7 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $jobType;
 
@@ -84,17 +99,59 @@ class Item
      * @Groups("roster")
      * @Groups("jobStuff")
      * @Groups("wishItem")
+     * @Groups("currentStuff")
      */
     private $slot;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Job", inversedBy="items")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("item")
+     * @OrderBy({"id" = "ASC"})
      */
     private $jobs;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     */
+    private $isUpgrade;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     */
+    private $isCoffer;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canBeUpgraded;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups("instance")
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("wishItem")
+     * @Groups("currentStuff")
+     */
+    private $isUpgraded;
+
 
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
+
     }
 
 
@@ -215,5 +272,53 @@ class Item
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getIsUpgrade(): ?bool
+    {
+        return $this->isUpgrade;
+    }
+
+    public function setIsUpgrade(bool $isUpgrade): self
+    {
+        $this->isUpgrade = $isUpgrade;
+
+        return $this;
+    }
+
+    public function getIsCoffer(): ?bool
+    {
+        return $this->isCoffer;
+    }
+
+    public function setIsCoffer(bool $isCoffer): self
+    {
+        $this->isCoffer = $isCoffer;
+
+        return $this;
+    }
+
+    public function getCanBeUpgraded(): ?bool
+    {
+        return $this->canBeUpgraded;
+    }
+
+    public function setCanBeUpgraded(bool $canBeUpgraded): self
+    {
+        $this->canBeUpgraded = $canBeUpgraded;
+
+        return $this;
+    }
+
+    public function getIsUpgraded(): ?bool
+    {
+        return $this->isUpgraded;
+    }
+
+    public function setIsUpgraded(bool $isUpgraded): self
+    {
+        $this->isUpgraded = $isUpgraded;
+
+        return $this;
     }
 }

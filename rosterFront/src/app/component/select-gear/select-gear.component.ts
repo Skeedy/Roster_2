@@ -7,6 +7,8 @@ import {RosterService} from "../../service/roster.service";
 import {Player} from "../../class/player";
 import {Wishitem} from "../../class/wishitem";
 import {WhishitemService} from "../../service/whishitem.service";
+import {CurrentstuffService} from "../../service/currentstuff.service";
+import {SuccessService} from "../../service/success.service";
 
 @Component({
   selector: 'app-select-gear',
@@ -30,21 +32,26 @@ export class SelectGearComponent implements OnDestroy {
   @Input() closable = true;
   @Input() gearShow: boolean;
   @Input() wishId : number;
-  @Output() wishItem: Wishitem;
-  public player : Player;
+  @Input() currentId: number;
+  @Input() isWish: boolean;
+  @Input() isCurrentStuff: boolean;
+  @Input() player : Player;
+  @Input() slotName: string
   @Output() gearShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(private wishitemServ: WhishitemService) { }
+  constructor(private wishitemServ: WhishitemService, public rosterServ: RosterService, public successServ: SuccessService) { }
 
   ngOnDestroy(): void {
   }
-  changeGear(itemId, wishId){
-    return this.wishitemServ.changeGear(itemId, wishId).subscribe(data => {
-      this.close(wishId);
-    })
+  changeGear(item){
+      return this.wishitemServ.changeGear(item.id, this.wishId).subscribe(data => {
+        this.wishitemServ.refreshWishItem(this.wishId).subscribe(_=>{
+          this.successServ.getSuccess(item.name + ' has been set to ' + this.player.name + ' for his ' + this.slotName);
+        });
+        this.close();
+      })
   }
-  close(wishId) {
+  close() {
     this.gearShow = false;
-    this.wishitemServ.refreshWishItem(wishId).subscribe();
     this.gearShowChange.emit(this.gearShow);
   }
 }

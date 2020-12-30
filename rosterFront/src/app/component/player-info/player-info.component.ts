@@ -7,6 +7,10 @@ import {JobService} from "../../service/job.service";
 import {Item} from "../../class/item";
 import {Wishitem} from "../../class/wishitem";
 import {WhishitemService} from "../../service/whishitem.service";
+import {CurrentstuffService} from "../../service/currentstuff.service";
+import {Currentstuff} from "../../class/currentstuff";
+import {ErrorService} from "../../service/error.service";
+import {Job} from "../../class/job";
 
 @Component({
   selector: 'app-player-info',
@@ -22,22 +26,33 @@ export class PlayerInfoComponent implements OnInit {
   showJob = false;
   isSub: boolean;
   wishItem: Wishitem;
+  currentStuff: Currentstuff;
   jobOrder: number;
   ddbId: number;
-  constructor(public jobServ: JobService, public wishitemServ: WhishitemService) { }
+  jobName: string;
+  constructor(public jobServ: JobService,
+              public wishitemServ: WhishitemService,
+              public currentServ: CurrentstuffService,
+              public errorServ: ErrorService) { }
 
   ngOnInit(): void {
     if(this.player.playerJobs[0]) {
       this.idJobMain = this.player.playerJobs[0].job.id;
     }
   }
-  getJobStuff(wishId) {
+  noJobSet(){
+    this.errorServ.getError(this.player.name + ' has no job defined.', 'Please select at least one job to proceed')
+  }
+  getJobStuff(wishId, StuffId) {
     if (this.player.playerJobs.length > 0) {
       this.jobServ.getJobStuff(this.idJobMain).subscribe((data) => {
           this.items = data;
       })
       this.wishitemServ.getWishItem(wishId).subscribe((data)=>{
         this.wishItem = data;
+      })
+      this.currentServ.getCurrentItem(StuffId).subscribe((data)=>{
+        this.currentStuff = data;
       })
       this.showPlayer = !this.showPlayer;
     }

@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\CurrentStuff;
+use App\Entity\OldStuff;
 use App\Entity\PlayerJob;
 use App\Entity\WishItem;
+use App\Repository\ItemRepository;
 use App\Repository\JobRepository;
+use App\Repository\LootRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\RosterRepository;
+use App\Repository\SlotRepository;
 use App\Repository\WishItemRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +24,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\Player;
 use App\Repository\PlayerRepository;
 
-define('APIKey', '73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
+define('APIKey', '619d5d66075843a49bfb76c7d87cc412333c8d75389e47b8a17eac66c5109a7c');
 
 /**
  * @Route("/player")
@@ -81,7 +86,9 @@ class PlayerController extends AbstractController
                 $playername = $playerData['Character']['Name'];
                 $playerServer = $playerData['Character']['Server'];
                 $playerImg = $playerData['Character']['Avatar'];
+                $playerPortrait = $playerData['Character']['Portrait'];
                 $player->setImgUrl($playerImg);
+                $player->setPortrait($playerPortrait);
                 $player->setIDLodestone($playersId);
                 $player->setName($playername);
                 $player->setServer($playerServer);
@@ -98,16 +105,25 @@ class PlayerController extends AbstractController
     /**
      * @Route("/patch/{id}", name="player_patch", methods={"PATCH"})
      */
-    public function patch(Request $request, SerializerInterface $serializer,WishItemRepository $wishItemRepository, PlayerJobRepository $playerJobRepository, Player $player, JobRepository $jobRepository, EntityManagerInterface $em){
+    public function patch(Request $request,
+                          SerializerInterface $serializer,
+                          WishItemRepository $wishItemRepository,
+                          PlayerJobRepository $playerJobRepository,
+                          Player $player,
+                          JobRepository $jobRepository,
+                          SlotRepository $slotRepository,
+                          ItemRepository $itemRepository,
+                          EntityManagerInterface $em){
         $json = $request->getContent();
         $json = $serializer->decode($json, 'json');
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['ddbId']]);
-        $jobId = $jobRepository->findOneBy(['id' =>$json['job']]);
+        $jobfetch = $jobRepository->findOneBy(['id' =>$json['job']]);
+        $jobId = $jobfetch->getId();
         $check = false;
         if ($playerJob){
             $jobs = $player->getPlayerJobs();
             foreach ($jobs as $job){
-                if ($job->getJob() === $jobId){
+                if ($job->getJob() === $jobfetch){
                     $check = true;
                 }
             }
@@ -120,12 +136,19 @@ class PlayerController extends AbstractController
                 $playerJob->setWishItem(NULL);
                 $em->remove($wishItem);
                 $newWishItem = new WishItem();
+                $newWishItem->setRing1($this->findRing(true, $jobId, $itemRepository, $slotRepository));
+                $newWishItem->setRing2($this->findRing(false, $jobId, $itemRepository, $slotRepository));
+                $newCurrentStuff = new CurrentStuff();
+                $newOldStuff = new OldStuff();
+                $playerJob->setOldStuff($newOldStuff);
+                $playerJob->setCurrentstuff($newCurrentStuff);
                 $playerJob->setWishItem($newWishItem);
-                $playerJob->setJob($jobId);
+                $playerJob->setJob($jobfetch);
                 $playerJob->setIsMain($json['isMain']);
                 $playerJob->setIsSub($json['isSub']);
                 $playerJob->setPlayer($player);
                 $em->persist($playerJob);
+                $em->persist($newWishItem);
                 $em->flush();
                 $respond = $this->json($json, 200, []);
                 return $respond;
@@ -142,15 +165,22 @@ class PlayerController extends AbstractController
                 }
             }
             $playerJob = new PlayerJob();
-            $wishItem = new WishItem();
+            $newWishItem = new WishItem();
+            $currentStuff = new CurrentStuff();
+            $newOldStuff = new OldStuff();
+            $newWishItem->setRing1($this->findRing(true, $jobId, $itemRepository, $slotRepository));
+            $newWishItem->setRing2($this->findRing(false, $jobId, $itemRepository, $slotRepository));
+            $playerJob->setOldStuff($newOldStuff);
             $ordcount = count($player->getPlayerJobs());
-            $playerJob->setWishItem($wishItem);
+            $playerJob->setWishItem($newWishItem);
+            $playerJob->setCurrentstuff($currentStuff);
             $playerJob->setPlayer($player);
-            $playerJob->setJob($jobId);
+            $playerJob->setJob($jobfetch);
             $playerJob->setOrd($ordcount === 0? 0 : $ordcount);
             $playerJob->setIsMain($json['isMain']);
             $playerJob->setIsSub($json['isSub']);
             $em->persist($playerJob);
+            $em->persist($newWishItem);
             $em->flush();
             $respond = $this->json($json, 200, []);
             return $respond;
@@ -159,13 +189,31 @@ class PlayerController extends AbstractController
     /**
      * @Route("/{id}", name="player_delete", methods={"DELETE"})
      */
-    public function delete(Player $player, EntityManagerInterface $em){
+    public function delete(Player $player, EntityManagerInterface $em, LootRepository $lootRepository){
         if ($player){
+            $playerjobs = $player->getPlayerJobs();
+            foreach ($playerjobs as $playerjob) {
+                $playerjobID = $playerjob->getId();
+                $loots = $lootRepository->findBy(['playerjob'=> $playerjobID]);
+                foreach ($loots as $loot) {
+                    $em->remove($loot);
+                    $em->flush();
+                }
+            }
             $em->remove($player);
             $em->flush();
         }
         $response = JsonResponse::fromJsonString('{ "response": "'. $player->getName() .' has been deleted" }', 200);
         return $response;
     }
-
+    public function findRing($isSavage, $jobId, ItemRepository $itemRepository, SlotRepository $slotRepository){
+        $slotId = $slotRepository->findOneBy(["name"=> "finger"])->getId();
+        $items = $itemRepository->findBy(['slot'=> $slotId, 'ilvl' => 530, 'isSavage' => $isSavage]);
+        foreach ($items as $item){
+            foreach ($item->getJobs() as $job)
+                if($jobId === $job->getId()) {
+                    return $item;
+            }
+        }
+    }
 }

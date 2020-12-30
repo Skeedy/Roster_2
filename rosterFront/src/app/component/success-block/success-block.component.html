@@ -1,0 +1,7 @@
+<div [@successShow] *ngIf="successServ.success.isActive;" class="dialog d-flex align-items-center">
+  <img height="75px" src="assets/img/moogle.png">
+  <div>
+    <div style="color: #FFF">{{successServ.success.html}}</div>
+    <div *ngIf="successServ.success.subhtml" style="color: #FFF">{{successServ.success.subhtml}}</div>
+  </div>
+</div>

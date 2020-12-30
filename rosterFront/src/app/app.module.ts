@@ -63,6 +63,34 @@ import { PlayerShowComponent } from './component/player-show/player-show.compone
 import { SelectGearComponent } from './component/select-gear/select-gear.component';
 import {JwtInterceptor} from "./class/jwtinterceptor";
 import {ErrorInterceptor} from "./class/errorinterceptor";
+import { PoolComponent } from './component/pool/pool.component';
+import { LootSlotComponent } from './component/loot-slot/loot-slot.component';
+import { PlayerJobLootComponent } from './component/player-job-loot/player-job-loot.component';
+import { WishlistComponent } from './component/wishlist/wishlist.component';
+import { CurrentStuffComponent } from './component/current-stuff/current-stuff.component';
+import { SelectCurrentComponent } from './component/select-current/select-current.component';
+import { IsCofferPipe } from './pipe/is-coffer.pipe';
+import { IsNotCofferPipe } from './pipe/is-not-coffer.pipe';
+import { MeleeWeaponPipe } from './pipe/melee-weapon.pipe';
+import { TankWeaponPipe } from './pipe/tank-weapon.pipe';
+import { HealWeaponPipe } from './pipe/heal-weapon.pipe';
+import { MagicWeaponPipe } from './pipe/magic-weapon.pipe';
+import { RangedWeaponPipe } from './pipe/ranged-weapon.pipe';
+import { IsUpgradePipe } from './pipe/is-upgrade.pipe';
+import { UpgradeComponent } from './component/upgrade/upgrade.component';
+import { SetUpgradeComponent } from './component/set-upgrade/set-upgrade.component';
+import { UpgradePlayerJobComponent } from './component/upgrade-player-job/upgrade-player-job.component';
+import { UpgradeSelectJobComponent } from './component/upgrade-select-job/upgrade-select-job.component';
+import { ErrorBlockComponent } from './component/error-block/error-block.component';
+import { SuccessBlockComponent } from './component/success-block/success-block.component';
+import { LoadingBoxComponent } from './component/loading-box/loading-box.component';
+import { PreviousLootComponent } from './component/previous-loot/previous-loot.component';
+import { PreviousWeekLootComponent } from './component/previous-week-loot/previous-week-loot.component';
+import { InstanceOnePipe } from './pipe/instance-one.pipe';
+import { InstanceTwoPipe } from './pipe/instance-two.pipe';
+import { InstanceThreePipe } from './pipe/instance-three.pipe';
+import { InstanceFourPipe } from './pipe/instance-four.pipe';
+
 
 @NgModule({
   declarations: [
@@ -85,6 +113,33 @@ import {ErrorInterceptor} from "./class/errorinterceptor";
     InstanceComponent,
     PlayerShowComponent,
     SelectGearComponent,
+    PoolComponent,
+    LootSlotComponent,
+    PlayerJobLootComponent,
+    WishlistComponent,
+    CurrentStuffComponent,
+    SelectCurrentComponent,
+    IsCofferPipe,
+    IsNotCofferPipe,
+    MeleeWeaponPipe,
+    TankWeaponPipe,
+    HealWeaponPipe,
+    MagicWeaponPipe,
+    RangedWeaponPipe,
+    IsUpgradePipe,
+    UpgradeComponent,
+    SetUpgradeComponent,
+    UpgradePlayerJobComponent,
+    UpgradeSelectJobComponent,
+    ErrorBlockComponent,
+    SuccessBlockComponent,
+    LoadingBoxComponent,
+    PreviousLootComponent,
+    PreviousWeekLootComponent,
+    InstanceOnePipe,
+    InstanceTwoPipe,
+    InstanceThreePipe,
+    InstanceFourPipe,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

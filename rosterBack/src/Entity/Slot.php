@@ -17,6 +17,8 @@ class Slot
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups("jobStuff")
+     * @Groups("roster")
+     * @Groups("instance")
      */
     private $id;
 
@@ -24,6 +26,8 @@ class Slot
      * @ORM\Column(type="string", length=255)
      * @Groups("wishItem")
      * @Groups("jobStuff")
+     * @Groups("roster")
+     * @Groups("instance")
      */
     private $name;
 

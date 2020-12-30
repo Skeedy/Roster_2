@@ -1,0 +1,17 @@
+.active{
+  background-color: #3be438;
+}
+.selected{
+  background-color: #3689a8;
+}
+.disabled{
+  background-color: red;
+  pointer-events: none;
+}
+.jobImg{
+  padding: 5px;
+}
+.noNeed{
+  opacity: 0.3;
+  pointer-events: none;
+}
