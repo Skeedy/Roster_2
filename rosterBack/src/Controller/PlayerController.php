@@ -46,7 +46,8 @@ class PlayerController extends AbstractController
      */
     public function show(Player $player): Response
     {
-        $respond = $this->json($player, 200, [], ['groups' => 'player']);
+
+        $respond = $this->json($player, 200, [], ['groups' => 'playerloot']);
         return $respond;
     }
 

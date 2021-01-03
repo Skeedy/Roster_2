@@ -65,6 +65,7 @@ class PlayerJob
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Loot", mappedBy="playerjob", cascade={"persist", "remove"})
+     * @Groups("playerloot")
      */
     private $loots;
 

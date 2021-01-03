@@ -144,7 +144,7 @@ image.imgpath AS job_img
 FROM instance 
 INNER JOIN loot ON instance.id = loot.instance_id 
 INNER JOIN player_job ON playerjob_id = player_job.id
-INNER JOIN player ON player_id = player.id
+INNER JOIN player ON loot.player_id = player.id
 INNER JOIN job ON player_job.job_id = job.id
 INNER JOIN image ON job.image_id = image.id
 INNER JOIN item ON loot.item_id = item.id 

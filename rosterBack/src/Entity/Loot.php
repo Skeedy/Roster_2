@@ -37,6 +37,7 @@ class Loot
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups("loots")
+     * @Groups("playerloot")
      */
     private $chest;
 
@@ -49,6 +50,8 @@ class Loot
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Item")
      * @Groups("loots")
+     * @Groups("playerloot")
+     * @Groups("roster")
      */
     private $item;
 
@@ -60,8 +63,15 @@ class Loot
     /**
      * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="loots")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("roster")
      */
     private $week;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Player::class, inversedBy="loots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $player;
 
 
     public function getId(): ?int
@@ -149,6 +159,18 @@ class Loot
     public function setWeek(?Week $week): self
     {
         $this->week = $week;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(?Player $player): self
+    {
+        $this->player = $player;
 
         return $this;
     }

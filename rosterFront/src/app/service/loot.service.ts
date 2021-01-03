@@ -5,6 +5,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Loot} from "../class/loot";
 import {map} from "rxjs/operators";
 import {Wishitem} from "../class/wishitem";
+import {Coffer} from "../class/coffer";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import {Wishitem} from "../class/wishitem";
 export class LootService {
   public _lootsSub = new BehaviorSubject<Loot[]>(new Array<Loot>());
   public _loots: Observable<Loot[]>;
+  public coffers = new Array<Coffer[]>();
   constructor(private http: HttpClient) {}
 
   getWeekLoot():Observable<Loot[]>{
@@ -68,5 +70,8 @@ export class LootService {
     }
     console.log(obj);
     return this.http.patch(Globals.APP_API+ '/loot/setupgrade', obj);
+  }
+  getCoffers():Observable<Coffer[]>{
+    return this.http.get<Coffer[]>(Globals.APP_API+ '/loot/coffers');
   }
 }

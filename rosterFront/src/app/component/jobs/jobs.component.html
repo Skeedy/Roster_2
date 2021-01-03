@@ -9,7 +9,7 @@
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | tankJobs">
           <div>
-            <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
+            <img class="pointer" [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                  (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
           </div>
         </div>
@@ -17,7 +17,7 @@
       <h5 class="text-center text-white">Healer</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | healerJobs">
-          <img  [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
+          <img class="pointer" [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                 (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
@@ -26,21 +26,21 @@
       <h5 class="text-center text-white">Melee DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | meleedps">
-          <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
+          <img class="pointer" [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
       <h5 class="text-center text-white">Ranged DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | rangeddps">
-          <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
+          <img class="pointer" [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>
       <h5 class="text-center text-white">Magic DPS</h5>
       <div class="d-flex">
         <div *ngFor="let job of jobServ._jobSub.value | magicdps">
-          <img [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
+          <img class="pointer" [ngClass]="{'disabledDiv': !checkJob(job.id)}" height="50px"
                (click)="patchJob(isSub, job, player.id)" src="{{job.image.imgpath |imgpath}}">
         </div>
       </div>

@@ -1,0 +1,11 @@
+<div class="background-opacity row background-opacity my-2 py-2 flex-wrap">
+  <div class="col-2 text-center">
+    <img src="{{player.imgUrl}}" matTooltip="{{player.name}}" alt="{{player.name}}">
+    <p class="my-1 text-white text-center" style="font-weight: bold"> {{player.name}}</p>
+  </div>
+  <div class="col-10 d-flex justify-content-around align-items-center flex-wrap">
+    <div *ngFor="let coffer of coffers">
+      <app-coffer-count [lootsPlayer]="lootsPlayer" [coffer]="coffer" ></app-coffer-count>
+    </div>
+  </div>
+</div>

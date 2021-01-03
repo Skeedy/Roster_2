@@ -1,4 +1,5 @@
 import { PlayerJob } from "./player-job";
+import {Loot} from "./loot";
 
 export class Player {
   id: number;
@@ -8,4 +9,5 @@ export class Player {
   playerJobs : PlayerJob[];
   imgUrl : string
   portrait: string;
+  loots: Loot[];
 }

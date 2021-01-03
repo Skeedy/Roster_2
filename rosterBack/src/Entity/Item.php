@@ -24,6 +24,7 @@ class Item
      * @Groups("currentStuff")
      * @Groups("item")
      * @Groups("roster")
+     * @Groups("playerloot")
      */
     private $id;
 
@@ -36,6 +37,7 @@ class Item
      * @Groups("wishItem")
      * @Groups("currentStuff")
      * @Groups("loots")
+     * @Groups("playerloot")
      */
     private $name;
 

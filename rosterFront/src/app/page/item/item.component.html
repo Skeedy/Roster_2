@@ -1,0 +1,5 @@
+<div class="container">
+  <div *ngFor="let player of (rosterServ._rosterSub | async).player;">
+    <app-player-item-loop [coffers]="coffers" [player]="player"></app-player-item-loop>
+  </div>
+</div>

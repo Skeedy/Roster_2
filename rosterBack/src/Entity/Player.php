@@ -52,6 +52,7 @@ class Player
      * @ORM\OneToMany(targetEntity="App\Entity\PlayerJob", mappedBy="player", orphanRemoval=true, cascade={"persist"})
      * @Groups("player")
      * @Groups("roster")
+     * @Groups("playerloot")
      * @OrderBy({"ord" = "ASC"})
      */
     private $playerJobs;
@@ -78,10 +79,17 @@ class Player
      */
     private $portrait;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Loot::class, mappedBy="player", orphanRemoval=true)
+     * @Groups("roster")
+     */
+    private $loots;
+
 
     public function __construct()
     {
         $this->playerJobs = new ArrayCollection();
+        $this->loots = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +196,36 @@ class Player
     public function setPortrait(string $portrait): self
     {
         $this->portrait = $portrait;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Loot[]
+     */
+    public function getLoots(): Collection
+    {
+        return $this->loots;
+    }
+
+    public function addLoot(Loot $loot): self
+    {
+        if (!$this->loots->contains($loot)) {
+            $this->loots[] = $loot;
+            $loot->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLoot(Loot $loot): self
+    {
+        if ($this->loots->removeElement($loot)) {
+            // set the owning side to null (unless already changed)
+            if ($loot->getPlayer() === $this) {
+                $loot->setPlayer(null);
+            }
+        }
 
         return $this;
     }

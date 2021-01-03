@@ -90,6 +90,10 @@ import { InstanceOnePipe } from './pipe/instance-one.pipe';
 import { InstanceTwoPipe } from './pipe/instance-two.pipe';
 import { InstanceThreePipe } from './pipe/instance-three.pipe';
 import { InstanceFourPipe } from './pipe/instance-four.pipe';
+import { PlayerLootsComponent } from './component/player-loots/player-loots.component';
+import { ItemComponent } from './page/item/item.component';
+import { CofferCountComponent } from './component/coffer-count/coffer-count.component';
+import { PlayerItemLoopComponent } from './component/player-item-loop/player-item-loop.component';
 
 
 @NgModule({
@@ -140,6 +144,10 @@ import { InstanceFourPipe } from './pipe/instance-four.pipe';
     InstanceTwoPipe,
     InstanceThreePipe,
     InstanceFourPipe,
+    PlayerLootsComponent,
+    ItemComponent,
+    CofferCountComponent,
+    PlayerItemLoopComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

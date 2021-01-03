@@ -1,4 +1,5 @@
 import {Item} from "./item";
+import {Slot} from "./slot";
 
 export class Loot {
   loot_id: number;
@@ -18,4 +19,6 @@ export class Loot {
   item_isUpgrade: string;
   item_upgraded: Item;
   instance_value: number;
+  item: Item;
+  slot : Slot;
 }

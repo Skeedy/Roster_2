@@ -13,6 +13,7 @@ use App\Repository\LootRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\WeekRepository;
 use App\Repository\WishItemRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,6 +47,7 @@ class LootController extends AbstractController
         $itemChest = $itemRepository->findOneBy(['id' => $json['item_id']]);
         $instance = $instanceRepository->findOneBy(['value' => $json['instance']]);
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['playerjob_id']]);
+        $player = $playerJob->getPlayer();
         $newCurrentStuff = $playerJob->getCurrentstuff();
         $newOldStuff = $playerJob->getOldStuff();
         $currentWeek = date('W');
@@ -79,6 +81,7 @@ class LootController extends AbstractController
             $loot->setPlayerJob($playerJob);
             $loot->setItemUpgraded(NULL);
             $loot->setItem($itemChest);
+            $loot->setPlayer($player);
             $loot->setWeek($weekRepository->findOneBy(['value'=> $currentWeek]));
             $this->deleteOldItem($oldSlotId, $oldStuff, $currentStuff, $em);
             $this->setItemIntoCurrentstuff($slotChest->getId(),$newCurrentStuff, $newOldStuff,$itemToAssignCurrent? $itemToAssignCurrent: $item, $em);
@@ -88,6 +91,7 @@ class LootController extends AbstractController
             $loot->setChest($json['chest']);
             $loot->setRoster($this->getUser());
             $loot->setInstance($instance);
+            $loot->setPlayer($player);
             $loot->setPlayerJob($playerJob);
             $loot->setItem($itemChest);
             $loot->setItemUpgraded(NULL);
@@ -259,6 +263,7 @@ WHERE week.value = :week AND loot.roster_id = :roster';
         $itemToUpgrade = $itemRepository->findOneBy(['id' => $json['itemUpgrade']]);
         $newCurrentStuff = $playerJob->getCurrentstuff();
         $newOldStuff = $playerJob->getOldStuff();
+        $player = $playerJob->getPlayer();
         $currentWeek = date('W');
         $dateCheck = date('D') === 'Mon';
         $slot = $itemToUpgrade->getSlot();
@@ -279,6 +284,7 @@ WHERE week.value = :week AND loot.roster_id = :roster';
             $loot->setInstance($instance);
             $loot->setChest(NULL);
             $loot->setItem($item);
+            $loot->setPlayer($player);
             $loot->setItemUpgraded($itemToUpgrade);
             $loot->setRoster($this->getUser());
             $loot->setPlayerJob($playerJob);
@@ -290,6 +296,7 @@ WHERE week.value = :week AND loot.roster_id = :roster';
         if (!$loot){
             $loot = new Loot();
             $loot->setInstance($instance);
+            $loot->setPlayer($player);
             $loot->setChest(NULL);
             $loot->setItem($item);
             $loot->setItemUpgraded($itemToUpgrade);
@@ -302,5 +309,15 @@ WHERE week.value = :week AND loot.roster_id = :roster';
         $em->flush();
         return $this->json($loot, 200, [], ['groups' => 'loots']);
     }
-
+    /**
+     * @Route("/coffers", name="loot_coffer", methods={"GET"})
+     */
+    public function getCoffer(EntityManagerInterface $em){
+        $conn = $em->getConnection();
+        $sql ='SELECT * FROM item WHERE is_coffer = true OR is_upgrade = true';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result  =  $stmt->fetchAll();
+        return $this->json($result, 200, []);
+    }
 }

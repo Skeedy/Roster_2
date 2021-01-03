@@ -4,6 +4,9 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {Item} from "../../class/item";
 import {LootService} from "../../service/loot.service";
 import {PlayerJob} from "../../class/player-job";
+import {SuccessService} from "../../service/success.service";
+import {ErrorService} from "../../service/error.service";
+import {LoadingService} from "../../service/loading.service";
 
 @Component({
   selector: 'app-set-upgrade',
@@ -34,7 +37,7 @@ export class SetUpgradeComponent implements OnInit, OnChanges {
   itemId: number;
   buttonDisabled = true;
   @Output() setUpgradeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  constructor(public rosterServ : RosterService, public lootServ : LootService) { }
+  constructor(public successServ: SuccessService, public errorServ: ErrorService, public loadingServ: LoadingService, public rosterServ : RosterService, public lootServ : LootService) { }
 
   ngOnInit(): void {
   }
@@ -67,10 +70,13 @@ export class SetUpgradeComponent implements OnInit, OnChanges {
     }
   }
   setItem(){
+    this.loadingServ.activeLoading();
     this.lootServ.setItemToUpgrade(this.lootSlot? this.lootSlot.loot_id : null,
       this.item.id, this.playerJobSelectedId, this.valueRaid, this.itemId).subscribe(_=>{
       this.lootServ.refreshWeekLoot().subscribe();
       this.rosterServ.refreshRoster().subscribe();
+      this.loadingServ.removeLoading();
+      this.successServ.getSuccess('blabla');
       this.close();
     })
   }

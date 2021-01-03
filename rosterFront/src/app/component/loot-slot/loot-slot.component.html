@@ -1,10 +1,10 @@
 <div *ngIf="lootSlot" class="my-3">
   <div style="text-align: center">
-    <img (click)="showPool= !showPool; lootId = lootSlot.loot_id"
+    <img class="pointer" (click)="showPool= !showPool; lootId = lootSlot.loot_id"
          src="https://xivapi.com/img-misc/chest{{chest}}.png">
-    <img src="{{lootSlot.item_url}}" height="75px">
-    <img class="mx-3" src="{{lootSlot.player_url}}" height="75px">
-    <img src="{{lootSlot.job_img | imgpath}}">
+    <img src="{{lootSlot.item_url}}"  matTooltip="{{lootSlot.item_name}}" height="75px">
+    <img class="mx-3" src="{{lootSlot.player_url}}" matTooltip="{{lootSlot.player_name}}" height="75px">
+    <img src="{{lootSlot.job_img | imgpath}}" matTooltip="{{lootSlot.job_name}}">
   </div>
 </div>
 <div *ngIf="!lootSlot" class="my-3">

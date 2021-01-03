@@ -1,6 +1,6 @@
 <div class="d-flex my-2">
   <button mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
-  <img *ngIf="player.playerJobs.length" src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id, this.player.playerJobs[0].currentstuff.id);">
+  <img class="pointer" *ngIf="player.playerJobs.length" src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id, this.player.playerJobs[0].currentstuff.id);">
   <img *ngIf="!player.playerJobs.length" src="{{player.imgUrl}}" (click)="noJobSet();">
   <div style="color: #FFF">
     <div><b>{{player.name}}</b> ({{player.server}})</div>
@@ -8,10 +8,10 @@
       <div *ngIf="player.playerJobs" class="d-flex">
         <div *ngFor="let job of player.playerJobs">
           <div *ngIf="job.isMain">
-            <img height="60px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = false; ddbId = job.id; jobOrder=job.ord">
+            <img class="pointer" height="60px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = false; ddbId = job.id; jobOrder=job.ord">
           </div>
           <div *ngIf="job.isSub">
-            <img height="40px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = true; ddbId = job.id; jobName=job.job.name; jobOrder=job.ord">
+            <img class="pointer" height="40px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = true; ddbId = job.id; jobName=job.job.name; jobOrder=job.ord">
           </div>
         </div>
       </div>
