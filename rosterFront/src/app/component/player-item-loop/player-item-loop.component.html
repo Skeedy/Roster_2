@@ -1,9 +1,12 @@
 <div class="background-opacity row background-opacity my-2 py-2 flex-wrap">
-  <div class="col-2 text-center">
+  <div class="col-3 text-center d-flex justify-content-around">
+    <div>
     <img src="{{player.imgUrl}}" matTooltip="{{player.name}}" alt="{{player.name}}">
     <p class="my-1 text-white text-center" style="font-weight: bold"> {{player.name}}</p>
+    </div>
+    <app-total-loot class="text-white text-center d-flex align-items-center" [lootsPlayer]="lootsPlayer" ></app-total-loot>
   </div>
-  <div class="col-10 d-flex justify-content-around align-items-center flex-wrap">
+  <div class="col-9 d-flex justify-content-around align-items-center flex-wrap">
     <div *ngFor="let coffer of coffers">
       <app-coffer-count [lootsPlayer]="lootsPlayer" [coffer]="coffer" ></app-coffer-count>
     </div>

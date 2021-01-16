@@ -94,6 +94,7 @@ import { PlayerLootsComponent } from './component/player-loots/player-loots.comp
 import { ItemComponent } from './page/item/item.component';
 import { CofferCountComponent } from './component/coffer-count/coffer-count.component';
 import { PlayerItemLoopComponent } from './component/player-item-loop/player-item-loop.component';
+import { TotalLootComponent } from './component/total-loot/total-loot.component';
 
 
 @NgModule({
@@ -148,6 +149,7 @@ import { PlayerItemLoopComponent } from './component/player-item-loop/player-ite
     ItemComponent,
     CofferCountComponent,
     PlayerItemLoopComponent,
+    TotalLootComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,
