@@ -168,10 +168,10 @@ AND loot.roster_id = :roster AND week.value = :week
             $currentWeek -=1;
         }
         $currentWeekId = $weekRepository->findOneBy(['value'=>$currentWeek])->getId();
-        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value
+        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value, week.id
 FROM week INNER JOIN loot ON loot.week_id = week.id
 WHERE week.id < :week AND loot.roster_id = :roster
-GROUP BY week.value';
+GROUP BY week.id';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['week' => $currentWeekId, 'roster' => $roster->getId()]);
         $result  =  $stmt->fetchAll();

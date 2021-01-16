@@ -133,7 +133,8 @@ INNER JOIN player ON player.id = player_job.player_id
 INNER JOIN instance ON instance.id = loot.instance_id
 INNER JOIN job ON player_job.job_id = job.id
 INNER JOIN image ON job.image_id = image.id
-WHERE week.value = :week AND loot.roster_id = :roster';
+WHERE week.value = :week AND loot.roster_id = :roster
+ORDER BY week.id DESC';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['week' => $week, 'roster' => $roster->getId()]);
         $result  =  $stmt->fetchAll();

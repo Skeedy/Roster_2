@@ -17,6 +17,7 @@ export class RosterComponent implements OnInit {
   public week: any;
   public loots: Loot[];
   public weekCount: any;
+  order = 'id';
   public showPrevious: boolean;
   constructor(
     private instanceServ: InstanceService,

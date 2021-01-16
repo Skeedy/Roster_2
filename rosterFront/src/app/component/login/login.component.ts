@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
 import {Router} from '@angular/router';
 import {RosterService} from "../../service/roster.service";
+import {LoadingService} from "../../service/loading.service";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   public loading: boolean;
   public html: string;
 
-  constructor(private fb: FormBuilder, private rosterServ: RosterService, private router: Router) { }
+  constructor(private fb: FormBuilder, public loadingServ: LoadingService, private rosterServ: RosterService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
     });
   }
   login() {
-    console.log(this.loginForm.value)
+    this.loadingServ.activeLoading()
     this.connexionFailed = false;
     this.loading = true;
     const val = this.loginForm.value;
@@ -38,17 +39,18 @@ export class LoginComponent implements OnInit {
             this.rosterServ.getRoster()
               .subscribe(
                 (roster) => {
+                  this.loadingServ.removeLoading();
                   this.router.navigate(['/roster']);
                   this.loading = false;
                 },
                 (err) => {
-                  console.log(err);
+                  this.loadingServ.removeLoading();
                   this.connexionFailed = true;
                   this.loading = false;
                 });
           },
           (err) => {
-            console.log(err);
+            this.loadingServ.removeLoading();
             this.connexionFailed = true;
             this.loading = false;
             this.html = 'Roster name or Password invalid'
