@@ -10,7 +10,7 @@ export class TankWeaponPipe implements PipeTransform {
     if (value) {
       return value.filter( (item: Item) => {
         for(let i=0; i<item.jobs.length; i++) {
-          return item.jobs[i].role === 'TANK'
+          return item.jobs[i].role === 'TANK' && item.slot.id === 1;
         }
       });
     }

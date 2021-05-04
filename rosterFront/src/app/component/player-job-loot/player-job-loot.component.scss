@@ -9,9 +9,15 @@
   pointer-events: none;
 }
 .jobImg{
-  padding: 5px;
+  height: 45px;
 }
 .noNeed{
   opacity: 0.3;
   pointer-events: none;
+}
+@media screen and (max-width: 480px){
+  .jobImg{
+    height: 33px;
+    width: 33px;
+  }
 }

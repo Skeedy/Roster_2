@@ -140,13 +140,12 @@ item.img_url AS item_url,
 week.value AS week,
 instance.img_url AS instance_url,
 player.img_url AS player_url,
-image.imgpath AS job_img 
+job.img_url AS job_url 
 FROM instance 
 INNER JOIN loot ON instance.id = loot.instance_id 
 INNER JOIN player_job ON playerjob_id = player_job.id
 INNER JOIN player ON loot.player_id = player.id
 INNER JOIN job ON player_job.job_id = job.id
-INNER JOIN image ON job.image_id = image.id
 INNER JOIN item ON loot.item_id = item.id 
 INNER JOIN week ON loot.week_id = week.id
 AND loot.roster_id = :roster AND week.value = :week
@@ -168,7 +167,7 @@ AND loot.roster_id = :roster AND week.value = :week
             $currentWeek -=1;
         }
         $currentWeekId = $weekRepository->findOneBy(['value'=>$currentWeek])->getId();
-        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value, week.id
+        $sql = 'SELECT COUNT( DISTINCT week.value) AS weekCount, week.value, week.id, week.year
 FROM week INNER JOIN loot ON loot.week_id = week.id
 WHERE week.id < :week AND loot.roster_id = :roster
 GROUP BY week.id';

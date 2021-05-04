@@ -1,5 +1,5 @@
-<div class="row justify-content-md-center">
-  <div class="col-sm-2 col-lg-2">
+<div class="row justify-content-center">
+  <div class="col-2 col-lg-2">
     <div>
       <p class="slotName">M. hand</p>
       <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).mainHand">
@@ -85,13 +85,13 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-8 col-lg-6 d-flex align-items-center">
+  <div class="col-7 col-sm-6 d-flex align-items-center p-0">
     <img src="{{player.portrait}}" class="img-fluid">
   </div>
-  <div class="col-sm-2 col-lg-2">
+  <div class="col-2 col-sm-2">
     <div>
       <div class="slotName">O. hand</div>
-        <div  class="text-center" *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
+      <div  class="text-center" *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
         <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).offHand">
           <img class="item" (click)="gearShow= !gearShow;getSlotStuff(2); slotName='shield'"
                src="https://xivapi.com/img-misc/gear/offhand.png">
@@ -103,9 +103,9 @@
         </div>
       </div>
       <ng-template #png class="text-center">
-           <div class="text-center">
-        <img class="item" src="https://xivapi.com/img-misc/gear/offhand.png">
-          </div>
+        <div class="text-center">
+          <img class="item" src="https://xivapi.com/img-misc/gear/offhand.png">
+        </div>
       </ng-template>
     </div>
     <div>

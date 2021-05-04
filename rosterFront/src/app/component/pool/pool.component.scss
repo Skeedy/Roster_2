@@ -17,7 +17,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
-
+.coffer-img{
+  width: 85px;
+}
 .active{
   padding: 5px;
   background-color: #3be438;
@@ -25,4 +27,40 @@
 .selected{
   padding: 5px;
   background-color: #3689a8;
+}
+.player-img{
+  height: 75px;
+}
+.role-img{
+  height: 75px;
+  width: 75px;
+}
+.weap-icon{
+  height: 75px;
+  width: 75px;
+}
+// mobile
+@media screen and (max-width: 480px){
+  .dialog {
+    width: 95%;
+  }
+  .coffer-img{
+    height: 50px;
+    width: 50px;
+  }
+  .player-img{
+    height: 40px
+  }
+  .role-img{
+    height: 35px;
+    width: 35px;
+  }
+  .weap-icon{
+    height: 35px;
+    width: 35px;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
 }

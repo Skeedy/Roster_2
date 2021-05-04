@@ -26,3 +26,19 @@
 .pointer{
   cursor: pointer;
 }
+.job-img{
+  height: 50px;
+  width: 50px;
+}
+// mobile
+@media screen and (max-width: 480px){
+  .job-img{
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
+}

@@ -15,3 +15,9 @@
   opacity: 0.3;
   pointer-events: none;
 }
+@media screen and (max-width: 480px){
+  .jobImg{
+    height: 40px;
+    width: 40px;
+  }
+}

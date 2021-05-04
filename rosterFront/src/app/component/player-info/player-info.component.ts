@@ -21,7 +21,7 @@ export class PlayerInfoComponent implements OnInit {
   @Input() player: Player;
   @Output() items: Item[];
   showPlayer = false;
-  showDialog = false;
+
   idJobMain : number;
   showJob = false;
   isSub: boolean;

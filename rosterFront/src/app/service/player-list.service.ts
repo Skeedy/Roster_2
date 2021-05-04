@@ -16,7 +16,7 @@ public playerList: PlayerList;
 public isSubmitted = false;
 public isDone = false;
 public formUp = false;
-public nbForm :number;
+public nbForm = 0;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();
   }
@@ -36,7 +36,10 @@ public nbForm :number;
     }
   }
   searchPlayer(fname, lname, server) {
-    return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server)
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
+    return this.http.get('https://xivapi.com/character/search?name='+fname+'+'+lname+'&server='+server,httpOptions)
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

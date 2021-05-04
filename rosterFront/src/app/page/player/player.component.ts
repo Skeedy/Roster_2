@@ -21,50 +21,29 @@ import {Router} from "@angular/router";
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit, AfterViewInit{
-  @ViewChild(AddPlayerComponent)
-
-  public maxPlayer = 8;
-  constructor(public viewContainerRef: ViewContainerRef,
-              private componentFactoryResolver: ComponentFactoryResolver,
-              public searchServ: PlayerListService,
+  constructor(
               public rosterServ: RosterService,
               private router: Router,
               public jobServ: JobService) {
   }
 
   ngOnInit(): void {
-    this.rosterServ.getRoster().subscribe(_=>{
-    },
-        _=> {this.router.navigate(['/']);
+    if (this.rosterServ.isConnected()) {
+      this.rosterServ.getRoster().subscribe(_ => {
+        console.log(this.rosterServ._rosterSub.value.player.length)
+        },
+        _ => {
+          this.router.navigate(['/']);
           this.rosterServ.logout()
-    });
-    this.jobServ.getJobs();
+        });
+      this.jobServ.getJobs();
+    }
+    else{
+      this.router.navigate(['/']);
+    }
   }
   ngAfterViewInit() {
   }
 
-  addCharForm() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
-    this.viewContainerRef.createComponent(componentFactory)
-    this.searchServ.formUp = true;
-    this.searchServ.nbForm++;
-    console.log('nbFrom : ' + this.searchServ.nbForm +'/ nbPlayer : '+ this.rosterServ.nbPlayer)
-    console.log(this.rosterServ.nbPlayer);
-  }
 
-  submitPlayers() {
-    if(this.searchServ.playerList.playersIds.length === this.searchServ.nbForm){
-      this.rosterServ.postPlayer().subscribe((data) => {
-      if (data) {
-        this.rosterServ.getRoster().subscribe();
-        this.searchServ.isSubmitted = false;
-        this.searchServ.isDone = true;
-        this.searchServ.formUp = false;
-        }
-      });
-    }
-    else{
-      console.log('erreur')
-    }
-  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Roster} from "../../class/roster";
 import {RosterService} from "../../service/roster.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -55,11 +56,13 @@ export class AuthComponent implements OnInit {
     this.registerOpen = !this.registerOpen;
   }
   constructor(
-    private rosterService: RosterService
+    private rosterService: RosterService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-
+    if (this.rosterService.isConnected()){
+      this.router.navigate(['/roster']);
+    }
   }
-
 }

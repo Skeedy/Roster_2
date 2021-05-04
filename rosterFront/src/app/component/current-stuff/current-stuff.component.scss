@@ -6,6 +6,26 @@
   color: #FFF;
   font-weight: bold;
   text-align: center;
-  font-size: 15px;
   margin-top: 10px;
+}
+p{
+  margin: 0;
+}
+// mobile
+@media screen and (max-width: 480px){
+  .slotName{
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3px;
+    font-size: 0.65rem;
+  }
+  .item{
+    width: 35px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
 }

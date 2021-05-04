@@ -14,7 +14,7 @@ export class AppComponent {
   constructor(
     private rosterServ: RosterService,
     private router: Router
-  ){}
+  ){  }
   isConnected(): boolean {
     this.roster = this.rosterServ.currentUser;
     return this.rosterServ.isConnected();

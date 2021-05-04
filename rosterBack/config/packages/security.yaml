@@ -23,12 +23,10 @@ security:
                 success_handler:          lexik_jwt_authentication.handler.authentication_success
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
 
-        auth_register:
-            host: api\.roster.fr
+        api_register:
             pattern: ^/roster/register
             stateless: true
             anonymous: true
-
         api:
             pattern:   ^/
             stateless: true
@@ -54,4 +52,5 @@ security:
     access_control:
         - { path: ^/roster/register, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

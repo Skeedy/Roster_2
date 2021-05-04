@@ -1,30 +1,34 @@
-<div class="d-flex my-2">
-  <button mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
-  <img class="pointer" *ngIf="player.playerJobs.length" src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id, this.player.playerJobs[0].currentstuff.id);">
-  <img *ngIf="!player.playerJobs.length" src="{{player.imgUrl}}" (click)="noJobSet();">
-  <div style="color: #FFF">
-    <div><b>{{player.name}}</b> ({{player.server}})</div>
-    <div class="d-flex">
-      <div *ngIf="player.playerJobs" class="d-flex">
-        <div *ngFor="let job of player.playerJobs">
-          <div *ngIf="job.isMain">
-            <img class="pointer" height="60px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = false; ddbId = job.id; jobOrder=job.ord">
-          </div>
-          <div *ngIf="job.isSub">
-            <img class="pointer" height="40px" src="{{job.job.image.imgpath |imgpath }}" (click)="showJob= !showJob; isSub = true; ddbId = job.id; jobName=job.job.name; jobOrder=job.ord">
+<div class="bg-opacity p-2 my-2 text-white">
+  <div class="text-center"><b>{{player.name}}</b></div>
+  <div class="d-flex justify-content-start justify-content-sm-start">
+    <div class="d-flex align-items-center mr-2">
+      <img class="pointer player-img" *ngIf="player.playerJobs.length" matTooltip="{{player.name}}" src="{{player.imgUrl}}" (click)="getJobStuff(player.playerJobs[0].wishitem.id, this.player.playerJobs[0].currentstuff.id);">
+      <img class="pointer player-img" *ngIf="!player.playerJobs.length" matTooltip="{{player.name}}" src="{{player.imgUrl}}" (click)="noJobSet();">
+    </div>
+    <div style="color: #FFF">
+      <div class="d-flex">
+        <div *ngIf="player.playerJobs" class="d-flex">
+          <div *ngFor="let job of player.playerJobs">
+            <div *ngIf="job.isMain">
+              <img class="pointer main-job" src="{{job.job.imgUrl }}" (click)="showJob= !showJob; isSub = false; ddbId = job.id; jobOrder=job.ord">
+            </div>
+            <div *ngIf="job.isSub">
+              <img class="pointer sub-job" src="{{job.job.imgUrl }}" (click)="showJob= !showJob; isSub = true; ddbId = job.id; jobName=job.job.name; jobOrder=job.ord">
+            </div>
           </div>
         </div>
       </div>
-      <div *ngIf="player.playerJobs.length == 0" class="d-flex align-items-center">
-        <button mat-mini-fab color="warn" (click)="showJob= !showJob; isSub = false; ddbId = null;"> + </button>
-      </div>
-      <div *ngIf="player.playerJobs.length>0">
-        <button mat-mini-fab color="warn" (click)="showJob= !showJob; isSub = true; ddbId = null"> + </button>
+      <div *ngIf="player.playerJobs.length < 5">
+        <div *ngIf="player.playerJobs.length == 0" class="d-flex align-items-center">
+          <button mat-flat-button color="warn" (click)="showJob= !showJob; isSub = false; ddbId = null;"> Add job </button>
+        </div>
+        <div *ngIf="player.playerJobs.length>0">
+          <button mat-flat-button color="warn" (click)="showJob= !showJob; isSub = true; ddbId = null"> Add job </button>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
 <app-jobs [player]="player" [jobOrder]="jobOrder" [ddbId]= "ddbId" [jobName]="jobName" [isSub]="isSub" [(jobList)]="showJob"></app-jobs>
 <app-player-show [items]="items" [currentStuff]="currentStuff" [wishItem]="wishItem" [player]="player" [idMain]="idJobMain" [(playerShow)]="showPlayer"></app-player-show>
-<app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>
+

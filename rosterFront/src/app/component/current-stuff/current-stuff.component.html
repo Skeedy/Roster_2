@@ -1,5 +1,5 @@
-<div class="row justify-content-md-center">
-  <div class="col-sm-2 col-lg-2">
+<div class="row justify-content-center">
+  <div class="col-2 col-lg-2">
     <div>
       <div class="slotName">Main hand</div>
       <div class="text-center" *ngIf="!(currentServ._currentSub|async).mainHand">
@@ -18,7 +18,7 @@
         <img class="item" (click)="gearShow= !gearShow; getSlotStuff(3); slotName='head'"
              src="https://xivapi.com/img-misc/gear/head.png">
       </div>
-      <div *ngIf="(currentServ._currentSub|async).head">
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).head">
         <img class="item" (click)="gearShow= !gearShow;getSlotStuff(3); slotName='head'"
              matTooltip="{{(currentServ._currentSub|async).head.name}}"
              src="{{(currentServ._currentSub|async).head.imgUrl}}"/>
@@ -61,15 +61,15 @@
       </div>
     </div>
     <div>
-      <div class="slotName">Feet</div>
-      <div class="text-center" *ngIf="!(currentServ._currentSub|async).feet">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
-             src="https://xivapi.com/img-misc/gear/feet.png">
+      <div class="slotName">Legs</div>
+      <div class="text-center" *ngIf="!(currentServ._currentSub|async).legs">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(7); slotName='legs'"
+             src="https://xivapi.com/img-misc/gear/legs.png">
       </div>
-      <div class="text-center" *ngIf="(currentServ._currentSub|async).feet">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(8); slotName='feet'"
-             matTooltip="{{(currentServ._currentSub|async).feet.name}}"
-             src="{{(currentServ._currentSub|async).feet.imgUrl}}"/>
+      <div class="text-center" *ngIf="(currentServ._currentSub|async).legs">
+        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(7); slotName='legs'"
+             matTooltip="{{(currentServ._currentSub|async).legs.name}}"
+             src="{{(currentServ._currentSub|async).legs.imgUrl}}"/>
       </div>
     </div>
     <div>
@@ -85,10 +85,10 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-8 col-lg-6 d-flex align-items-center">
+  <div class="col-7 col-sm-6 d-flex align-items-center p-0">
     <img src="{{player.portrait}}" class="img-fluid">
   </div>
-  <div class="col-sm-2 col-lg-2">
+  <div class="col-2 col-sm-2">
     <div>
       <div class="slotName">Off hand</div>
       <div class="text-center" *ngIf="player.playerJobs[index].job.name == 'Paladin'; else png">
@@ -152,21 +152,21 @@
           <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='left ring'" matTooltip="{{(currentServ._currentSub|async).ring1.name}}"
                src="{{(currentServ._currentSub|async).ring1.imgUrl}}"/>
         </div>
-    </div>
-    <div>
-      <div class="slotName">Right ring</div>
-      <div class="text-center" *ngIf="!(currentServ._currentSub|async).ring2">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
-             src="https://xivapi.com/img-misc/gear/ring2.png">
       </div>
-      <div class="text-center" *ngIf="(currentServ._currentSub|async).ring2">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
-             matTooltip="{{(currentServ._currentSub|async).ring2.name}}"
-             src="{{(currentServ._currentSub|async).ring2.imgUrl}}"/>
+      <div>
+        <div class="slotName">Right ring</div>
+        <div class="text-center" *ngIf="!(currentServ._currentSub|async).ring2">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+               src="https://xivapi.com/img-misc/gear/ring2.png">
+        </div>
+        <div class="text-center" *ngIf="(currentServ._currentSub|async).ring2">
+          <img class="item" (click)="gearShow= !gearShow;getSlotStuff(12); slotName='right ring'"
+               matTooltip="{{(currentServ._currentSub|async).ring2.name}}"
+               src="{{(currentServ._currentSub|async).ring2.imgUrl}}"/>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
 <app-select-current [currentId]="player.playerJobs[index].currentstuff.id"
                     [slotName]="slotName"

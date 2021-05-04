@@ -6,4 +6,5 @@ export class Job {
   image: Image;
   role: string;
   subrole: string;
+  imgUrl: string;
 }

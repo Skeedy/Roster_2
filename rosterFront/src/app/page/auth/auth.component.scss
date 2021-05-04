@@ -2,19 +2,29 @@ button:focus,button:active:focus,button.active:focus {
   outline: none !important;
 }
 button{
-  font-size: 30px;
-  font-family: 'FFXIV';
   padding: 5px;
   padding-bottom: 10px;
   color: #FFF;
-  background-color: darkblue;
   letter-spacing: 2px;
+  background-color: #2b2ba7;
 }
 .input-field{
   height: 0;
   display: none;
-  padding: 20px;
   margin: auto;
-  width: fit-content;
-  background-color: #171717b8;
+  text-align: center;
+}
+.login-block{
+  background-color: #0000009c;
+  margin: auto;
+  padding: 10px;
+  border-radius: 20px;
+}
+// mobile
+@media screen and (max-width: 480px){
+
+}
+
+@media screen and (max-width: 960px ){
+
 }

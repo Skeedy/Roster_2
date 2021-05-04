@@ -75,6 +75,14 @@ class Job
      */
     private $value;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("roster")
+     * @Groups("jobStuff")
+     * @Groups("jobShow")
+     */
+    private $imgUrl;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -182,6 +190,18 @@ class Job
     public function setValue(int $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(?string $imgUrl): self
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

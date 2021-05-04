@@ -18,3 +18,21 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 490;
 }
+.friendly-moogle{
+  width: 150px;
+  height: 160px;
+}
+// mobile
+@media screen and (max-width: 480px){
+  .dialog{
+    width: 95%;
+  }
+  .friendly-moogle{
+    width: 80px;
+    height: 90px;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
+}

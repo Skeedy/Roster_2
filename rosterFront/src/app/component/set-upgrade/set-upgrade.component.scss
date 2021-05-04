@@ -18,3 +18,19 @@
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 590;
 }
+.player-img{
+  height: 75px;
+}
+@media screen and (max-width: 480px){
+  .dialog{
+    width:95%;
+  }
+  .player-img{
+    height: 40px;
+    width: 40px;
+  }
+  .item-img{
+    height: 40px;
+    width: 40px;
+  }
+}

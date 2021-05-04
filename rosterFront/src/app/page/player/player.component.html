@@ -1,13 +1,19 @@
 <div class="container">
-  <div class="row flex-wrap">
-    <div *ngFor="let player of (rosterServ._rosterSub | async).player;" class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-     <app-player-info [player]="player"></app-player-info>
+  <div *ngIf="rosterServ._rosterSub.value.player.length == 0" class="row justify-content-center flex-wrap">
+    <div class="no-character p-2">
+      <img src="./assets/img/moogle.png" alt="friendly moogle">
+      <div class="d-flex flex-column justify-content-center">
+        <h5 class="m-0 text-center"> Thanks for using FFXIV Roster !</h5>
+        <h5 class="m-0 text-center"> Please register one character to proceed</h5>
+      </div>
     </div>
   </div>
-<div>
-  <button *ngIf="rosterServ.nbPlayer+searchServ.nbForm < 8" mat-fab class="add-button " (click)="addCharForm()"><mat-icon>add</mat-icon></button>
-  <button *ngIf="searchServ.formUp && searchServ.nbForm >= 1 && searchServ.playerList.playersIds.length === searchServ.nbForm"
-          mat-fab (click)="submitPlayers()">Go</button>
-</div>
-<app-add-player *ngIf="rosterServ.nbPlayer < 8"></app-add-player>
+  <div *ngIf="(rosterServ._rosterSub | async).player.length >= 1" class="row flex-wrap">
+    <div *ngFor="let player of (rosterServ._rosterSub | async).player;" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+      <app-player-info [player]="player"></app-player-info>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <app-new-player-form *ngIf="rosterServ.nbPlayer < 8"></app-new-player-form>
+  </div>
 </div>

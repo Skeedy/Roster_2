@@ -1,49 +1,50 @@
 <div *ngIf="registrationDone">
-  <div class="text-center">Roster created !</div>
   <div>
-    <img width="70px" src="../../../assets/img/happy_spriggan.png">
-    Now you can add player to your team <a>here</a> !
+    <h5 class="text-center font-weight-bold">Roster created !</h5>
+    <p>
+    An email to confirm your roster has been sent. Please check your mailbox !
+    </p>
   </div>
+  <img width="70px" src="../../../assets/img/mail_moogle.png">
 </div>
 <div *ngIf="!registrationDone">
   <div *ngIf="registerFailed" (close)="registerFailed = false" class="error">
     <img width="70px" src="../../../assets/img/moogle.png">
     <div> {{html}} !</div>
   </div>
-
    <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
-  <div>
+
     <form class="form-content" [formGroup]="registerForm">
       <div class="">
         <mat-form-field>
           <input matInput
-                 placeholder="name"
+                 placeholder="Name"
                  formControlName="rostername"
                  autocomplete="Off" required/>
         </mat-form-field>
-        <span class="mx-2"></span>
+        <span class="mx-0 mx-sm-2"></span>
         <mat-form-field>
           <input matInput type="email"
-                 placeholder="email"
+                 placeholder="Email"
                  formControlName="email"
                  autocomplete="Off" required/>
         </mat-form-field>
-      </div>
+        </div>
       <div>
         <mat-form-field>
           <input matInput type="password"
                  placeholder="{{ password.errors?.pattern ?
                          'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number' :
-                         'password' }}"
+                         'Password' }}"
                  formControlName="password"
                  autocomplete="Off" required/>
         </mat-form-field>
-        <span class="mx-2"></span>
+        <span class="mx-0 mx-sm-2"></span>
         <mat-form-field>
           <input matInput type="password"
                  placeholder="{{ password.errors?.pattern ?
                          'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number' :
-                         'Confirmer password ' }}"
+                         'Confirm password ' }}"
                  formControlName="confirmPassword"
                  autocomplete="Off" required/>
           <div *ngIf="f.confirmPassword.errors" class="invalid-feedback">
@@ -52,13 +53,14 @@
           </div>
         </mat-form-field>
       </div>
+      <div class="text-center">
       <button mat-raised-button color="primary"
               [disabled]="loading || registerForm.invalid"
               (click)="register()">
         <span>Create</span>
       </button>
+      </div>
     </form>
-  </div>
 </div>
 
 

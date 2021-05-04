@@ -28,13 +28,14 @@ export class RosterComponent implements OnInit {
 
   ngOnInit(): void {
     this.rosterServ.refreshRoster().subscribe();
-    if(!this.loots) {
-      this.lootService.getWeekLoot().subscribe((data) => {
+    console.log(this.rosterServ._rosterSub)
+    if (this.loots){
+      this.lootService.refreshWeekLoot().subscribe((data) => {
         this.loots = data;
       });
     }
-    if (this.loots){
-      this.lootService.refreshWeekLoot().subscribe((data) => {
+    if(!this.loots) {
+      this.lootService.getWeekLoot().subscribe((data) => {
         this.loots = data;
       });
     }

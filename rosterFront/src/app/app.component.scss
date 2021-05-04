@@ -8,23 +8,24 @@ mat-drawer-content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: black;
+  background-color: #e8eef6;
 }
 
 
 mat-drawer-content button.menu{
-position: absolute;
+  position: absolute;
   top: 50px;
-  left: 50px;
+  left: 10px;
   background: none;
   color: #fff;
+  box-shadow: none!important;
 }
 mat-drawer-content div.logout{
   background-color: #872222!important;
   border-radius: 50px;
   position: absolute;
   top: 50px;
-  right: 50px;
+  right: 10px;
   color: #fff;
 }
 
@@ -39,31 +40,59 @@ mat-drawer-content button:focus, mat-drawer-content button:active:focus, mat-dra
   width: unset!important;
 }
 mat-drawer{
-padding: 35px;
+  padding: 35px;
 }
 .crystal-background{
-background-color: black;
-background-image: url("../assets/img/bg.jpg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
+  background-color: black;
+  background-image: url("../assets/img/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 mat-drawer{
-background: linear-gradient(to left, #476b8a, #000);
-color: white;
-font-family: FFXIV;
-font-size: 30px;
+  background: linear-gradient(to left, #272727, #525252);
+  color: white;
+  font-family: FFXIV;
+  font-size: 30px;
 }
 mat-drawer ul li{
-list-style: none;
+  list-style: none;
 }
 .font{
   font-family: FFXIV;
 }
 .active{
-  color: red!important;
+  color: #ef9532!important;
+}
+ul{
+  padding: 0;
 }
 ul li a{
   color: #FFF;
   text-decoration: underline;
+}
+.menu-img{
+  width: 60px;
+  height: 60px;
+}
+@media screen and (max-width: 480px){
+  .crystal-background{
+    background-color: black;
+    background-image: url("../assets/img/bg_mobile.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  .menu-img{
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
 }

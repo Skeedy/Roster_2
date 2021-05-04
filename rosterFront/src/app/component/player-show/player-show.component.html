@@ -1,46 +1,50 @@
 <div [@playerShow] *ngIf="playerShow" class="dialog">
-    <div class="row justify-content-md-center">
-      <div class="col-sm-12 col-lg-10 d-flex justify-content-between">
-        <img style="height: fit-content; border-radius: 20px;" src="{{player.imgUrl}}">
-        <div>
-          <h1 class="title">{{player.name}}</h1>
-          <div class="d-flex justify-content-center align-items-center">
-            <img height="45px" src="{{player.playerJobs[index].job.image.imgpath|imgpath}}">
-            <div class="jobName">{{player.playerJobs[index].job.name}}'s {{wishlistShow? 'wish list': 'current gear'}}</div>
+  <div class="row justify-content-md-center">
+    <div class="col-12 col-sm-10 d-flex justify-content-between">
+      <img class="portrait" style="height: fit-content; border-radius: 20px;" src="{{player.imgUrl}}">
+      <div>
+        <h1 class="title">{{player.name}}</h1>
+      </div>
+      <div *ngIf="player.playerJobs" class="d-flex">
+        <div *ngFor="let job of player.playerJobs">
+          <div *ngIf="job.isMain">
+            <img class="main-job" height="60px" style="cursor: pointer"
+                 (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = 0"
+                 src="{{job.job.imgUrl }}">
           </div>
-        </div>
-        <div *ngIf="player.playerJobs" class="d-flex">
-          <div *ngFor="let job of player.playerJobs">
-            <div *ngIf="job.isMain">
-              <img height="60px" style="cursor: pointer"
-                   (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = 0"
-                   src="{{job.job.image.imgpath |imgpath }}">
-            </div>
-            <div *ngIf="job.isSub">
-              <img height="40px" style="cursor: pointer"
-                   (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = job.ord"
-                   src="{{job.job.image.imgpath |imgpath }}">
-            </div>
+          <div *ngIf="job.isSub">
+            <img class="sub-job" height="40px" style="cursor: pointer"
+                 (click)="getGear(job.job.id, job.wishitem.id, job.currentstuff.id); index = job.ord"
+                 src="{{job.job.imgUrl }}">
           </div>
         </div>
       </div>
+
     </div>
-    <div *ngIf="player.playerJobs.length > 0">
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <img class="main-job" src="{{player.playerJobs[index].job.imgUrl}}">
+    <div class="jobName">{{player.playerJobs[index].job.name}}'s {{wishlistShow? 'wish list': 'current gear'}}</div>
+  </div>
+  <div *ngIf="player.playerJobs.length > 0">
+    <div>
       <div>
-        <div>
-        </div>
-        <app-wishlist *ngIf="wishlistShow" [index]=index [player]="player" [items]="items"></app-wishlist>
-        <app-current-stuff *ngIf="!wishlistShow" [index]=index [player]="player" [items]="items"></app-current-stuff>
-        <div class="row">
-           <div class="col-sm-12 col-lg-12 d-flex justify-content-center">
-            <div class="col-auto">
+      </div>
+      <app-wishlist *ngIf="wishlistShow" [index]=index [player]="player" [items]="items"></app-wishlist>
+      <app-current-stuff *ngIf="!wishlistShow" [index]=index [player]="player" [items]="items"></app-current-stuff>
+      <div class="row">
+        <div class="col-12 col-sm-12 d-flex justify-content-center">
+          <div class="col-auto">
             <button mat-button style="background: wheat" [class.active]="wishlistShow" (click)="wishlistShow = true">Wish list</button>
             <button mat-button style="background: wheat" [class.active]="!wishlistShow" (click)="wishlistShow = false">Current gear</button>
-            </div>
+            <button style="position: absolute;" mat-button color="warn" (click)="showDialog = !showDialog"><mat-icon>delete_forever</mat-icon></button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+</div>
+<app-delete-confirmation [player]="player" [(visible)]="showDialog"></app-delete-confirmation>
 <div *ngIf="playerShow" class="overlay" (click)="close()"></div>
 

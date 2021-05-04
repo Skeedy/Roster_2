@@ -44,7 +44,6 @@ export class RosterService {
         this.rosterID = this._rosterSub.value.id;
         if (this.nbPlayer < 8) {
           this.searchServ.formUp = true;
-          this.searchServ.nbForm = 1;
         }
       }
       return roster;

@@ -1,13 +1,13 @@
 <div [@pool] *ngIf="setUpgrade" class="dialog">
   <div class="d-flex justify-content-center">
-    <img src="{{item.imgUrl}}">
-    <h5 style="color:#FFF">Set player's job then item to upgrade</h5>
+    <img class="item-img" src="{{item.imgUrl}}">
+    <h6 style="color:#FFF">Set player's job then item to upgrade</h6>
   </div>
   <div class="d-flex">
     <div>
       <div *ngFor="let player of rosterServ._rosterSub.value.player;" class="align-items-center mx-2 my-2 d-flex">
         <div>
-          <img height="75px" src="{{player.imgUrl}}" matTooltip="{{player.name}}">
+          <img class="player-img" src="{{player.imgUrl}}" matTooltip="{{player.name}}">
         </div>
         <div *ngFor="let playerJob of player.playerJobs">
           <app-upgrade-player-job (valueChange)="getStuff($event, playerJob)"
@@ -35,6 +35,7 @@
   </div>
   <div class="text-center">
     <button [disabled]="buttonDisabled" mat-button (click)="setItem()" style="background-color: #3adb76">Save</button>
+    <button  mat-button (click)="close()" style="background-color: #e86267">Close</button>
   </div>
 </div>
 <div *ngIf="setUpgrade" class="overlay" (click)="close()"></div>

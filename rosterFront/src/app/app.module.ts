@@ -95,6 +95,8 @@ import { ItemComponent } from './page/item/item.component';
 import { CofferCountComponent } from './component/coffer-count/coffer-count.component';
 import { PlayerItemLoopComponent } from './component/player-item-loop/player-item-loop.component';
 import { TotalLootComponent } from './component/total-loot/total-loot.component';
+import { PickUpLootComponent } from './component/pick-up-loot/pick-up-loot.component';
+import { NewPlayerFormComponent } from './component/new-player-form/new-player-form.component';
 
 
 @NgModule({
@@ -150,6 +152,8 @@ import { TotalLootComponent } from './component/total-loot/total-loot.component'
     CofferCountComponent,
     PlayerItemLoopComponent,
     TotalLootComponent,
+    PickUpLootComponent,
+    NewPlayerFormComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -21,4 +21,5 @@ export class Loot {
   instance_value: number;
   item: Item;
   slot : Slot;
+  job_url: string;
 }

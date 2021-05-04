@@ -39,9 +39,14 @@ export class LoginComponent implements OnInit {
             this.rosterServ.getRoster()
               .subscribe(
                 (roster) => {
-                  this.loadingServ.removeLoading();
-                  this.router.navigate(['/roster']);
-                  this.loading = false;
+                    this.loadingServ.removeLoading();
+                  if(this.rosterServ._rosterSub.value.player.length >= 1) {
+                    this.router.navigate(['/roster']);
+                  }
+                  else{
+                    this.router.navigate(['/player']);
+                  }
+                    this.loading = false;
                 },
                 (err) => {
                   this.loadingServ.removeLoading();

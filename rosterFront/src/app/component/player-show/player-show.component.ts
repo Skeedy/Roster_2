@@ -33,6 +33,7 @@ export class PlayerShowComponent implements OnInit {
   @Input() currentStuff : Currentstuff;
   @Input() closable = true;
   @Input() wishId: number;
+  showDialog = false;
   @Input() idMain : number;
   @Input() playerShow: boolean;
   @Output() playerShowChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -61,5 +62,6 @@ export class PlayerShowComponent implements OnInit {
   close() {
     this.playerShow = false;
     this.playerShowChange.emit(this.playerShow);
+    this.index = 0;
   }
 }
