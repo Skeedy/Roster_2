@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {LootService} from "../../service/loot.service";
 import {Loot} from "../../class/loot";
 
@@ -7,18 +7,15 @@ import {Loot} from "../../class/loot";
   templateUrl: './previous-loot.component.html',
   styleUrls: ['./previous-loot.component.scss']
 })
-export class PreviousLootComponent implements OnInit {
+export class PreviousLootComponent implements OnChanges {
 @Input() week: any;
 public loots : Loot[];
   panelOpenState = false;
   constructor(public lootServ : LootService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
   }
-  getWeekLoot(value){
-  this.lootServ.getLootByWeek(value).subscribe((data)=>{
-    this.loots = data;
+  getWeekLoot(){
     this.panelOpenState = true;
-  })
   }
 }

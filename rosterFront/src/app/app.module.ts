@@ -97,6 +97,7 @@ import { PlayerItemLoopComponent } from './component/player-item-loop/player-ite
 import { TotalLootComponent } from './component/total-loot/total-loot.component';
 import { PickUpLootComponent } from './component/pick-up-loot/pick-up-loot.component';
 import { NewPlayerFormComponent } from './component/new-player-form/new-player-form.component';
+import { HistoryComponent } from './page/history/history.component';
 
 
 @NgModule({
@@ -154,6 +155,7 @@ import { NewPlayerFormComponent } from './component/new-player-form/new-player-f
     TotalLootComponent,
     PickUpLootComponent,
     NewPlayerFormComponent,
+    HistoryComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

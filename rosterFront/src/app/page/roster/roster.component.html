@@ -19,8 +19,3 @@
     </div>
   </div>
 </div>
-<div *ngIf="showPrevious" class="mt-4">
-  <div *ngFor="let week of weekCount.slice().reverse()">
-    <app-previous-loot [week]="week"></app-previous-loot>
-  </div>
-</div>

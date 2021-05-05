@@ -1,21 +1,26 @@
-<div class="row">
-  <div class="col-md-3">
-    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Umbra (Savage)</h6>
-    <div *ngFor="let loot of loots | instanceOne" class="text-center">
-      <img height="50px" src="{{loot.player_url}}">
-      <img height="50px" src="{{loot.job_url}}">
-      <img height="50px" src="{{loot.item_url}}">
+<div class="row justify-content-center">
+  <div *ngIf="(loots|instanceOne).length">
+    <div class="col">
+      <h6 class="text-center" style="color:#FFF"> Eden's Promise: Umbra (Savage)</h6>
+      <div *ngFor="let loot of loots | instanceOne" class="text-center">
+        <img height="50px" src="{{loot.player_url}}">
+        <img height="50px" src="{{loot.job_url}}">
+        <img height="50px" src="{{loot.item_url}}">
+      </div>
     </div>
   </div>
-  <div class="col-md-3">
-    <h6 class="text-center" style="color:#FFF"> Eden's Promise: Litany (Savage)</h6>
-    <div *ngFor="let loot of loots | instanceTwo" class="text-center">
-      <img height="50px" src="{{loot.player_url}}">
-      <img height="50px" src="{{loot.job_url}}">
-      <img height="50px" src="{{loot.item_url}}">
+  <div *ngIf="(loots|instanceTwo).length">
+    <div class="col">
+      <h6 class="text-center" style="color:#FFF"> Eden's Promise: Litany (Savage)</h6>
+      <div *ngFor="let loot of loots | instanceTwo" class="text-center">
+        <img height="50px" src="{{loot.player_url}}">
+        <img height="50px" src="{{loot.job_url}}">
+        <img height="50px" src="{{loot.item_url}}">
+      </div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div *ngIf="(loots|instanceThree).length">
+  <div class="col">
     <h6 class="text-center" style="color:#FFF"> Eden's Promise: Anamorphosis (Savage)</h6>
     <div *ngFor="let loot of loots | instanceThree" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
@@ -23,7 +28,9 @@
       <img height="50px" src="{{loot.item_url}}">
     </div>
   </div>
-  <div class="col-md-3">
+    </div>
+  <div *ngIf="(loots|instanceFour).length">
+  <div class="col">
     <h6 class="text-center" style="color:#FFF"> Eden's Promise: Eternity (Savage)</h6>
     <div *ngFor="let loot of loots | instanceFour" class="text-center">
       <img height="50px" src="{{loot.player_url}}">
@@ -31,4 +38,5 @@
       <img height="50px" src="{{loot.item_url}}">
     </div>
   </div>
+    </div>
 </div>

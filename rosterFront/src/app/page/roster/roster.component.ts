@@ -16,9 +16,9 @@ export class RosterComponent implements OnInit {
   public players: any;
   public week: any;
   public loots: Loot[];
-  public weekCount: any;
+
   order = 'id';
-  public showPrevious: boolean;
+
   constructor(
     private instanceServ: InstanceService,
     private router: Router,
@@ -45,7 +45,7 @@ export class RosterComponent implements OnInit {
       // @ts-ignore
       this.showPrevious = data.showPrevious;
       // @ts-ignore
-        this.weekCount = this.showPrevious? data.weekCount : [];
+      this.weekCount = this.showPrevious? data.weekCount : [];
       this.instanceServ.getInstances().subscribe((data) => {
         if (data) {
           this.raids = data;
