@@ -67,6 +67,11 @@ class Roster implements UserInterface
      */
     private $loots;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
     public function __construct()
     {
         $this->player = new ArrayCollection();
@@ -242,4 +247,16 @@ class Roster implements UserInterface
 
         return $this;
     }
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
 }

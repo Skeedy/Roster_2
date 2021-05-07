@@ -4,4 +4,5 @@ export class Roster {
   id: number;
   rostername: string;
   player : Player[];
+  isVerified: boolean;
 }

@@ -9,12 +9,8 @@ import {LootService} from "../../service/loot.service";
 })
 export class PreviousWeekLootComponent implements OnChanges {
 @Input() loots: Loot[];
-@Input() week: number;
   constructor(public lootServ : LootService) { }
 
   ngOnChanges(): void {
-    this.lootServ.getLootByWeek(this.week).subscribe((data)=>{
-      this.loots = data;
-  })
   }
 }

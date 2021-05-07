@@ -9,3 +9,4 @@ register:
 api_login_check:
   path: /login_check
   controller: App\Controller\RosterController::getTokenUser
+  methods: POST

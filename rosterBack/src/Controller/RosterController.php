@@ -5,13 +5,10 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Entity\Roster;
 use App\Entity\Week;
-use App\Repository\InstanceRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
 use App\Repository\WeekRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/roster")
@@ -31,31 +26,28 @@ use Symfony\Component\Validator\Constraints\Json;
 class RosterController extends AbstractController
 {
 
-    /**
-     * @Route("/register", name="roster_register", methods={"POST"})
-     */
     public function register(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
-
         $jsonPost = $request->getContent();
         $roster = $serializer->deserialize($jsonPost, Roster::class, 'json');
         $newName = $roster->getRostername();
         $newEmail = $roster->getEmail();
         if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
-            $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 403);
+            $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 401);
             return $response;
         }
         if ($rosterRepository->findOneBy(['rostername'=> $newName])){
-            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 403);
+            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
             return $response;
         }
         $roster->setRoles(['ROLE_USER']);
         $rawPassword = $roster->getPassword();
         $encode = $encoder->encodePassword($roster, $rawPassword);
         if (empty($newName) || empty($rawPassword) || empty($newEmail)){
-            return JsonResponse::fromJsonString("Invalid Username or Password or Email");
+            return JsonResponse::fromJsonString("Invalid Username or Password or Email", 401);
         }
         $roster->setPassword($encode);
+        $roster->setIsVerified(false);
         $em->persist($roster);
         $em->flush();
         $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
@@ -86,7 +78,12 @@ class RosterController extends AbstractController
      */
     public function getTokenUser(UserInterface $user, JWTTokenManagerInterface $JWTManager)
     {
+        if($user->isVerified()){
         return new JsonResponse(['token' => $JWTManager->create($user)]);
+        }
+        else{
+            return new JsonResponse(['prout'=>'prout']);
+        }
     }
 
     /**
@@ -94,6 +91,8 @@ class RosterController extends AbstractController
      */
     public function profile(PlayerRepository $playerRepository, EntityManagerInterface $em, SerializerInterface $serializer){
         $roster = $this->getUser();
+        return $this->json($roster, 200, [], ['groups'=> 'roster']);
+
 //        $players = $roster->getPlayer();
 //        foreach($players as $player){
 //            $playerData = file_get_contents('https://xivapi.com/character/' . $player->getIdLodestone() . '?&private_key= 73c419fb32744431889a856647096edff547644c560e4200860abf6e70b710ae');
@@ -105,7 +104,7 @@ class RosterController extends AbstractController
 //                $em->flush();
 //            }
 //        }
-        return $this->json($roster, 200, [], ['groups'=> 'roster']);
+
     }
     /**
      * @Route("/currentWeekLoot", name="roster_currentWeekLoot", methods={"GET"})

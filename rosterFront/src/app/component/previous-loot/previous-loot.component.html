@@ -1,10 +1,10 @@
 <mat-expansion-panel style="background: #000000ad;"
-                     (click)="!panelOpenState? getWeekLoot(): null"
+                     (click)="!panelOpenState? getWeekLoot(week.value): null"
                      (closed)="panelOpenState = false">
   <mat-expansion-panel-header style="background: #ffffff1f;">
     <mat-panel-title class="d-flex justify-content-center" style="color:#FFF">
       <b>WEEK {{week.value}} -- {{week.year}}</b>
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <app-previous-week-loot style="background-color: #00000094" [week]="week.value" [loots]="loots"></app-previous-week-loot>
+  <app-previous-week-loot style="background-color: #00000094" [loots]="loots"></app-previous-week-loot>
 </mat-expansion-panel>

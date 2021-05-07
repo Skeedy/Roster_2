@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit {
                   if(this.rosterServ._rosterSub.value.player.length >= 1) {
                     this.router.navigate(['/roster']);
                   }
+                  else if (!this.rosterServ._rosterSub.value.isVerified){
+                    this.rosterServ.logout();
+                    this.html = "Your account needs to be activated to proceed, please check your email !"
+                  }
                   else{
                     this.router.navigate(['/player']);
                   }
@@ -54,11 +58,12 @@ export class LoginComponent implements OnInit {
                   this.loading = false;
                 });
           },
-          (err) => {
+          (data) => {
+            console.log(data)
             this.loadingServ.removeLoading();
             this.connexionFailed = true;
             this.loading = false;
-            this.html = 'Roster name or Password invalid'
+            this.html = 'Roster name or Password invalid !'
           } );
     }
   }

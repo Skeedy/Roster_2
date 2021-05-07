@@ -1,0 +1,4 @@
+<h1>Welcome {{ email.toName }}!</h1>
+<p> your roster "{{ roster.rostername }}" has been created and need to be activated by clicking to this
+    <a href="{{ path('app_confirm_email', {'id' : roster.id}) }}">link</a>
+</p>

@@ -14,8 +14,12 @@ public loots : Loot[];
   constructor(public lootServ : LootService) { }
 
   ngOnChanges(): void {
+
   }
-  getWeekLoot(){
-    this.panelOpenState = true;
+  getWeekLoot(value){
+    this.lootServ.getLootByWeek(value).subscribe((data)=>{
+      this.loots = data;
+      this.panelOpenState = true;
+    })
   }
 }
