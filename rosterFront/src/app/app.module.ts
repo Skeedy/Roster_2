@@ -98,6 +98,8 @@ import { TotalLootComponent } from './component/total-loot/total-loot.component'
 import { PickUpLootComponent } from './component/pick-up-loot/pick-up-loot.component';
 import { NewPlayerFormComponent } from './component/new-player-form/new-player-form.component';
 import { HistoryComponent } from './page/history/history.component';
+import { ForgetPasswordComponent } from './page/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './page/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -156,6 +158,8 @@ import { HistoryComponent } from './page/history/history.component';
     PickUpLootComponent,
     NewPlayerFormComponent,
     HistoryComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -18,25 +18,20 @@ export class NewPlayerFormComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver,) { }
 
   ngOnInit(): void {
-    console.log(this.searchServ.nbForm)
   }
   addCharForm() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AddPlayerComponent);
     this.formBlock.createComponent(componentFactory);
-    this.searchServ.formUp = true;
-    this.searchServ.nbForm++;
-    console.log('nbFrom : ' + this.searchServ.nbForm +'/ nbPlayer : '+ this.rosterServ.nbPlayer)
-    console.log(this.rosterServ.nbPlayer);
   }
 
   submitPlayers() {
-    if(this.searchServ.playerList.playersIds.length === this.searchServ.nbForm){
+    if(this.searchServ.playerList.playersIds.length){
       this.rosterServ.postPlayer().subscribe((data) => {
         if (data) {
           this.rosterServ.getRoster().subscribe();
           this.searchServ.isSubmitted = false;
-          this.searchServ.isDone = true;
-          this.searchServ.formUp = false;
+          this.searchServ.isDone = false;
+          this.searchServ.playerList.playersIds = [];
         }
       });
     }

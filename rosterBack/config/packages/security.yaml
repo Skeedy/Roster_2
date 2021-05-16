@@ -24,12 +24,27 @@ security:
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
 
         api_register:
-            pattern: ^/register
+            pattern: ^/roster/register
             stateless: true
             anonymous: true
 
         app_confirm_email:
             pattern : ^/confirmemail/
+            stateless: true
+            anonymous: true
+
+        app_check_email_password:
+            pattern: ^/checkEmailPassword
+            stateless: true
+            anonymous: true
+
+        app_redirect_password:
+            pattern: ^/redirectPassword
+            stateless: true
+            anonymous: true
+
+        app_change_password:
+            pattern: ^/changePassword
             stateless: true
             anonymous: true
 
@@ -56,8 +71,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/roster/register, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/changePassword, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/confirmemail, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/checkEmailPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/redirectPassword, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login_check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

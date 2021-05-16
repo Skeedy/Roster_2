@@ -37,6 +37,9 @@ export class AddPlayerComponent implements OnInit {
         this.searchServ.addPlayer(this.newChar.ID);
         this.searchServ.isSubmitted = true;
         this.notFound = false;
+        this.loading = false;
+        this.isSearching = false;
+        this.newPlayerFrom.reset();
       }
       else{
         this.notFound = true;
@@ -53,8 +56,6 @@ export class AddPlayerComponent implements OnInit {
   }
   onCloseClicked() {
     this.host.nativeElement.remove();
-    this.searchServ.nbForm --;
-    console.log(this.searchServ.nbForm);
   }
 
 }

@@ -8,6 +8,11 @@
       <input matInput placeholder="Password" type="password" formControlName="password" autocomplete="off" required/>
     </mat-form-field>
     </div>
+    <div class="text-center my-1">
+      <div class="row justify-content-center">
+        <a routerLink="/forget-password">Forgot password ?</a>
+      </div>
+    </div>
     <div style="color: red; font-style: italic; font-weight: bold" class="pb-2">{{html}}</div>
     <div class="text-center">
     <button mat-raised-button color="primary"
@@ -15,8 +20,3 @@
             (click)="login()">Log in</button>
     </div>
   </form>
-  <div class="text-center mt-4">
-    <div class="row justify-content-center">
-      <a href="">Forgot password?</a>
-    </div>
-  </div>

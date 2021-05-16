@@ -120,19 +120,16 @@ class PlayerController extends AbstractController
         $playerJob = $playerJobRepository->findOneBy(['id' => $json['ddbId']]);
         $jobfetch = $jobRepository->findOneBy(['id' =>$json['job']]);
         $jobId = $jobfetch->getId();
-        $check = false;
-        if ($playerJob){
-            $jobs = $player->getPlayerJobs();
-            foreach ($jobs as $job){
-                if ($job->getJob() === $jobfetch){
-                    $check = true;
+        if(count($player->getPlayerJobs()) < 5) {
+            if ($playerJob) {
+                $jobs = $player->getPlayerJobs();
+                foreach ($jobs as $job) {
+                    if ($job->getJob() === $jobfetch) {
+                        $response = JsonResponse::fromJsonString('{"error" : true, "response":"This job is already in use"}', 403);
+                        return $response;
+                    }
                 }
-            }
-            if ($check){
-                $response = JsonResponse::fromJsonString('{"error" : true, "response":"This job is already in use"}', 403);
-                return $response;
-            }
-            else {
+
                 $wishItem = $wishItemRepository->find($playerJob->getWishItem()->getId());
                 $playerJob->setWishItem(NULL);
                 $em->remove($wishItem);
@@ -154,17 +151,7 @@ class PlayerController extends AbstractController
                 $respond = $this->json($json, 200, []);
                 return $respond;
             }
-        }else {
-            $jobs = $player->getPlayerJobs();
-            foreach ($jobs as $job) {
-                if ($job->getJob() === $jobId) {
-                    $check = true;
-                }
-                if ($check) {
-                    $response = JsonResponse::fromJsonString('{"error" : true, "response":"This job is already in use"}', 403);
-                    return $response;
-                }
-            }
+
             $playerJob = new PlayerJob();
             $newWishItem = new WishItem();
             $currentStuff = new CurrentStuff();
@@ -177,7 +164,7 @@ class PlayerController extends AbstractController
             $playerJob->setCurrentstuff($currentStuff);
             $playerJob->setPlayer($player);
             $playerJob->setJob($jobfetch);
-            $playerJob->setOrd($ordcount === 0? 0 : $ordcount);
+            $playerJob->setOrd($ordcount === 0 ? 0 : $ordcount);
             $playerJob->setIsMain($json['isMain']);
             $playerJob->setIsSub($json['isSub']);
             $em->persist($playerJob);
@@ -186,35 +173,39 @@ class PlayerController extends AbstractController
             $respond = $this->json($json, 200, []);
             return $respond;
         }
-    }
-    /**
-     * @Route("/{id}", name="player_delete", methods={"DELETE"})
-     */
-    public function delete(Player $player, EntityManagerInterface $em, LootRepository $lootRepository){
-        if ($player){
-            $playerjobs = $player->getPlayerJobs();
-            foreach ($playerjobs as $playerjob) {
-                $playerjobID = $playerjob->getId();
-                $loots = $lootRepository->findBy(['playerjob'=> $playerjobID]);
-                foreach ($loots as $loot) {
-                    $em->remove($loot);
-                    $em->flush();
-                }
-            }
-            $em->remove($player);
-            $em->flush();
+        else{
+            $response = JsonResponse::fromJsonString('{"error" : true, "response":"5 jobs are allowed for now"}', 403);
+            return $response;
         }
-        $response = JsonResponse::fromJsonString('{ "response": "'. $player->getName() .' has been deleted" }', 200);
-        return $response;
-    }
-    public function findRing($isSavage, $jobId, ItemRepository $itemRepository, SlotRepository $slotRepository){
-        $slotId = $slotRepository->findOneBy(["name"=> "finger"])->getId();
-        $items = $itemRepository->findBy(['slot'=> $slotId, 'ilvl' => 530, 'isSavage' => $isSavage]);
-        foreach ($items as $item){
-            foreach ($item->getJobs() as $job)
-                if($jobId === $job->getId()) {
-                    return $item;
+}
+/**
+ * @Route("/{id}", name="player_delete", methods={"DELETE"})
+ */
+public function delete(Player $player, EntityManagerInterface $em, LootRepository $lootRepository){
+    if ($player){
+        $playerjobs = $player->getPlayerJobs();
+        foreach ($playerjobs as $playerjob) {
+            $playerjobID = $playerjob->getId();
+            $loots = $lootRepository->findBy(['playerjob'=> $playerjobID]);
+            foreach ($loots as $loot) {
+                $em->remove($loot);
+                $em->flush();
             }
         }
+        $em->remove($player);
+        $em->flush();
     }
+    $response = JsonResponse::fromJsonString('{ "response": "'. $player->getName() .' has been deleted" }', 200);
+    return $response;
+}
+public function findRing($isSavage, $jobId, ItemRepository $itemRepository, SlotRepository $slotRepository){
+    $slotId = $slotRepository->findOneBy(["name"=> "finger"])->getId();
+    $items = $itemRepository->findBy(['slot'=> $slotId, 'ilvl' => 530, 'isSavage' => $isSavage]);
+    foreach ($items as $item){
+        foreach ($item->getJobs() as $job)
+            if($jobId === $job->getId()) {
+                return $item;
+            }
+    }
+}
 }

@@ -42,9 +42,6 @@ export class RosterService {
         this._rosterSub.next(roster);
         this.nbPlayer = this._rosterSub.value.player.length;
         this.rosterID = this._rosterSub.value.id;
-        if (this.nbPlayer < 8) {
-          this.searchServ.formUp = true;
-        }
       }
       return roster;
     }));
@@ -103,4 +100,16 @@ export class RosterService {
     };
     return this.http.post(Globals.APP_API + '/roster/register', obj);
   }
+  public sendEmailPassword(email){
+    const obj = {
+      email: email
+    }
+    return this.http.post(Globals.APP_API + '/checkEmailPassword', obj)
+  }
+  public changePassword(data, id){
+    const obj = {
+      password: data.password
+    }
+      return this.http.post(Globals.APP_API + '/changePassword/'+id, obj)
+    }
 }

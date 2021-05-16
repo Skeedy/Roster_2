@@ -2,11 +2,10 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 register:
-  path: /register
+  path: /roster/register
   controller: App\Controller\RosterController::register
   methods: POST
 
 api_login_check:
   path: /login_check
   controller: App\Controller\RosterController::getTokenUser
-  methods: POST

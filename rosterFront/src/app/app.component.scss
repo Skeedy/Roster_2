@@ -16,9 +16,10 @@ mat-drawer-content button.menu{
   position: absolute;
   top: 50px;
   left: 10px;
-  background: none;
-  color: #fff;
+  background: #d8d8d8;
+  color: #872a22;
   box-shadow: none!important;
+
 }
 mat-drawer-content div.logout{
   background-color: #872222!important;
@@ -76,6 +77,7 @@ ul li a{
 .menu-img{
   width: 60px;
   height: 60px;
+  padding: 5px;
 }
 @media screen and (max-width: 480px){
   .crystal-background{

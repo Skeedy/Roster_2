@@ -69,8 +69,14 @@ class Roster implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("roster")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $passwordPending;
 
     public function __construct()
     {
@@ -255,6 +261,18 @@ class Roster implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getPasswordPending(): ?bool
+    {
+        return $this->passwordPending;
+    }
+
+    public function setPasswordPending(bool $passwordPending): self
+    {
+        $this->passwordPending = $passwordPending;
 
         return $this;
     }

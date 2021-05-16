@@ -30,7 +30,6 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     if (this.rosterServ.isConnected()) {
       this.rosterServ.getRoster().subscribe(_ => {
-        console.log(this.rosterServ._rosterSub.value.player.length)
         },
         _ => {
           this.router.navigate(['/']);

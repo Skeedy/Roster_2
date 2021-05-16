@@ -15,8 +15,6 @@ export class PlayerListService {
 public playerList: PlayerList;
 public isSubmitted = false;
 public isDone = false;
-public formUp = false;
-public nbForm = 0;
   constructor(private http: HttpClient) {
     this.playerList = new PlayerList();
   }
@@ -27,13 +25,9 @@ public nbForm = 0;
 
   addPlayer(result: Result){
     this.playerList.addPlayer(result);
-    this.formUp = true;
   }
   removePlayer(result){
     this.playerList.removePlayer(result);
-    if (this.nbForm === 0) {
-      this.formUp = false;
-    }
   }
   searchPlayer(fname, lname, server) {
     const httpOptions = {

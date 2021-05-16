@@ -5,20 +5,29 @@ namespace App\Controller;
 use App\Entity\Player;
 use App\Entity\Roster;
 use App\Entity\Week;
+use App\Repository\InstanceRepository;
 use App\Repository\LootRepository;
 use App\Repository\PlayerRepository;
 use App\Repository\RosterRepository;
 use App\Repository\WeekRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\Json;
 
 /**
  * @Route("/roster")
@@ -26,8 +35,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RosterController extends AbstractController
 {
 
-    public function register(Request $request,RosterRepository $rosterRepository, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
+    /**
+     * @Route("/register", name="roster_register", methods={"POST"})
+     */
+    public function register(Request $request,RosterRepository $rosterRepository, MailerInterface $mailer, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
+
         $jsonPost = $request->getContent();
         $roster = $serializer->deserialize($jsonPost, Roster::class, 'json');
         $newName = $roster->getRostername();
@@ -37,19 +50,39 @@ class RosterController extends AbstractController
             return $response;
         }
         if ($rosterRepository->findOneBy(['rostername'=> $newName])){
-            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
+           $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
             return $response;
+
         }
         $roster->setRoles(['ROLE_USER']);
         $rawPassword = $roster->getPassword();
         $encode = $encoder->encodePassword($roster, $rawPassword);
         if (empty($newName) || empty($rawPassword) || empty($newEmail)){
-            return JsonResponse::fromJsonString("Invalid Username or Password or Email", 401);
+            return JsonResponse::fromJsonString("Invalid Username or Password or Email");
         }
         $roster->setPassword($encode);
         $roster->setIsVerified(false);
         $em->persist($roster);
         $em->flush();
+        $roster->setPassword($encode);
+        $roster->setIsVerified(false);
+        $roster->setPasswordPending(false);
+        $em->persist($roster);
+        $em->flush();
+        /*$email = (new TemplatedEmail())
+            ->from('pierretisserand31@gmail.com')
+            ->to(new Address($newEmail))
+            ->subject('Welcome to FFXIVRoster!')
+            // path of the Twig template to render
+            ->htmlTemplate('emails/registration.html.twig')
+
+            // pass variables (name => value) to the template
+            ->context([
+                'expiration_date' => new \DateTime('+7 days'),
+                'roster' => $roster,
+            ]);
+        $mailer->send($email);
+        */
         $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
         return $respond;
     }
@@ -70,20 +103,6 @@ class RosterController extends AbstractController
         }
         $respond = $this->json($json, 200, []);
         return $respond;
-    }
-    /**
-     * @param UserInterface $user
-     * @param JWTTokenManagerInterface $JWTManager
-     * @return JsonResponse
-     */
-    public function getTokenUser(UserInterface $user, JWTTokenManagerInterface $JWTManager)
-    {
-        if($user->isVerified()){
-        return new JsonResponse(['token' => $JWTManager->create($user)]);
-        }
-        else{
-            return new JsonResponse(['prout'=>'prout']);
-        }
     }
 
     /**

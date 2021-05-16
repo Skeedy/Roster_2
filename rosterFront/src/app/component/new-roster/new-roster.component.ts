@@ -49,7 +49,7 @@ export class NewRosterComponent implements OnInit {
       this.html ='success'
     }, (err) => {
       console.log(err);
-      this.html = err.error.response;
+      this.html = err.response;
       this.loading = false;
       this.registerFailed = true;
     });

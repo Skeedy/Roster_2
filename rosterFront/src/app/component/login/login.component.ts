@@ -40,15 +40,16 @@ export class LoginComponent implements OnInit {
               .subscribe(
                 (roster) => {
                     this.loadingServ.removeLoading();
-                  if(this.rosterServ._rosterSub.value.player.length >= 1) {
-                    this.router.navigate(['/roster']);
-                  }
-                  else if (!this.rosterServ._rosterSub.value.isVerified){
+                  if (!this.rosterServ._rosterSub.value.isVerified){
                     this.rosterServ.logout();
                     this.html = "Your account needs to be activated to proceed, please check your email !"
                   }
-                  else{
-                    this.router.navigate(['/player']);
+                  else {
+                    if (this.rosterServ._rosterSub.value.isVerified && this.rosterServ._rosterSub.value.player.length >= 1) {
+                      this.router.navigate(['/roster']);
+                    } else {
+                      this.router.navigate(['/player']);
+                    }
                   }
                     this.loading = false;
                 },
