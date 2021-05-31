@@ -31,20 +31,24 @@ export class LoginComponent implements OnInit {
     this.loadingServ.activeLoading()
     this.connexionFailed = false;
     this.loading = true;
+    // récupère les inputs du formulaire
     const val = this.loginForm.value;
     if (val.rostername && val.password) {
-      this.rosterServ.login(val.rostername, val.password)
-        .subscribe(
+      // appelle la fonction login dans le roster Service
+      this.rosterServ.login(val.rostername, val.password).subscribe(
           () => {
-            this.rosterServ.getRoster()
-              .subscribe(
+            // si réponse 200
+            this.rosterServ.getRoster().subscribe(
+              // appelle la fonction getRoster pour récupérer les données
                 (roster) => {
                     this.loadingServ.removeLoading();
+                  // si la variable isVerified est false, l'utilisateur est automatiquement déconnecté
                   if (!this.rosterServ._rosterSub.value.isVerified){
                     this.rosterServ.logout();
-                    this.html = "Your account needs to be activated to proceed, please check your email !"
+                    this.html = 'Your account needs to be activated to proceed, please check your email !'
                   }
                   else {
+                    // redirige vers la page si il y a au moins une donnée
                     if (this.rosterServ._rosterSub.value.isVerified && this.rosterServ._rosterSub.value.player.length >= 1) {
                       this.router.navigate(['/roster']);
                     } else {
@@ -59,8 +63,8 @@ export class LoginComponent implements OnInit {
                   this.loading = false;
                 });
           },
+        // si réponse erreur du serveur
           (data) => {
-            console.log(data)
             this.loadingServ.removeLoading();
             this.connexionFailed = true;
             this.loading = false;

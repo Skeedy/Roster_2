@@ -52,7 +52,6 @@ class RosterController extends AbstractController
         if ($rosterRepository->findOneBy(['rostername'=> $newName])){
            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
             return $response;
-
         }
         $roster->setRoles(['ROLE_USER']);
         $rawPassword = $roster->getPassword();
@@ -61,29 +60,22 @@ class RosterController extends AbstractController
             return JsonResponse::fromJsonString("Invalid Username or Password or Email");
         }
         $roster->setPassword($encode);
-        $roster->setIsVerified(false);
+        $roster->setIsVerified(false); // En attente de confirmation de mail
+        $roster->setPasswordPending(false); // Si l'utilisateur demande un changement de mot de passe
         $em->persist($roster);
-        $em->flush();
-        $roster->setPassword($encode);
-        $roster->setIsVerified(false);
-        $roster->setPasswordPending(false);
-        $em->persist($roster);
-        $em->flush();
-        /*$email = (new TemplatedEmail())
+        $em->flush(); // Enregistre dans la base de données
+        $email = (new TemplatedEmail())
             ->from('pierretisserand31@gmail.com')
             ->to(new Address($newEmail))
             ->subject('Welcome to FFXIVRoster!')
-            // path of the Twig template to render
             ->htmlTemplate('emails/registration.html.twig')
-
-            // pass variables (name => value) to the template
             ->context([
                 'expiration_date' => new \DateTime('+7 days'),
                 'roster' => $roster,
             ]);
         $mailer->send($email);
-        */
-        $respond = $this->json($roster, 200, [], ['groups'=> 'roster']);
+
+        $respond = JsonResponse::fromJsonString('{ "response": "Roster created !" }', 200);
         return $respond;
     }
 
@@ -103,6 +95,13 @@ class RosterController extends AbstractController
         }
         $respond = $this->json($json, 200, []);
         return $respond;
+    }
+
+    public function getTokenUser(UserInterface $user, JWTTokenManagerInterface $JWTManager)
+    {
+        if($user->isVerified()){
+            return new JsonResponse(['token' => $JWTManager->create($user)]);
+        }
     }
 
     /**

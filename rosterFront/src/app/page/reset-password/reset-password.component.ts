@@ -25,7 +25,6 @@ export class ResetPasswordComponent implements OnInit {
       }
       if(isAsked === 'true'){
         this.rosterId = params['id'];
-        console.log(this.rosterId)
       }
     });
     this.passwordForm = this.fb.group({
@@ -50,7 +49,7 @@ export class ResetPasswordComponent implements OnInit {
       this.changeDone = true;
     },(err)=>{
       this.error = true;
-      this.errorHtml = 'This roster did not ask to change password';
+      this.errorHtml = err.error.response;
     })
   }
 }

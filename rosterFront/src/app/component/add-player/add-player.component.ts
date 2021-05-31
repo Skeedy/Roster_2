@@ -30,15 +30,19 @@ export class AddPlayerComponent implements OnInit {
     const val = this.newPlayerFrom.value;
     this.loading = true;
     this.isSearching = true;
+    // appelle la function de recherche
     this.searchServ.searchPlayer(val.fname,val.lname,val.server).subscribe(data => {
         this.search = data;
+        // si trouve un personnage
       if(this.search.Results[0]) {
         this.newChar = this.search.Results[0];
+        // mémorise l'identifiant récupéré
         this.searchServ.addPlayer(this.newChar.ID);
         this.searchServ.isSubmitted = true;
         this.notFound = false;
         this.loading = false;
         this.isSearching = false;
+        // reset le formulaire
         this.newPlayerFrom.reset();
       }
       else{
@@ -55,7 +59,7 @@ export class AddPlayerComponent implements OnInit {
     this.onCloseClicked();
   }
   onCloseClicked() {
-    this.host.nativeElement.remove();
+    this.newPlayerFrom.reset();
   }
 
 }

@@ -48,8 +48,7 @@ export class NewRosterComponent implements OnInit {
       this.registrationDone = true;
       this.html ='success'
     }, (err) => {
-      console.log(err);
-      this.html = err.response;
+      this.html = err.error.response;
       this.loading = false;
       this.registerFailed = true;
     });

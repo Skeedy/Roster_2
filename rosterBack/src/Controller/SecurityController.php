@@ -46,34 +46,34 @@ class SecurityController extends AbstractController
         $roster->setIsVerified(true);
         $em->persist($roster);
         $em->flush();
-        $this->redirect(url. 'roster');
-        return $this->json($roster, 200, [], ['groups'=> 'roster']);
+        return $this->redirect(url);
     }
     /**
      * @Route("/checkEmailPassword", name="app_email_password", methods={"POST"})
      */
     public function checkEmail(Request $request,EntityManagerInterface $em, MailerInterface $mailer, SerializerInterface $serializer,RosterRepository $rosterRepository){
         $json = $serializer->decode($request->getContent(), 'json');
-        $roster = $rosterRepository->findOneBy(['email'=>$json['email']]);
-
+        $roster = $rosterRepository->findOneBy(['email'=>$json['email']]); //recherche si l'email existe
+        // si existe
         if($roster){
-            /* $email = (new TemplatedEmail())
+            $email = (new TemplatedEmail())
                 ->from('developper@ffxivroster.com')
                 ->to(new Address($json['email']))
                 ->subject('Welcome to FFXIVRoster!')
                 // path of the Twig template to render
-                ->htmlTemplate('emails/registration.html.twig')
+                ->htmlTemplate('emails/changePassword.html.twig')
                 // pass variables (name => value) to the template
                 ->context([
                     'expiration_date' => new \DateTime('+7 days'),
                     'roster'=>$roster
                     ]);
-            $mailer->send($email); */
-            $roster->setPasswordPending(true);
+            $mailer->send($email);
+            $roster->setPasswordPending(true); // passe la boolean a true pour la demande de changement de mot de passe
             $em->persist($roster);
             $em->flush();
             return $this->json('An email has been sent, please check it to change your password', 200);
         }
+        // si existe pas
         else{
             return $this->json('this email does not exist', 401);
         }
@@ -84,18 +84,17 @@ class SecurityController extends AbstractController
      */
     public function redirectPassword(Roster $roster){
         if($roster){
-            return $this->redirect(url. 'reset-password?id='. $roster->getId().'asked='.$roster->getPasswordPending());
+            return $this->redirect(url. 'reset-password?id='. $roster->getId().'&asked=true');
         }
-        else{
-            return $this->json('prout');
-        }
+
     }
     /**
      * @Route("/changePassword/{id}", name="app_change_password", methods={"POST"})
      */
     public function changePassword(Roster $roster, EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder, SerializerInterface  $serializer){
         $json =  $serializer->decode($request->getContent(), 'json');
-        $encode = $encoder->encodePassword($roster, $json['password']);
+        $encode = $encoder->encodePassword($roster, $json['password']); // récupère le password du JSON envoyé
+        // si le roster existe et si il a fait la demande de changement de mot de passe
         if ($roster && $roster->getPasswordPending()){
             $roster->setPassword($encode);
             $roster->setPasswordPending(false);
@@ -103,6 +102,7 @@ class SecurityController extends AbstractController
             $em->flush();
             return JsonResponse::fromJsonString('{"response" : "Your password has been changed successfuly !"}', 200);
         }
+        // si roster existe mais pas de demande
         if ($roster && !$roster->getPasswordPending()){
             return JsonResponse::fromJsonString('{"response" :"This roster did not ask to change password"}', 403);
         }

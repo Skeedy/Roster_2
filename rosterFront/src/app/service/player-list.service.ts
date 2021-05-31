@@ -48,9 +48,6 @@ public isDone = false;
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
-    return this.http.delete<Player>(url, httpOptions).pipe(
-      tap(_ => this.log('deleted player id=${type.id}')),
-      catchError(this.handleError<Player>('deletePlayer'))
-    );
+    return this.http.delete<Player>(url, httpOptions);
   }
 }
