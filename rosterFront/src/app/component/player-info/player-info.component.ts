@@ -18,16 +18,20 @@ import {Job} from "../../class/job";
   styleUrls: ['./player-info.component.scss']
 })
 export class PlayerInfoComponent implements OnInit {
+  // injecte ses données dans le component enfant
   @Input() player: Player;
-  @Output() items: Item[];
+  @Input() items: Item[];
+  // si passe à true, affichera le component "player-show"
   showPlayer = false;
-
   idJobMain : number;
+  // si passe à true, affichera le component "jobs"
   showJob = false;
   isSub: boolean;
+  // variable qui s'attend à récupérer une instance de wishItem
   wishItem: Wishitem;
   currentStuff: Currentstuff;
   jobOrder: number;
+  // identifiant du job dans la base de données
   ddbId: number;
   jobName: string;
   constructor(public jobServ: JobService,
@@ -45,15 +49,19 @@ export class PlayerInfoComponent implements OnInit {
   }
   getJobStuff(wishId, StuffId) {
     if (this.player.playerJobs.length > 0) {
+      // récupère l'équipement que le job peut équiper.
       this.jobServ.getJobStuff(this.idJobMain).subscribe((data) => {
           this.items = data;
       })
+      // récupère sa wishlist de son job
       this.wishitemServ.getWishItem(wishId).subscribe((data)=>{
         this.wishItem = data;
       })
+      // récupère son currentstuff de son job
       this.currentServ.getCurrentItem(StuffId).subscribe((data)=>{
         this.currentStuff = data;
       })
+      // affiche donc le component "player-show"
       this.showPlayer = !this.showPlayer;
     }
     else{

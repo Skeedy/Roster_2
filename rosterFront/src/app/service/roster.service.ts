@@ -106,10 +106,11 @@ export class RosterService {
     }
     return this.http.post(Globals.APP_API + '/checkEmailPassword', obj)
   }
-  public changePassword(data, id){
+  public changePassword(data, token){
     const obj = {
+      token : token,
       password: data.password
     }
-      return this.http.post(Globals.APP_API + '/changePassword/'+id, obj)
+      return this.http.post(Globals.APP_API + '/changePassword', obj)
     }
 }

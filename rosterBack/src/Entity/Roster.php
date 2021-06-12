@@ -74,9 +74,10 @@ class Roster implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $passwordPending;
+    private $tokenPassword;
+
 
     public function __construct()
     {
@@ -265,14 +266,14 @@ class Roster implements UserInterface
         return $this;
     }
 
-    public function getPasswordPending(): ?bool
+    public function getTokenPassword(): ?string
     {
-        return $this->passwordPending;
+        return $this->tokenPassword;
     }
 
-    public function setPasswordPending(bool $passwordPending): self
+    public function setTokenPassword(?string $tokenPassword): self
     {
-        $this->passwordPending = $passwordPending;
+        $this->tokenPassword = $tokenPassword;
 
         return $this;
     }

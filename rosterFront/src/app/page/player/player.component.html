@@ -1,4 +1,5 @@
 <div class="container">
+  <!-- si aucun personnage n'est enregistré -->
   <div *ngIf="rosterServ._rosterSub.value.player.length == 0" class="row justify-content-center flex-wrap">
     <div class="no-character p-2">
       <img src="./assets/img/moogle.png" alt="friendly moogle">
@@ -8,12 +9,16 @@
       </div>
     </div>
   </div>
+  <!-- si au moins un personnage est enregistré -->
   <div *ngIf="(rosterServ._rosterSub | async).player.length >= 1" class="row flex-wrap">
+    <!-- boucle sur les personnages du roster -->
     <div *ngFor="let player of (rosterServ._rosterSub | async).player;" class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+      <!-- injecte l'objet du personnage dans un component -->
       <app-player-info [player]="player"></app-player-info>
     </div>
   </div>
   <div class="row d-flex justify-content-center">
+    <!-- affiche un formulaire d'ajout de personage si le roster en a moins de 8-->
     <app-new-player-form *ngIf="rosterServ.nbPlayer < 8"></app-new-player-form>
   </div>
 </div>

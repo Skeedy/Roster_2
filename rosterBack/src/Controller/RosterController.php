@@ -40,20 +40,27 @@ class RosterController extends AbstractController
      */
     public function register(Request $request,RosterRepository $rosterRepository, MailerInterface $mailer, SerializerInterface $serializer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
-
+        // récupère le JSON du formulaire
         $jsonPost = $request->getContent();
+        // deserialiaze et le transforme en instance de Roster
         $roster = $serializer->deserialize($jsonPost, Roster::class, 'json');
+        // récupère le nom pour regarder si il n'existe pas déjà
         $newName = $roster->getRostername();
+        // pareil mais pour l'email
         $newEmail = $roster->getEmail();
+        // si nom existe, erreur
         if ($rosterRepository->findOneBy(['email'=> $newEmail]) ){
             $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 401);
             return $response;
         }
+        // si email existe
         if ($rosterRepository->findOneBy(['rostername'=> $newName])){
            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
             return $response;
         }
+        // défini le role de l'utilisateur
         $roster->setRoles(['ROLE_USER']);
+        // récupère le pasword et l'encode
         $rawPassword = $roster->getPassword();
         $encode = $encoder->encodePassword($roster, $rawPassword);
         if (empty($newName) || empty($rawPassword) || empty($newEmail)){
@@ -61,11 +68,12 @@ class RosterController extends AbstractController
         }
         $roster->setPassword($encode);
         $roster->setIsVerified(false); // En attente de confirmation de mail
-        $roster->setPasswordPending(false); // Si l'utilisateur demande un changement de mot de passe
+        $roster->setTokenPassword(NULL); // rentre aucun token pour changer le mot de passe
         $em->persist($roster);
         $em->flush(); // Enregistre dans la base de données
+        // créer une instance de mail
         $email = (new TemplatedEmail())
-            ->from('pierretisserand31@gmail.com')
+            ->from('rosterffxiv@gmail.com')
             ->to(new Address($newEmail))
             ->subject('Welcome to FFXIVRoster!')
             ->htmlTemplate('emails/registration.html.twig')
@@ -73,6 +81,7 @@ class RosterController extends AbstractController
                 'expiration_date' => new \DateTime('+7 days'),
                 'roster' => $roster,
             ]);
+        // envoie le mail
         $mailer->send($email);
 
         $respond = JsonResponse::fromJsonString('{ "response": "Roster created !" }', 200);

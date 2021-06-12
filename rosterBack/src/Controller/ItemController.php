@@ -16,10 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-/**
- * @Route("/item")
- */
-
 define('weaponUpgrade', 'Ester');
 define('gearUpgrade', 'Twine');
 define('accessorieUpgrade', 'Dusting');
@@ -36,6 +32,11 @@ CONST monk = 8;
 CONST dragoon = 9;
 CONST ninja = 10;
 CONST samourai = 11;
+
+/**
+ * @Route("/item")
+ */
+
 class ItemController extends AbstractController
 {
     public function strpos_arr($haystack, $needle) {
@@ -85,72 +86,74 @@ class ItemController extends AbstractController
                     $pieces = explode(' ', $itemName);
                     $last_word = array_pop($pieces);
                     $jobType = null;
-                    switch ($last_word) {
-                        case 'Casting':
-                            $jobType = 'Casting';
-                            $jobs = $jobRepository->findBy(['value'=> magicDPS]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Fending':
-                            $jobType = 'Fending';
-                            $jobs = $jobRepository->findBy(['value'=> tanks]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Maiming':
-                            $jobType = 'Maiming';
-                            $jobs = $jobRepository->findBy(['value'=> dragoon]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Striking':
-                            $jobType = 'Striking';
-                            $jobs = $jobRepository->findBy(['value'=> [monk, samourai]]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Slaying':
-                            $jobType = 'Slaying';
-                            $jobs = $jobRepository->findBy(['value'=> [monk, dragoon, samourai]]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Healing':
-                            $jobType = 'Healing';
-                            $jobs = $jobRepository->findBy(['id'=> healers]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Scouting':
-                            $jobType = 'Scouting';
-                            $jobs = $jobRepository->findBy(['value'=> ninja]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
-                            break;
-                        case 'Aiming':
-                            $jobType = 'Aiming';
-                            $checkNinja = $data['EquipSlotCategoryTargetID'] >= 9;
-                            $jobs = $jobRepository->findBy(['value' => [$checkNinja? ninja: '', rangedDPS]]);
-                            foreach ($jobs as $job){
-                                $item->addJob($job);
-                            }
+                    if($data['ClassJobUseTargetID'] == 0) {
+                        switch ($last_word) {
+                            case 'Casting':
+                                $jobType = 'Casting';
+                                $jobs = $jobRepository->findBy(['value' => magicDPS]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Fending':
+                                $jobType = 'Fending';
+                                $jobs = $jobRepository->findBy(['value' => tanks]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Maiming':
+                                $jobType = 'Maiming';
+                                $jobs = $jobRepository->findBy(['value' => dragoon]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Striking':
+                                $jobType = 'Striking';
+                                $jobs = $jobRepository->findBy(['value' => [monk, samourai]]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Slaying':
+                                $jobType = 'Slaying';
+                                $jobs = $jobRepository->findBy(['value' => [monk, dragoon, samourai]]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Healing':
+                                $jobType = 'Healing';
+                                $jobs = $jobRepository->findBy(['id' => healers]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Scouting':
+                                $jobType = 'Scouting';
+                                $jobs = $jobRepository->findBy(['value' => ninja]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                                break;
+                            case 'Aiming':
+                                $jobType = 'Aiming';
+                                $checkNinja = $data['EquipSlotCategoryTargetID'] >= 9;
+                                $jobs = $jobRepository->findBy(['value' => [$checkNinja ? ninja : '', rangedDPS]]);
+                                foreach ($jobs as $job) {
+                                    $item->addJob($job);
+                                }
+                        }
                     }
                     $convertSlotId = $data['EquipSlotCategoryTargetID'] === 13 ? 1 : $data['EquipSlotCategoryTargetID'];
                     $slot = $slotRepository->findOneBy(['lodId' => $convertSlotId]);
                     $item->setSlot($convertSlotId === 0 ? null : $slot);
-                    if($data['ClassJobUseTargetID'] !== 0 || $data['EquipSlotCategoryTargetID'] == 2){
-                        if ($data['ClassJobUseTargetID'] !== 0) {
+                    if($data['ClassJobUseTargetID'] !== 0){
+                        if ($data['ClassJobUseTargetID'] !== 2) {
                             $job = $jobRepository->findOneBy(['lodId' => $data['ClassJobUseTargetID']]);
                         }
-                        if ($data['EquipSlotCategoryTargetID'] == 2){
+                        else{
                             $job = $jobRepository->findOneBy(['lodId' => 1]);
                         }
                         $item->addJob($job);

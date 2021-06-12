@@ -6,9 +6,11 @@ use App\Entity\CurrentStuff;
 use App\Entity\OldStuff;
 use App\Entity\PlayerJob;
 use App\Entity\WishItem;
+use App\Repository\CurrentStuffRepository;
 use App\Repository\ItemRepository;
 use App\Repository\JobRepository;
 use App\Repository\LootRepository;
+use App\Repository\OldstuffRepository;
 use App\Repository\PlayerJobRepository;
 use App\Repository\RosterRepository;
 use App\Repository\SlotRepository;
@@ -96,7 +98,6 @@ class PlayerController extends AbstractController
      */
     public function patch(Request $request,
                           SerializerInterface $serializer,
-                          WishItemRepository $wishItemRepository,
                           PlayerJobRepository $playerJobRepository,
                           Player $player,
                           JobRepository $jobRepository,
@@ -123,16 +124,16 @@ class PlayerController extends AbstractController
             }
             if($playerJob){
                 // si pas d'erreur
-                // récupère la wishlist du job du personnage actuelle
-                $wishItem = $wishItemRepository->find($playerJob->getWishItem()->getId());
-                // enlève la wishlist de l'entité
-                $playerJob->setWishItem(NULL);
-                // puis la supprime
-                $em->remove($wishItem);
+                // supprime toutes les instances de liste d'équipement
+                $em->remove($playerJob->getWishItem());
+                $em->remove($playerJob->getCurrentstuff());
+                $em->remove($playerJob->getOldStuff());
             }
             if(!$playerJob){
                 $playerJob = new PlayerJob();
                 $playerJob->setPlayer($player);
+                $ordcount = count($player->getPlayerJobs());
+                $playerJob->setOrd($ordcount === 0 ? 0 : $ordcount);
             }
             // créer une nouvelle instance de wishlist
             $newWishItem = new WishItem();
@@ -147,8 +148,6 @@ class PlayerController extends AbstractController
             $playerJob->setOldStuff($newOldStuff);
             $playerJob->setCurrentstuff($newCurrentStuff);
             $playerJob->setWishItem($newWishItem);
-            $ordcount = count($player->getPlayerJobs());
-            $playerJob->setOrd($ordcount === 0 ? 0 : $ordcount);
             // assigne le job
             $playerJob->setJob($jobfetch);
             // assigne si c'est un main ou sub
@@ -158,18 +157,18 @@ class PlayerController extends AbstractController
             // assigne le joueur
             // enregistre toute les instances crées
             $em->persist($playerJob);
+            $em->persist($newOldStuff);
+            $em->persist($newCurrentStuff);
             $em->persist($newWishItem);
             $em->flush();
             $respond = $this->json($json, 200, []);
             return $respond;
             // si il n'existe pas
-
         }
         else {
             $response = JsonResponse::fromJsonString('{"error" : true, "response":"Only 5 jobs are allowed for now"}', 403);
             return $response;
         }
-
     }
 /**
  * @Route("/{id}", name="player_delete", methods={"DELETE"})

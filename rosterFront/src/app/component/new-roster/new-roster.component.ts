@@ -20,8 +20,10 @@ export class NewRosterComponent implements OnInit {
   constructor(private fb: FormBuilder, private authServ: AuthService, private  rosterServ : RosterService) { }
 
   ngOnInit() {
+    // récupère les entrées du formulaire
     this.registerForm = this.fb.group({
         rostername: [ null, Validators.required ],
+      // vérifie les caractères du champs input password
         password: new FormControl('', Validators.compose([
           Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')
@@ -32,6 +34,7 @@ export class NewRosterComponent implements OnInit {
           Validators.pattern('^(([^<>()\\[\\]\\.,;:\\s@\\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')
         ]))
       },
+      // Valide si les 2 champs de mot de passe sont les mêmes
       { validator: MustMatch('password', 'confirmPassword')
       });
   }

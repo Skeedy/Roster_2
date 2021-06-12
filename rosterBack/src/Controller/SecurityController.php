@@ -43,10 +43,12 @@ class SecurityController extends AbstractController
      * @Route("/confirmemail/{id}", name="app_confirm_email", methods={"GET"})
      */
     public function comfirmEmail(Roster $roster,  EntityManagerInterface $em){
-        $roster->setIsVerified(true);
-        $em->persist($roster);
-        $em->flush();
-        return $this->redirect(url);
+        if($roster) {
+            $roster->setIsVerified(true);
+            $em->persist($roster);
+            $em->flush();
+            return $this->redirect(url);
+        }
     }
     /**
      * @Route("/checkEmailPassword", name="app_email_password", methods={"POST"})
@@ -56,6 +58,9 @@ class SecurityController extends AbstractController
         $roster = $rosterRepository->findOneBy(['email'=>$json['email']]); //recherche si l'email existe
         // si existe
         if($roster){
+            $roster->setTokenPassword($this->generateToken()); // passe la boolean a true pour la demande de changement de mot de passe
+            $em->persist($roster);
+            $em->flush();
             $email = (new TemplatedEmail())
                 ->from('developper@ffxivroster.com')
                 ->to(new Address($json['email']))
@@ -68,9 +73,6 @@ class SecurityController extends AbstractController
                     'roster'=>$roster
                     ]);
             $mailer->send($email);
-            $roster->setPasswordPending(true); // passe la boolean a true pour la demande de changement de mot de passe
-            $em->persist($roster);
-            $em->flush();
             return $this->json('An email has been sent, please check it to change your password', 200);
         }
         // si existe pas
@@ -80,34 +82,40 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/redirectPassword/{id}", name="app_redirect_password", methods={"GET"})
+     * @Route("/redirectPassword", name="app_redirect_password", methods={"GET"})
      */
-    public function redirectPassword(Roster $roster){
+    public function redirectPassword(RosterRepository $rosterRepository){
+        $roster = $rosterRepository->findOneBy(['tokenPassword'=> $_GET['token']]);
         if($roster){
-            return $this->redirect(url. 'reset-password?id='. $roster->getId().'&asked=true');
+            return $this->redirect(url. 'reset-password?token='. $roster->getTokenPassword());
         }
-
     }
     /**
-     * @Route("/changePassword/{id}", name="app_change_password", methods={"POST"})
+     * @Route("/changePassword", name="app_change_password", methods={"POST"})
      */
-    public function changePassword(Roster $roster, EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder, SerializerInterface  $serializer){
+    public function changePassword(RosterRepository $rosterRepository , EntityManagerInterface $em, Request $request,UserPasswordEncoderInterface $encoder, SerializerInterface  $serializer){
         $json =  $serializer->decode($request->getContent(), 'json');
-        $encode = $encoder->encodePassword($roster, $json['password']); // récupère le password du JSON envoyé
+        $roster = $rosterRepository->findOneBy(['tokenPassword'=> $json['token']]);
+        // récupère le password du JSON envoyé et l'encode
+        $encode = $encoder->encodePassword($roster, $json['password']);
         // si le roster existe et si il a fait la demande de changement de mot de passe
-        if ($roster && $roster->getPasswordPending()){
+        if ($roster){
             $roster->setPassword($encode);
-            $roster->setPasswordPending(false);
+            // enlève le token
+            $roster->setTokenPassword(NULL);
             $em->persist($roster);
             $em->flush();
             return JsonResponse::fromJsonString('{"response" : "Your password has been changed successfuly !"}', 200);
         }
         // si roster existe mais pas de demande
-        if ($roster && !$roster->getPasswordPending()){
+        if ($roster && $roster->getTokenPassword() == NULL){
             return JsonResponse::fromJsonString('{"response" :"This roster did not ask to change password"}', 403);
         }
         else{
-            return JsonResponse::fromJsonString("{'Oops a problem occurs, please try again'}", 401);
+            return JsonResponse::fromJsonString("{'Oops ! a problem occurs, please try again'}", 401);
         }
+    }
+    function generateToken() {
+        return md5(uniqid());
     }
 }

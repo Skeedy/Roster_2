@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ResetPasswordComponent implements OnInit {
   public passwordForm: FormGroup;
-  private rosterId : number;
+  private token : string;
   changeDone = false;
   constructor(private route: ActivatedRoute, private router: Router, private fb: FormBuilder, public rosterServ : RosterService) { }
   html : string;
@@ -19,12 +19,9 @@ export class ResetPasswordComponent implements OnInit {
   error = false;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      let isAsked = params['asked'];
-      if (isAsked !== 'true' || !isAsked){
+      this.token = params['token'];
+      if (!this.token){
         this.router.navigate(['/']);
-      }
-      if(isAsked === 'true'){
-        this.rosterId = params['id'];
       }
     });
     this.passwordForm = this.fb.group({
@@ -44,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
 
   changePassword(){
     const val = this.passwordForm.value;
-    this.rosterServ.changePassword(val, this.rosterId).subscribe((data)=>{
+    this.rosterServ.changePassword(val, this.token).subscribe((data)=>{
       this.html = 'Your password has been changed successfully';
       this.changeDone = true;
     },(err)=>{
