@@ -6,7 +6,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .separator{
   height: 100px;
 }
-
+@font-face {
+  font-family: 'FFXIV';
+  src: url('./assets/fonts/FFXIV/OPTIEngeEtienne.woff') format('woff'),
+  url('./assets/fonts/FFXIV/OPTIEngeEtienne.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Hurry';
+  src: url('./assets/fonts/FFXIV/HurryUp-Regular.woff') format('woff'),
+  url('./assets/fonts/FFXIV/HurryUp-Regular.woff2') format('woff2');
+}
 // mobile
 @media screen and (max-width: 480px){
   .hide-mobile{

@@ -57,3 +57,9 @@ a{
 .friendly-moogle{
   width: 75px;
 }
+.login-block{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

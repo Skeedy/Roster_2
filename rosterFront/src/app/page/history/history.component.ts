@@ -12,7 +12,7 @@ export class HistoryComponent implements OnInit {
   constructor(public lootService: LootService) { }
 
   ngOnInit(): void {
-    this.lootService.getWeek().subscribe(data=> {
+    this.lootService.getWeeks().subscribe(data=> {
       // @ts-ignore
       this.week = data.week;
       // @ts-ignore

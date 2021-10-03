@@ -1,11 +1,11 @@
   <form class="form-content " [formGroup]="loginForm">
-    <div>
+    <div class="login-block">
     <mat-form-field color="primary">
-      <input matInput placeholder="Roster name" formControlName="rostername" autocomplete="off" required/>
+      <input matInput placeholder="Roster name" (click)="sound.playInput()" formControlName="rostername" autocomplete="off" required/>
     </mat-form-field>
       <span class="mx-0 mx-sm-2"></span>
     <mat-form-field>
-      <input matInput placeholder="Password" type="password" formControlName="password" autocomplete="off" required/>
+      <input matInput placeholder="Password" (click)="sound.playInput()" type="password" formControlName="password" autocomplete="off" required/>
     </mat-form-field>
     </div>
     <div class="text-center my-1">

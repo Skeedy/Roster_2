@@ -1,4 +1,6 @@
 <h1>Welcome !</h1>
 <p> Your roster "{{ roster.rostername }}" has been created and need to be activated by clicking to this
-    <a href="http://90.120.9.48:8081{{ path('app_confirm_email', {'id' : roster.id}) }}">link</a>
+    {# <a href="http://90.120.9.48:8081{{ path('app_confirm_email', {'id' : roster.id}) }}">#}
+    <a href="http://api.roster.fr{{ path('app_confirm_email', {'id' : roster.id}) }}">
+        link</a>
 </p>

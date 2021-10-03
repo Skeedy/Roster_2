@@ -1,9 +1,5 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
-@font-face {
-  font-family: 'FFXIV';
-  src: url('../assets/fonts/FFXIV/OPTIEngeEtienne.woff') format('woff'),
-  url('../assets/fonts/FFXIV/OPTIEngeEtienne.woff2') format('woff2');
-}
+
 mat-drawer-content {
   display: flex;
   flex-direction: column;

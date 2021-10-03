@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Roster} from "./class/roster";
 import {RosterService} from "./service/roster.service";
 import {Router} from "@angular/router";
+import {SoundService} from "./service/sound.service";
 
 @Component({
   selector: 'app-root',
@@ -13,13 +14,15 @@ export class AppComponent {
   roster: Roster|null;
   constructor(
     private rosterServ: RosterService,
-    private router: Router
+    private router: Router,
+    public soundService: SoundService
   ){  }
   isConnected(): boolean {
     this.roster = this.rosterServ.currentUser;
     return this.rosterServ.isConnected();
   }
   logout(): void {
+    this.soundService.playLogOut();
     this.rosterServ.logout();
     this.router.navigate(['/']);
   }

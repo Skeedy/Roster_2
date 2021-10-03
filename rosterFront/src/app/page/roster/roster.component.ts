@@ -39,14 +39,14 @@ export class RosterComponent implements OnInit {
         this.loots = data;
       });
     }
-    this.lootService.getWeek().subscribe(data=> {
+    this.lootService.getWeeks().subscribe(data=> {
       // @ts-ignore
       this.week = data.week;
       // @ts-ignore
       this.showPrevious = data.showPrevious;
       // @ts-ignore
       this.weekCount = this.showPrevious? data.weekCount : [];
-      this.instanceServ.getInstances().subscribe((data) => {
+      this.instanceServ.getInstances().subscribe((data : Raid[]) => {
         if (data) {
           this.raids = data;
         }

@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
 import { MustMatch} from "../../functions/must-match.validator";
 import {RosterService} from "../../service/roster.service";
+import {SoundService} from "../../service/sound.service";
 
 @Component({
   selector: 'app-new-roster',
@@ -14,10 +15,13 @@ export class NewRosterComponent implements OnInit {
   public registerFailed: boolean;
   public registrationDone: boolean;
   public loading: boolean;
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
   public html: string;
 
-  constructor(private fb: FormBuilder, private authServ: AuthService, private  rosterServ : RosterService) { }
+  constructor(private fb: FormBuilder,
+              private authServ: AuthService,
+              private  rosterServ : RosterService,
+              public soundService: SoundService) { }
 
   ngOnInit() {
     // récupère les entrées du formulaire
@@ -52,6 +56,7 @@ export class NewRosterComponent implements OnInit {
       this.html ='success'
     }, (err) => {
       this.html = err.error.response;
+      this.soundService.playError();
       this.loading = false;
       this.registerFailed = true;
     });

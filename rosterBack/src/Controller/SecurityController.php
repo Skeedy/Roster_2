@@ -18,7 +18,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Serializer\SerializerInterface;
 
-define('url', 'http://90.120.9.48:8080/' );
+//define('url', 'http://90.120.9.48:8080/' );
+define('url', 'http://localhost:4200/' );
 
 class SecurityController extends AbstractController
 {
@@ -64,7 +65,7 @@ class SecurityController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from('developper@ffxivroster.com')
                 ->to(new Address($json['email']))
-                ->subject('Welcome to FFXIVRoster!')
+                ->subject('FFXIVRoster change password')
                 // path of the Twig template to render
                 ->htmlTemplate('emails/changePassword.html.twig')
                 // pass variables (name => value) to the template

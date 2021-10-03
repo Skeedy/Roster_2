@@ -3,6 +3,7 @@ import {Roster} from "../../class/roster";
 import {RosterService} from "../../service/roster.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
+import {SoundService} from "../../service/sound.service";
 
 @Component({
   selector: 'app-auth',
@@ -49,20 +50,24 @@ export class AuthComponent implements OnInit {
   logIsOpen = false;
   registerOpen = false;
   rosters : Roster[];
-  toggleLogIn() {
-    this.logIsOpen = !this.logIsOpen;
-  }
-  toggleRegister() {
-    this.registerOpen = !this.registerOpen;
-  }
+
   constructor(
     private rosterService: RosterService,
-    private router: Router
+    private router: Router,
+    public sound: SoundService
   ) { }
 
   ngOnInit(): void {
     if (this.rosterService.isConnected()){
       this.router.navigate(['/roster']);
     }
+  }
+  toggleLogIn() {
+    this.sound.playAction();
+    this.logIsOpen = !this.logIsOpen;
+  }
+  toggleRegister() {
+    this.sound.playAction();
+    this.registerOpen = !this.registerOpen;
   }
 }

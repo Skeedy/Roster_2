@@ -182,9 +182,9 @@ AND loot.roster_id = :roster AND week.value = :week
         return $this->json($result, 200, []);
     }
     /**
-     * @Route("/currentWeek", name="roster_currentWeek", methods={"GET"})
+     * @Route("/weeks", name="roster_currentWeek", methods={"GET"})
      */
-    public function getWeekNumber(EntityManagerInterface $em, LootRepository $lootRepository, WeekRepository $weekRepository){
+    public function getWeeksNumber(EntityManagerInterface $em, LootRepository $lootRepository, WeekRepository $weekRepository){
         $roster = $this->getUser();
         $conn = $em->getConnection();
         $currentWeek = date('W');

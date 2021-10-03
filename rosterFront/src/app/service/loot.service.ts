@@ -43,8 +43,8 @@ export class LootService {
       return loot.item_id === itemid.toString() && loot.instance_id === instanceId.toString();
     })
   }
-  getWeek(){
-    return this.http.get(Globals.APP_API+ '/roster/currentWeek')
+  getWeeks(){
+    return this.http.get(Globals.APP_API+ '/roster/weeks')
   }
   getLootByWeek(value):Observable<Loot[]>{
     return this.http.get<Loot[]>(Globals.APP_API+ '/loot/week?week=' + value);

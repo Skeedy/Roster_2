@@ -19,6 +19,22 @@ button{
   margin: auto;
   padding: 10px;
   border-radius: 20px;
+  animation:  2s linear 0s showUp;
+}
+@keyframes showUp {
+  from{
+    opacity: 0;
+    top:0;
+  }
+  to{
+    opacity: 1;
+    top: 50%;
+  }
+}
+.welcome{
+  font-family: "Hurry";
+  font-weight: bold;
+  letter-spacing: 7px;
 }
 // mobile
 @media screen and (max-width: 480px){
