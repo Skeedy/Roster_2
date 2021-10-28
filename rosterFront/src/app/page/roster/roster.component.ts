@@ -27,41 +27,45 @@ export class RosterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.rosterServ.refreshRoster().subscribe();
-    console.log(this.rosterServ._rosterSub)
-    if (this.loots){
+    this.rosterServ.refreshRoster().subscribe(() => {
+        this.lootService.getWeeks().subscribe(data => {
+          // @ts-ignore
+          this.week = data.week;
+          // @ts-ignore
+          this.showPrevious = data.showPrevious;
+          // @ts-ignore
+          this.weekCount = this.showPrevious ? data.weekCount : [];
+          this.instanceServ.getInstances().subscribe((data: Raid[]) => {
+            if (data) {
+              this.raids = data;
+            }
+          }, (_) => {
+            this.router.navigate(['/']);
+            this.rosterServ.logout();
+          });
+        })
+      },
+      (err) => {
+        this.router.navigate(['/']);
+        this.rosterServ.logout();
+      });
+    if (this.loots) {
       this.lootService.refreshWeekLoot().subscribe((data) => {
         this.loots = data;
       });
     }
-    if(!this.loots) {
+    if (!this.loots) {
       this.lootService.getWeekLoot().subscribe((data) => {
         this.loots = data;
       });
     }
-    this.lootService.getWeeks().subscribe(data=> {
-      // @ts-ignore
-      this.week = data.week;
-      // @ts-ignore
-      this.showPrevious = data.showPrevious;
-      // @ts-ignore
-      this.weekCount = this.showPrevious? data.weekCount : [];
-      this.instanceServ.getInstances().subscribe((data : Raid[]) => {
-        if (data) {
-          this.raids = data;
-        }
-      }, (_) => {
-        this.router.navigate(['/']);
-        this.rosterServ.logout();
-      });
-    })
-  }
+}
 
-  // getAugment(instanceId){
-  //   return this.raids.filter((raid: Raid)=>{
-  //     return raid.id === instanceId
-  //   }).find((item: Item)=>{
-  //     return item.name === "Crystalline Twine"
-  //   })
-  // }
+// getAugment(instanceId){
+//   return this.raids.filter((raid: Raid)=>{
+//     return raid.id === instanceId
+//   }).find((item: Item)=>{
+//     return item.name === "Crystalline Twine"
+//   })
+// }
 }
