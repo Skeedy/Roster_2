@@ -100,6 +100,7 @@ import { NewPlayerFormComponent } from './component/new-player-form/new-player-f
 import { HistoryComponent } from './page/history/history.component';
 import { ForgetPasswordComponent } from './page/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './page/reset-password/reset-password.component';
+import { WelcomeComponent } from './component/welcome/welcome.component';
 
 
 @NgModule({
@@ -160,6 +161,7 @@ import { ResetPasswordComponent } from './page/reset-password/reset-password.com
     HistoryComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
+    WelcomeComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

@@ -20,12 +20,11 @@
           <input matInput
                  placeholder="Name"
                  formControlName="rostername"
-                 (click)="soundService.playInput()"
                  autocomplete="Off" required/>
         </mat-form-field>
         <span class="mx-0 mx-sm-2"></span>
         <mat-form-field>
-          <input (click)="soundService.playInput()" matInput type="email"
+          <input matInput type="email"
                  placeholder="Email"
                  formControlName="email"
                  autocomplete="Off" required/>
@@ -34,7 +33,6 @@
       <div class="input-field">
         <mat-form-field>
           <input matInput type="password"
-                 (click)="soundService.playInput()"
                  placeholder="{{ password.errors?.pattern ?
                          'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number' :
                          'Password' }}"
@@ -44,7 +42,6 @@
         <span class="mx-0 mx-sm-2"></span>
         <mat-form-field>
           <input matInput type="password"
-                 (click)="soundService.playInput()"
                  placeholder="{{ password.errors?.pattern ?
                          'Minimum eight characters, at least one uppercase letter, one lowercase letter and one number' :
                          'Confirm password ' }}"

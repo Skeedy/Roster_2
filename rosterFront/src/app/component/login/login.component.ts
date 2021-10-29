@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
                   else {
                     // redirige vers la page si il y a au moins une donnée
                     if (this.rosterServ._rosterSub.value.isVerified && this.rosterServ._rosterSub.value.player.length >= 1) {
-                      this.sound.playEnter();
+                      // this.sound.playEnter();
                       this.router.navigate(['/roster']);
                     } else {
                       this.sound.playEnter();
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
                 },
                 (err) => {
                   this.loadingServ.removeLoading();
-                  this.sound.playError();
+                  // this.sound.playError();
                   this.connexionFailed = true;
                   this.loading = false;
                 });
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         // si réponse erreur du serveur
           (data) => {
             this.loadingServ.removeLoading();
-            this.sound.playError();
+            // this.sound.playError();
             this.connexionFailed = true;
             this.loading = false;
             this.html = 'Roster name or Password invalid !'

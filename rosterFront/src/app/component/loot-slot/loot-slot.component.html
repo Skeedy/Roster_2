@@ -4,7 +4,7 @@
          src="https://xivapi.com/img-misc/chest{{chest}}.png">
     <img class="loot-img" src="{{lootSlot.item_url}}"  matTooltip="{{lootSlot.item_name}}" height="65px">
     <img class="loot-img mx-3" src="{{lootSlot.player_url}}" matTooltip="{{lootSlot.player_name}}" height="65px">
-    <img class="loot-img" height="65px" src="{{lootSlot.job_url}}" matTooltip="{{lootSlot.job_name}}">
+    <img class="loot-img" height="65px" src="{{lootSlot.job_url}}" matTooltip="{{lootSlot.player_name}}'s {{lootSlot.job_name}}">
   </div>
 </div>
 <div *ngIf="!lootSlot" class="my-1 my-sm-2">

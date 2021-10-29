@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Roster} from "../../class/roster";
 import {RosterService} from "../../service/roster.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
 import {SoundService} from "../../service/sound.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-auth',
@@ -50,11 +51,13 @@ export class AuthComponent implements OnInit {
   logIsOpen = false;
   registerOpen = false;
   rosters : Roster[];
+  isVisible= true;
 
   constructor(
     private rosterService: RosterService,
     private router: Router,
-    public sound: SoundService
+    public sound: SoundService,
+    public cookieServ : CookieService
   ) { }
 
   ngOnInit(): void {
@@ -63,11 +66,11 @@ export class AuthComponent implements OnInit {
     }
   }
   toggleLogIn() {
-    this.sound.playAction();
+    // this.sound.playAction();
     this.logIsOpen = !this.logIsOpen;
   }
   toggleRegister() {
-    this.sound.playAction();
+    // this.sound.playAction();
     this.registerOpen = !this.registerOpen;
   }
 }

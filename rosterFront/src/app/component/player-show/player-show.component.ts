@@ -55,7 +55,6 @@ export class PlayerShowComponent implements OnInit {
       })
       this.currenServ.getCurrentItem(StuffId).subscribe( data => {
         this.currentStuff = data;
-        console.log(this.currentStuff)
       })
     }
   }

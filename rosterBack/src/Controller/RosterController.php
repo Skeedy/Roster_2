@@ -166,7 +166,8 @@ item.img_url AS item_url,
 week.value AS week,
 instance.img_url AS instance_url,
 player.img_url AS player_url,
-job.img_url AS job_url 
+job.img_url AS job_url ,
+       job.name AS job_name
 FROM instance 
 INNER JOIN loot ON instance.id = loot.instance_id 
 INNER JOIN player_job ON playerjob_id = player_job.id
