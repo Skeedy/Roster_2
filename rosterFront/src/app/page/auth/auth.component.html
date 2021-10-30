@@ -1,9 +1,9 @@
 <div style="color: #fff;" class="row justify-content-center">
-  <div class="login-block col-10 col-lg-5"
+  <div class="login-block col-10 col-lg-5 p-2"
        [ngClass]="{'m-auto' : cookieServ.check('is_first_time')}">
     <h2 class="welcome text-center"> Welcome to FFXIV Roster </h2>
-    <div class="mt-4 d-flex justify-content-around">
-      <button  (click)="toggleLogIn(); registerOpen? toggleRegister(): ''" mat-raised-button>Log in</button >
+    <div class=" d-flex justify-content-around">
+      <button  (click)="toggleLogIn(); registerOpen? toggleRegister(): ''" mat-raised-button>Sign in</button >
       <button  (click)="toggleRegister(); logIsOpen? toggleLogIn(): ''" mat-raised-button>Create</button>
     </div>
     <div>

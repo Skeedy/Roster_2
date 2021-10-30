@@ -3,8 +3,8 @@
 </div>
 <div class="container-fluid">
   <div class="row justify-content-md-between">
-    <div *ngFor="let raid of raids"  class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-3">
-      <div style="background: #00000094; padding: 0" class="my-2 pb-1 my-sm-0">
+    <div *ngFor="let raid of raids"  class="col-12 my-2 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div style="background: #000000de; padding: 0" class="my-2 pb-1 my-sm-0">
         <img class="d-flex" style="margin: auto; width:100%" src="{{raid.imgUrl}}">
         <h6 class="my-1" style="color: #FFF; text-align: center">{{raid.name}}</h6>
         <app-loot-slot [raid]= raid [chest]= 1 [lootSlot]="lootService.sortByChest(1,raid.id)[0]"></app-loot-slot>

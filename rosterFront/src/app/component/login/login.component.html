@@ -1,22 +1,23 @@
-  <form class="form-content " [formGroup]="loginForm">
-    <div class="login-block">
+<form class="form-content " [formGroup]="loginForm">
+  <div class="login-block">
+    <div *ngIf="html" style="color: red; font-style: italic; font-weight: bold" class="pb-2">{{html}}</div>
     <mat-form-field color="primary">
       <input matInput placeholder="Roster name"  formControlName="rostername" autocomplete="off" required/>
     </mat-form-field>
-      <span class="mx-0 mx-sm-2"></span>
+    <span class="mx-0 mx-sm-2"></span>
     <mat-form-field>
       <input matInput placeholder="Password"  type="password" formControlName="password" autocomplete="off" required/>
     </mat-form-field>
+  </div>
+  <div class="text-center my-1">
+    <div class="row justify-content-center">
+      <a routerLink="/forget-password">Forgot password ?</a>
     </div>
-    <div class="text-center my-1">
-      <div class="row justify-content-center">
-        <a routerLink="/forget-password">Forgot password ?</a>
-      </div>
-    </div>
-    <div style="color: red; font-style: italic; font-weight: bold" class="pb-2">{{html}}</div>
-    <div class="text-center">
+  </div>
+
+  <div class="text-center">
     <button mat-raised-button color="primary"
             [disabled]="loading || loginForm.invalid"
             (click)="login()">Log in</button>
-    </div>
-  </form>
+  </div>
+</form>

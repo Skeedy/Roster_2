@@ -48,7 +48,7 @@ import {CookieService} from "ngx-cookie-service";
   ],
 })
 export class AuthComponent implements OnInit {
-  logIsOpen = false;
+  logIsOpen = true;
   registerOpen = false;
   rosters : Roster[];
   isVisible= true;

@@ -2,11 +2,10 @@ button:focus,button:active:focus,button.active:focus {
   outline: none !important;
 }
 button{
-  padding: 5px;
-  padding-bottom: 10px;
   color: #FFF;
   letter-spacing: 2px;
-  background-color: #2b2ba7;
+  border: 2px solid #FFF;
+  background: rgba(0, 0, 0, 0);
 }
 .input-field{
   height: 0;
@@ -15,11 +14,10 @@ button{
   text-align: center;
 }
 .login-block{
-  background-color: #0000009c;
-
-  padding: 10px;
+  background-color: #000000de;
+  height: fit-content;
   border-radius: 20px;
-  animation:  2s linear 0s showUp;
+  animation:  1s linear 0s showUp;
 }
 @keyframes showUp {
   from{

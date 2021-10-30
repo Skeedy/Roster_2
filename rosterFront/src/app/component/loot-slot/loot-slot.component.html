@@ -4,12 +4,12 @@
          src="https://xivapi.com/img-misc/chest{{chest}}.png">
     <img class="loot-img" src="{{lootSlot.item_url}}"  matTooltip="{{lootSlot.item_name}}" height="65px">
     <img class="loot-img mx-3" src="{{lootSlot.player_url}}" matTooltip="{{lootSlot.player_name}}" height="65px">
-    <img class="loot-img" height="65px" src="{{lootSlot.job_url}}" matTooltip="{{lootSlot.player_name}}'s {{lootSlot.job_name}}">
+    <img class="loot-img" src="{{lootSlot.job_url}}" matTooltip="{{lootSlot.player_name}}'s {{lootSlot.job_name}}">
   </div>
 </div>
 <div *ngIf="!lootSlot" class="my-1 my-sm-2">
   <div class="d-flex align-items-center justify-content-center">
-    <img (click)="showPool= !showPool; lootId = null"
+    <img class="loot-img" (click)="showPool= !showPool; lootId = null"
          src="https://xivapi.com/img-misc/chest{{chest}}.png">
     <h5 style="color:#FFF"> Chest n°{{chest}}</h5>
   </div>

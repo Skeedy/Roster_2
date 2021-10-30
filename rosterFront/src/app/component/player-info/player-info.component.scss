@@ -2,7 +2,7 @@
   cursor: pointer;
 }
 .bg-opacity{
-   background-color: #00000094;
+   background-color: #000000de;
   border-radius: 10px;
 }
 .main-job{
@@ -12,6 +12,10 @@
 .sub-job{
   width: 40px;
   height: 40px;
+}
+.player-img{
+  width: 125px;
+  height: 125px;
 }
 @media screen and (max-width: 480px){
   .player-img{

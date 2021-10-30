@@ -17,7 +17,7 @@ export class NewRosterComponent implements OnInit {
   public loading: boolean;
   public registerForm: FormGroup;
   public html: string;
-
+  public showWarning = false;
   constructor(private fb: FormBuilder,
               private authServ: AuthService,
               private  rosterServ : RosterService,
@@ -61,4 +61,5 @@ export class NewRosterComponent implements OnInit {
       this.registerFailed = true;
     });
   }
+
 }

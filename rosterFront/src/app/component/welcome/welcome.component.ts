@@ -15,6 +15,7 @@ export class WelcomeComponent implements OnInit {
   }
   acceptCoockies(){
     this.cookieServ.set('is_first_time', 'true');
+    this.cookieServ.set('SameSite', 'Lax');
   }
   deny(){
     this.onCloseClick.emit();
