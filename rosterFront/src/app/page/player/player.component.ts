@@ -13,6 +13,7 @@ import {RosterService} from "../../service/roster.service";
 import {Roster} from "../../class/roster";
 import {JobService} from "../../service/job.service";
 import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -24,10 +25,12 @@ export class PlayerComponent implements OnInit, AfterViewInit{
   constructor(
               public rosterServ: RosterService,
               private router: Router,
-              public jobServ: JobService) {
+              public jobServ: JobService,
+              private titleService: Title) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Players - FFXIVRoster')
     if (this.rosterServ.isConnected()) {
       this.rosterServ.getRoster().subscribe(_ => {
         },

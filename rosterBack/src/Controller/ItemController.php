@@ -23,8 +23,8 @@ define('accessorieUpgrade', 'Dusting');
 
 // Value db jobs
 CONST tanks = [1,2,3,4];
-CONST healers = [5,6,7];
-CONST meleeDPS = [8,9,10,11];
+CONST healers = [5,6,7,48];
+CONST meleeDPS = [8,9,10,11,41];
 CONST rangedDPS = [12,13,14];
 CONST magicDPS = [15,16,17];
 
@@ -32,6 +32,7 @@ CONST monk = 8;
 CONST dragoon = 9;
 CONST ninja = 10;
 CONST samourai = 11;
+CONST reaper = 41;
 
 /**
  * @Route("/item")
@@ -104,7 +105,7 @@ class ItemController extends AbstractController
                                 break;
                             case 'Maiming':
                                 $jobType = 'Maiming';
-                                $jobs = $jobRepository->findBy(['value' => dragoon]);
+                                $jobs = $jobRepository->findBy(['value' => [dragoon, reaper]]);
                                 foreach ($jobs as $job) {
                                     $item->addJob($job);
                                 }
@@ -118,7 +119,7 @@ class ItemController extends AbstractController
                                 break;
                             case 'Slaying':
                                 $jobType = 'Slaying';
-                                $jobs = $jobRepository->findBy(['value' => [monk, dragoon, samourai]]);
+                                $jobs = $jobRepository->findBy(['value' => [monk, dragoon, samourai, reaper]]);
                                 foreach ($jobs as $job) {
                                     $item->addJob($job);
                                 }

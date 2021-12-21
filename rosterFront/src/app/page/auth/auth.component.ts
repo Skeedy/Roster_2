@@ -5,6 +5,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from "@angular/router";
 import {SoundService} from "../../service/sound.service";
 import {CookieService} from "ngx-cookie-service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-auth',
@@ -57,10 +58,12 @@ export class AuthComponent implements OnInit {
     private rosterService: RosterService,
     private router: Router,
     public sound: SoundService,
-    public cookieServ : CookieService
+    public cookieServ : CookieService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Welcome - FFXIVRoster')
     if (this.rosterService.isConnected()){
       this.router.navigate(['/roster']);
     }

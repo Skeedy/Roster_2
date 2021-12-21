@@ -1,0 +1,8 @@
+<div [@deleteShow] *ngIf="deleteShow" class="warning-block" >
+  <h5> Caution ! All datas will be deleted, including characters and their wish list</h5>
+  <div>
+    <button (click)="delete()">Yes, definitively sure</button>
+    <button (click)="close()">I'll think about it</button>
+  </div>
+</div>
+<div *ngIf="deleteShow" class="overlay" (click)="close()"></div>

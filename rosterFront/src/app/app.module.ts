@@ -101,6 +101,8 @@ import { HistoryComponent } from './page/history/history.component';
 import { ForgetPasswordComponent } from './page/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './page/reset-password/reset-password.component';
 import { WelcomeComponent } from './component/welcome/welcome.component';
+import { EditRosterComponent } from './page/edit-roster/edit-roster.component';
+import { DeleteRosterComponent } from './component/delete-roster/delete-roster.component';
 
 
 @NgModule({
@@ -162,6 +164,8 @@ import { WelcomeComponent } from './component/welcome/welcome.component';
     ForgetPasswordComponent,
     ResetPasswordComponent,
     WelcomeComponent,
+    EditRosterComponent,
+    DeleteRosterComponent,
   ],
   imports: [
     FormsModule, ReactiveFormsModule,

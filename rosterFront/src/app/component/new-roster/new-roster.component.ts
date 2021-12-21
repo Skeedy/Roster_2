@@ -56,7 +56,7 @@ export class NewRosterComponent implements OnInit {
       this.html ='success'
     }, (err) => {
       this.html = err.error.response;
-      this.soundService.playError();
+      // this.soundService.playError();
       this.loading = false;
       this.registerFailed = true;
     });

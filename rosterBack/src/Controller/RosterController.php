@@ -55,7 +55,7 @@ class RosterController extends AbstractController
         }
         // si email existe
         if ($rosterRepository->findOneBy(['rostername'=> $newName])){
-           $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
+            $response = JsonResponse::fromJsonString('{ "id": "2","response": "This name is already used" }', 401);
             return $response;
         }
         // défini le role de l'utilisateur
@@ -90,10 +90,11 @@ class RosterController extends AbstractController
 
 
     /**
-     * @Route("/patch/{id}", name="roster_patch", methods={"PATCH"})
+     * @Route("/patch/", name="roster_patch", methods={"PATCH"})
      */
-    public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository,Roster $roster, EntityManagerInterface $em){
+    public function patch(Request $request, SerializerInterface $serializer,PlayerRepository $playerRepository,EntityManagerInterface $em){
         $jsonPost = $request->getContent();
+        $roster = $this->getUser();
         $json = $serializer->decode($jsonPost, 'json');
         $playerIds = $json['playersIds'];
         foreach ($playerIds as $playerId){
@@ -204,17 +205,22 @@ GROUP BY week.id';
         $response = new JsonResponse(['weekCount' => $result, 'week'=>$currentWeek, 'showPrevious' => $result? true: false], 200);
         return $response;
     }
-    /**
-     * @Route("/{id}", name="roster_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Roster $roster): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$roster->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($roster);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('roster_index');
+    /**
+     * @Route("/", name="roster_delete", methods={"DELETE"})
+     */
+    public function delete(): Response
+    {
+        $roster = $this->getUser();
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($roster->getPlayer() as $player){
+            $roster->removePlayer($player);
+            $entityManager->remove($player);
+        }
+        $entityManager->remove($roster);
+        $entityManager->flush();
+
+
+        return $this->json('{response : '.$roster->getUsername() . ' has been deleted }', 200);
     }
 }

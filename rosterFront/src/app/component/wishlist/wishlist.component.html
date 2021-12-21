@@ -49,18 +49,6 @@
       </div>
     </div>
     <div>
-      <div class="slotName">Waist</div>
-      <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).belt">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6); slotName='waist'"
-             src="https://xivapi.com/img-misc/gear/waist.png">
-      </div>
-      <div class="text-center" *ngIf="(wishitemServ._wishItemSub|async).belt">
-        <img class="item" (click)="gearShow= !gearShow;getSlotStuff(6); slotName='waist'"
-             matTooltip="{{(wishitemServ._wishItemSub|async).belt.name}}"
-             src="{{(wishitemServ._wishItemSub|async).belt.imgUrl}}"/>
-      </div>
-    </div>
-    <div>
       <div class="slotName">Legs</div>
       <div class="text-center" *ngIf="!(wishitemServ._wishItemSub|async).legs">
         <img class="item" (click)="getSlotStuff(7); gearShow= !gearShow; slotName='legs'"

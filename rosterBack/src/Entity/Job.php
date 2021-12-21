@@ -34,14 +34,6 @@ class Job
      */
     private $name;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Groups("roster")
-     * @Groups("jobStuff")
-     * @Groups("jobShow")
-     */
-    private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -106,17 +98,6 @@ class Job
         return $this;
     }
 
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(Image $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getRole(): ?string
     {

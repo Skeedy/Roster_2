@@ -1,0 +1,106 @@
+.block-op{
+  background-color: #000000de;
+  height: fit-content;
+  border-radius: 20px;
+  margin: auto;
+  width: fit-content;
+}
+button:focus,button:active:focus,button.active:focus {
+  outline: none !important;
+}
+.mat-raised-button.mat-primary[disabled]{
+  color: #FFF;
+  background-color: #476b8a;
+}
+::ng-deep .mat-form-field {
+  .mat-input-element {
+    color: #FFFFFF;
+  }
+  .mat-form-field-label {
+    color: #FFFFFF;
+  }
+  .mat-form-field-underline {
+    background-color: #FFFFFF;
+  }
+  .mat-form-field-ripple {
+    background-color: #FFFFFF;
+  }
+  .mat-form-field-required-marker {
+    color: #FFFFFF;
+  }
+}
+::ng-deep .mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: #5687d7;
+  }
+  .mat-form-field-ripple {
+    background-color: #5687d7;
+  }
+  .mat-form-field-required-marker {
+    color: #5687d7;
+  }
+  .mat-input-element {
+    color: #5687d7;
+  }
+}
+::ng-deep .mat-form-field.mat-form-field-invalid {
+  .mat-input-element {
+    color: #bf3741;
+  }
+  .mat-form-field-label {
+    color: #bf3741;
+    .mat-form-field-required-marker {
+      color: #bf3741;
+    }
+  }
+  .mat-form-field-ripple {
+    background-color: #bf3741;
+  }
+}
+.error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-size: 18px;
+  font-style: italic;
+  background: #ff000061;
+  border-radius: 1999px;
+  padding: 3px;
+  font-weight: bold;
+}
+.error img{
+  width: 70px;
+}
+
+.input-register{
+  width: 75%
+}
+.input-field{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+// mobile
+@media screen and (max-width: 480px){
+  .error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 14px;
+    font-style: italic;
+    background: #ffffffa6;
+    border-radius: 1999px;
+    padding: 3px;
+    font-weight: bold;
+  }
+  .error img{
+    width: 50px;
+  }
+}
+
+@media screen and (max-width: 960px ){
+
+}

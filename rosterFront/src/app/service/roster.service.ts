@@ -100,17 +100,23 @@ export class RosterService {
     };
     return this.http.post(Globals.APP_API + '/roster/register', obj);
   }
+  public deleteRoster(){
+    return this.http.delete(Globals.APP_API+'/roster/')
+  }
   public sendEmailPassword(email){
     const obj = {
       email: email
     }
-    return this.http.post(Globals.APP_API + '/checkEmailPassword', obj)
+    return this.http.post(Globals.APP_API + '/checkEmailPassword', obj);
   }
   public changePassword(data, token){
     const obj = {
       token : token,
       password: data.password
     }
-      return this.http.post(Globals.APP_API + '/changePassword', obj)
+      return this.http.post(Globals.APP_API + '/changePassword', obj);
+    }
+    public updateDatas(obj){
+      return this.http.patch(Globals.APP_API + '/updateDatas', obj);
     }
 }

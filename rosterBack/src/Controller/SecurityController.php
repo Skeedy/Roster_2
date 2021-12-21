@@ -119,4 +119,50 @@ class SecurityController extends AbstractController
     function generateToken() {
         return md5(uniqid());
     }
+    /**
+     * @Route("/updateProfile", name="app_update_profile", methods={"PATCH"})
+     */
+    function updateDatas(EntityManagerInterface $em, Request $request,RosterRepository $rosterRepository, SerializerInterface  $serializer){
+        $json = $serializer->decode($request->getContent(), 'json');
+        $roster = $this->getUser();
+        $newEmail = false;
+        $newName = false;
+        if (isset($json['email'])){
+            if ($rosterRepository->findOneBy(['email'=> $json['email']])) {
+                $response = JsonResponse::fromJsonString('{ "id": "1","response": "This email is already used" }', 401);
+                return $response;
+            }
+            else {
+                $roster->setEmail( $json['email']);
+                $newEmail= true;
+            }
+        }
+        if (isset($json['rostername'])){
+            if ($rosterRepository->findOneBy(['rostername'=> $json['rostername']])) {
+                $response = JsonResponse::fromJsonString('{ "id": "1","response": "This name is already used" }', 401);
+                return $response;
+            }
+            else {
+                $roster->setRostername($json['rostername']);
+                $newName = true;
+            }
+        }
+
+        $em->persist($roster);
+        $em->flush();
+
+        if($newEmail && !$newName){
+            $response = $this->json('{respone : The email has been changed}', 200);
+            return $response;
+        }
+        if(!$newEmail && $newName){
+            $response = $this->json('{respone : The name has been changed}', 200);
+            return $response;
+        }
+        if($newEmail && $newName){
+            $response = $this->json('{respone : Your email  and name have been changed}', 200);
+            return $response;
+        }
+    }
+
 }

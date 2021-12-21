@@ -3,6 +3,7 @@ import {RosterService} from "../../service/roster.service";
 import {Router} from "@angular/router";
 import {LootService} from "../../service/loot.service";
 import {Coffer} from "../../class/coffer";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-item',
@@ -11,9 +12,13 @@ import {Coffer} from "../../class/coffer";
 })
 export class ItemComponent implements OnInit {
 public coffers : Coffer[];
-  constructor(private router: Router,public rosterServ: RosterService, public lootServ: LootService) { }
+  constructor(private router: Router,
+              public rosterServ: RosterService,
+              public lootServ: LootService,
+              private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Items - FFXIVRoster')
       this.rosterServ.getRoster().subscribe(_ => {
         },
         _ => {

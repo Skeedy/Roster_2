@@ -5,6 +5,7 @@ import {Raid} from "../../class/raid";
 import {Router} from "@angular/router";
 import {LootService} from "../../service/loot.service";
 import {Loot} from "../../class/loot";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-roster',
@@ -24,9 +25,11 @@ export class RosterComponent implements OnInit {
     private router: Router,
     public rosterServ: RosterService,
     public lootService: LootService,
+    private titleService: Title
   ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Instances - FFXIVRoster')
     this.rosterServ.refreshRoster().subscribe(() => {
         this.lootService.getWeeks().subscribe(data => {
           // @ts-ignore

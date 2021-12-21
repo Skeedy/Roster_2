@@ -1,0 +1,37 @@
+<div class="block-op p-5">
+    <div *ngIf="registerFailed" (close)="registerFailed = false" class="error mb-1">
+      <img src="../../../assets/img/moogle.png">
+      <div> {{html}} !</div>
+    </div>
+
+    <form class="form-content" [formGroup]="registerForm">
+      <div class="input-field">
+        <mat-form-field>
+          <input matInput
+                 type="text"
+                 value="{{(rosterService._rosterSub | async).rostername}}"
+                 placeholder="Name"
+                 formControlName="rostername"
+                 autocomplete="Off"/>
+        </mat-form-field>
+        <span class="mx-0 mx-sm-2"></span>
+        <mat-form-field>
+          <input matInput type="email"
+                 value="{{(rosterService._rosterSub | async).email}}"
+                 placeholder="Email"
+                 formControlName="email"
+                 autocomplete="Off"/>
+        </mat-form-field>
+      </div>
+      <div class="text-center">
+        <button (click)="saveChanges()" mat-raised-button color="primary" style="background-color: #23bf5d">
+          Save
+        </button>
+        <button (click)="deleteShow= !deleteShow;" mat-button class="mat-button btn-danger">
+          Delete Roster
+        </button>
+      </div>
+    </form>
+</div>
+
+<app-delete-roster [(deleteShow)]="deleteShow"></app-delete-roster>

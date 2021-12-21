@@ -42,9 +42,6 @@
           formControlName="password"
           autocomplete="Off" required/>
       </mat-form-field>
-      <div *ngIf="showWarning" style="font-style: italic; color:#e73b3b; text-underline: #DDDDDD" >
-        Do <span *ngIf="showWarning" style="font-weight: bold"> NOT </span> use your personnal password, you'll need to share this password to your teammate to log in !
-      </div>
       <span class="mx-0 mx-sm-2"></span>
       <mat-form-field>
         <input matInput type="password"
@@ -58,9 +55,12 @@
           <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
         </div>
       </mat-form-field>
+      <div *ngIf="showWarning" style="font-style: italic; color:#e73b3b; text-underline: #DDDDDD" >
+        Do <span *ngIf="showWarning" style="font-weight: bold"> NOT </span> use your personnal password, you'll need to share this password to your teammate to log in !
+      </div>
     </div>
     <div class="text-center">
-      <button mat-raised-button color="primary"
+      <button mat-raised-button color="primary" style="background-color: #23bf5d"
               [disabled]="loading || registerForm.invalid"
               (click)="register()">
         Create
